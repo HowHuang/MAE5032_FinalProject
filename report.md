@@ -1,85 +1,116 @@
-Penghan CHEN (陈鹏瀚) Hao HUANG (黄灏)
+Penghan CHEN (陈鹏翰) Hao HUANG (黄灏)
 
 #### Problem
 
-<img src="/Users/haohuang/Documents/3 PhD study/2 Courses/HPC/Homework/MAE5032_FinalProject/fig1 2022-05-28 14.53.52.png" alt="截屏2022-05-28 14.53.52" style="zoom: 77%;" />
+<img src="./fig1 2022-05-28 14.53.52.png" style="zoom: 77%;" />
 
 #### Solutions
 
-We learned the solution methods from the videos on [bilibili](https://www.bilibili.com/video/BV13A411B7n9?spm_id_from=333.337.search-card.all.click) and the books from class MAE5032-HPC by [Ju-LIU](https://ju-liu.github.io/)
+We learned the solution methods from the [videos](https://www.bilibili.com/video/BV13A411B7n9?spm_id_from=333.337.search-card.all.click) on bilibili and the books from class MAE5032-HPC by [Ju-LIU](https://ju-liu.github.io/)
 
-<img src="/Users/haohuang/Documents/3 PhD study/2 Courses/HPC/Homework/MAE5032_FinalProject/fig2 2022-05-28 16.23.01.png" alt="截屏2022-05-28 16.23.01" style="zoom:80%;" />
+<img src="./fig2 2022-05-28 16.23.01.png" style="zoom:80%;" />
 
 $u_{l,m}^t$ is denoted as temperature u in node l,m at time t.
 
-##### (1) For each node, the $u_{l,m}^{t+1}$ should be depended on five data at time t (i.e., $u_{l,m}^{t}$, $u_{l+1,m}^{t}$, $u_{l-,m}^{t}$, $u_{l,m+1}^{t}$, $u_{l,m-1}^{t}$) spatially and temporally.
+##### (1) For each internal node, the $u_{l,m}^{t+1}$ should be depended on five data at time t (i.e., $u_{l,m}^{t}$, $u_{l+1,m}^{t}$, $u_{l-,m}^{t}$, $u_{l,m+1}^{t}$, $u_{l,m-1}^{t}$) spatially and temporally.
 
 **The basic equation** should be
 $$
 \rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) = \kappa((\dfrac{\partial u}{\partial x})_{l+1,m}^{t\rightarrow t+1} - (\dfrac{\partial u}{\partial x})_{l-1,m}^{t\rightarrow t+1})\Delta y\Delta t + \kappa((\dfrac{\partial u}{\partial y})_{l,m+1}^{t\rightarrow t+1} - (\dfrac{\partial u}{\partial y})_{l,m-1}^{t\rightarrow t+1})\Delta x\Delta t
 $$
-As there is $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$, we considered this is a Neumann problem.
-$$
-\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) = (\kappa(\dfrac{\partial u}{\partial x})_{l+1,m}^{t\rightarrow t+1} + h_{l-1,m}^{t\rightarrow t+1})\Delta y\Delta t + (\kappa(\dfrac{\partial u}{\partial y})_{l,m+1}^{t\rightarrow t+1} + h_{l,m-1}^{t\rightarrow t+1})\Delta x\Delta t
-$$
 **In explicit format**, the relationship can be decribed by the following.
 $$
-\begin{aligned}
-\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} +  h_{l-1,m}^{t})\Delta y\Delta t + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} + h_{l,m-1}^{t})\Delta x\Delta t\\
-\dfrac{\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t})}{\Delta t} &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} +  h_{l-1,m}^{t})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} + h_{l,m-1}^{t})\Delta x\\
-\end{aligned}
+\dfrac{\rho c \Delta x \Delta y}{\Delta t}(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} +  \dfrac{u_{l,m}^{t}-u_{l-1,m}^{t}}{\delta x_{l-1}})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} + \dfrac{u_{l,m}^{t}-u_{l,m-1}^{t}}{\delta y_{m+1}})\Delta x\\
 $$
 $$
-a_{l,m}^{t+1} u_{l,m}^{t+1} = a_{l+1,m}^{t}u_{l+1,m}^{t} + \kappa h_{l-1,m}^{t}\Delta y + a_{l,m+1}^{t}u_{l,m+1}^{t} + \kappa h_{l,m-1}^{t}\Delta x + a_{l,m}^{t}u_{l,m}^{t}
+a_{l,m}^{t+1} u_{l,m}^{t+1} = a_{l+1,m}^{t}u_{l+1,m}^{t} + a_{l-1,m}^{t}u_{l-1,m}^{t} + a_{l,m+1}^{t}u_{l,m+1}^{t} + a_{l,m-1}^{t}u_{l,m-1}^{t} + a_{l,m}^{t}u_{l,m}^{t}
 $$
 
 where
 $$
 \begin{aligned}
-a_{l+1,m}^{t} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
-a_{l,m+1}^{t} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
-a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} - \dfrac{\kappa\Delta y}{\delta x_{l+1}} - \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
-a_{l,m}^{t+1} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} = a_{l+1,m}^{t} + a_{l,m+1}^{t}\\
+a_{l+1,m}^{t} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}} = \dfrac{\kappa\Delta y}{\Delta x} = a_{l-1,m}^{t} = \dfrac{\kappa\Delta y}{\delta x_{l-1}}\\
+a_{l,m+1}^{t} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}} = \dfrac{\kappa\Delta x}{\Delta y} = a_{l,m-1}^{t} = \dfrac{\kappa\Delta x}{\delta y_{m-1}}\\
+a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t}  - \dfrac{\kappa\Delta y}{\delta x_{l+1}} - \dfrac{\kappa\Delta y}{\delta x_{l-1}} - \dfrac{\kappa\Delta x}{\delta y_{m+1}} - \dfrac{\kappa\Delta x}{\delta y_{m-1}}\\
+&= \dfrac{\rho c \Delta x \Delta y}{\Delta t}  - 2\dfrac{\kappa\Delta y}{\Delta x} - 2\dfrac{\kappa\Delta x}{\Delta y}\\
+a_{l,m}^{t+1} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} = 2a_{l+1,m}^{t} + 2a_{l,m+1}^{t} + a_{l,m}^{t}\\
 \end{aligned}
 $$
-Note that $\delta$ is actually the same as $\Delta$ for internal nodes, and $\delta$ is the half of $\Delta$ for boundary nodes.
+Note that $\delta$ is actually the same as $\Delta$ for internal nodes.
 
 **In implicit format**, the relationship can be decribed by the following.
 $$
-\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) = \kappa(\dfrac{u_{l+1,m}^{t+1}-u_{l,m}^{t+1}}{\delta x_{l+1}} - \dfrac{u_{l,m}^{t+1}-u_{l-1,m}^{t+1}}{\delta x_{l-1}})\Delta y\Delta t + \kappa(\dfrac{u_{l,m+1}^{t+1} - u_{l,m}^{t+1}}{\delta y_{m+1}} - \dfrac{u_{l,m}^{t+1}-u_{l,m-1}^{t+1}}{\delta x_{m-1}})\Delta x\Delta t\\
-\dfrac{\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t})}{\Delta t} = \kappa(\dfrac{u_{l+1,m}^{t+1}-u_{l,m}^{t+1}}{\delta x_{l+1}} +  h_{l-1,m}^{t+1})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t+1}-u_{l,m}^{t+1}}{\delta y_{m+1}} + h_{l,m-1}^{t+1})\Delta x\\
+\begin{aligned}
+\dfrac{\rho c \Delta x \Delta y}{\Delta t}(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t+1}-u_{l,m}^{t+1}}{\delta x_{l+1}} - \dfrac{u_{l,m}^{t+1}-u_{l-1,m}^{t+1}}{\delta x_{l-1}})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t+1} - u_{l,m}^{t+1}}{\delta y_{m+1}} - \dfrac{u_{l,m}^{t+1}-u_{l,m-1}^{t+1}}{\delta x_{m-1}})\Delta x\\
+\end{aligned}
 $$
 
 $$
-a_{l,m}^{t+1} u_{l,m}^{t+1}=a_{l+1,m}^{t+1}u_{l+1,m}^{t+1} + \kappa h_{l-1,m}^{t+1}\Delta y + a_{l,m+1}^{t+1}u_{l,m+1}^{t+1} + \kappa h_{l,m-1}^{t+1}\Delta x + a_{l,m}^{t}u_{l,m}^{t}
+a_{l,m}^{t+1} u_{l,m}^{t+1} - a_{l+1,m}^{t+1}u_{l+1,m}^{t+1} - a_{l-1,m}^{t+1}u_{l-1,m}^{t+1} - a_{l,m+1}^{t+1}u_{l,m+1}^{t+1} - a_{l,m-1}^{t+1}u_{l,m-1}^{t+1} = a_{l,m}^{t}u_{l,m}^{t}
 $$
 
 where
 $$
 \begin{aligned}
 a_{l+1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
+a_{l-1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l-1}}\\
 a_{l,m+1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
+a_{l,m-1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m-1}}\\
 a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t}\\
-a_{l,m}^{t+1} - a_{l+1,m}^{t+1} - a_{l,m+1}^{t+1} &= a_{l,m}^{t}\\
+a_{l,m}^{t+1} &= a_{l+1,m}^{t+1} + a_{l-1,m}^{t+1} + a_{l,m+1}^{t+1} + a_{l,m-1}^{t+1} +a_{l,m}^{t}\\
 \end{aligned}
 $$
 
+##### (2) Considering the boundary condition
 
+As there is $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$, we considered this is a Neumann problem.
 
+From the basic equation, we know that
+$$
+\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) = (\kappa(\dfrac{\partial u}{\partial x})_{l+1,m}^{t\rightarrow t+1} + h_{l-1,m}^{t\rightarrow t+1})\Delta y\Delta t + (\kappa(\dfrac{\partial u}{\partial y})_{l,m+1}^{t\rightarrow t+1} + h_{l,m-1}^{t\rightarrow t+1})\Delta x\Delta t
+$$
+**In explicit format**, 
+$$
+\begin{aligned}
+\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} +  h_{l-1,m}^{t})\Delta y\Delta t + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} + h_{l,m-1}^{t})\Delta x\Delta t\\
+\dfrac{\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t})}{\Delta t} &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} +  h_{l-1,m}^{t})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} + h_{l,m-1}^{t})\Delta x\\
+a_{l,m}^{t+1} u_{l,m}^{t+1} &= a_{l+1,m}^{t}u_{l+1,m}^{t} + \kappa h_{l-1,m}^{t}\Delta y + a_{l,m+1}^{t}u_{l,m+1}^{t} + \kappa h_{l,m-1}^{t}\Delta x + a_{l,m}^{t}u_{l,m}^{t}\\
+\end{aligned}
+$$
+where
+$$
+\begin{aligned}
+\kappa h_{l-1,m}^{t}\Delta y + \kappa h_{l,m-1}^{t}\Delta x &= h\Delta x \Delta y\\
+a_{l+1,m}^{t} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
+a_{l,m+1}^{t} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
+a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} - \dfrac{\kappa\Delta y}{\delta x_{l+1}} - \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
+a_{l,m}^{t+1} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} = a_{l+1,m}^{t} + a_{l,m+1}^{t}\\
+\end{aligned}
+$$
+when $l=0$ , $h_{l-1,m}^{t}=0$; when $m=0$,  $h_{l,m-1}^{t}=0$;
 
-##### (2) For boundary condition, as there is $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$, we considered this is a Neumann problem. 
+when $l=1$,  $\delta x_{l+1}=\Delta x/2$; when $m=1$, $\delta y_{m+1} = \Delta y/2$;
 
+**In implicit format**, 
+$$
+\begin{aligned}
+\dfrac{\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t})}{\Delta t} &= \kappa(\dfrac{u_{l+1,m}^{t+1}-u_{l,m}^{t+1}}{\delta x_{l+1}} +  h_{l-1,m}^{t+1})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t+1}-u_{l,m}^{t+1}}{\delta y_{m+1}} + h_{l,m-1}^{t+1})\Delta x\\
+a_{l,m}^{t+1} u_{l,m}^{t+1} &= a_{l+1,m}^{t+1}u_{l+1,m}^{t+1} + \kappa h_{l-1,m}^{t+1}\Delta y + a_{l,m+1}^{t+1}u_{l,m+1}^{t+1} + \kappa h_{l,m-1}^{t+1}\Delta x + a_{l,m}^{t}u_{l,m}^{t}\\
+\end{aligned}
+$$
+where
+$$
+\begin{aligned}
+\kappa h_{l-1,m}^{t+1}\Delta y + \kappa h_{l,m-1}^{t+1}\Delta x &= h\Delta x \Delta y\\
+a_{l+1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
+a_{l,m+1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
+a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t}\\
+a_{l,m}^{t+1} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} + a_{l+1,m}^{t+1} + a_{l,m+1}^{t+1}\\
+\end{aligned}
+$$
+when $l=0$ , $h_{l-1,m}^{t}=0$; when $m=0$,  $h_{l,m-1}^{t}=0$;
 
-
-
-
-
-
-
-
-
-
-
+when $l=1$,  $\delta x_{l+1}=\Delta x/2$; when $m=1$, $\delta y_{m+1} = \Delta y/2$;
 
 
 
@@ -105,38 +136,6 @@ $$
 - [ ] 方法的稳定性
 - [ ] 误差分析
 - [ ] 并行效率（强可扩展性、弱可扩展性、Petsc不同求解器的影响）
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
