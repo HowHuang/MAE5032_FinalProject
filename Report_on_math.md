@@ -1,10 +1,10 @@
 Penghan CHEN (陈鹏翰) Hao HUANG (黄灏)
 
-#### Problem
+### Problem
 
 <img src="./fig1 2022-05-28 14.53.52.png" style="zoom: 77%;" />
 
-#### Solutions
+### Solutions
 
 We learned the solution methods from the [videos](https://www.bilibili.com/video/BV13A411B7n9?spm_id_from=333.337.search-card.all.click) on bilibili and the books from class MAE5032-HPC by [Ju-LIU](https://ju-liu.github.io/)
 
@@ -12,7 +12,7 @@ We learned the solution methods from the [videos](https://www.bilibili.com/video
 
 $u_{l,m}^t$ is denoted as temperature u in node l,m at time t.
 
-##### (1) For each internal node, the $u_{l,m}^{t+1}$ should be depended on five data at time t (i.e., $u_{l,m}^{t}$, $u_{l+1,m}^{t}$, $u_{l-,m}^{t}$, $u_{l,m+1}^{t}$, $u_{l,m-1}^{t}$) spatially and temporally.
+#### (1) For each internal node, the $u_{l,m}^{t+1}$ should be depended on five data at time t (i.e., $u_{l,m}^{t}$, $u_{l+1,m}^{t}$, $u_{l-,m}^{t}$, $u_{l,m+1}^{t}$, $u_{l,m-1}^{t}$) spatially and temporally.
 
 **The basic equation** should be
 $$
@@ -40,9 +40,7 @@ Note that $\delta$ is actually the same as $\Delta$ for internal nodes.
 
 **In implicit format**, the relationship can be decribed by the following.
 $$
-\begin{aligned}
 \dfrac{\rho c \Delta x \Delta y}{\Delta t}(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t+1}-u_{l,m}^{t+1}}{\delta x_{l+1}} - \dfrac{u_{l,m}^{t+1}-u_{l-1,m}^{t+1}}{\delta x_{l-1}})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t+1} - u_{l,m}^{t+1}}{\delta y_{m+1}} - \dfrac{u_{l,m}^{t+1}-u_{l,m-1}^{t+1}}{\delta x_{m-1}})\Delta x\\
-\end{aligned}
 $$
 
 $$
@@ -61,11 +59,11 @@ a_{l,m}^{t+1} &= a_{l+1,m}^{t+1} + a_{l-1,m}^{t+1} + a_{l,m+1}^{t+1} + a_{l,m-1}
 \end{aligned}
 $$
 
-##### (2) Considering the boundary condition
+#### (2) Considering the boundary condition
 
-As there is $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$, we considered this is a Neumann problem.
+When $l,m\in \Gamma$, data are given that $u=g$ or $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$.
 
-From the basic equation, we know that
+Starting from only considering $h$ from the left and down sides, the basic equation can be decribed as the following.
 $$
 \rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t}) = (\kappa(\dfrac{\partial u}{\partial x})_{l+1,m}^{t\rightarrow t+1} + h_{l-1,m}^{t\rightarrow t+1})\Delta y\Delta t + (\kappa(\dfrac{\partial u}{\partial y})_{l,m+1}^{t\rightarrow t+1} + h_{l,m-1}^{t\rightarrow t+1})\Delta x\Delta t
 $$
@@ -77,44 +75,42 @@ $$
 a_{l,m}^{t+1} u_{l,m}^{t+1} &= a_{l+1,m}^{t}u_{l+1,m}^{t} + \kappa h_{l-1,m}^{t}\Delta y + a_{l,m+1}^{t}u_{l,m+1}^{t} + \kappa h_{l,m-1}^{t}\Delta x + a_{l,m}^{t}u_{l,m}^{t}\\
 \end{aligned}
 $$
-where
+We described this in general format.
 $$
 \begin{aligned}
-\kappa h_{l-1,m}^{t}\Delta y + \kappa h_{l,m-1}^{t}\Delta x &= h\Delta x \Delta y\\
-a_{l+1,m}^{t} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
-a_{l,m+1}^{t} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
-a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} - \dfrac{\kappa\Delta y}{\delta x_{l+1}} - \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
-a_{l,m}^{t+1} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} = a_{l+1,m}^{t} + a_{l,m+1}^{t}\\
+a_{l,m}^{t+1} u_{l,m}^{t+1} &= a_{l+1,m}^{t}u_{l+1,m}^{t} + a_{l-1,m}^{t}u_{l-1,m}^{t} + a_{l,m+1}^{t}u_{l,m+1}^{t} + a_{l,m-1}^{t}u_{l,m-1}^{t} \\
+&+ \kappa h_{l+1,m}^{t}\Delta y + \kappa h_{l-1,m}^{t}\Delta y + \kappa h_{l,m+1}^{t}\Delta x + \kappa h_{l,m-1}^{t}\Delta x + a_{l,m}^{t}u_{l,m}^{t}
 \end{aligned}
 $$
-when $l=0$ , $h_{l-1,m}^{t}=0$; when $m=0$,  $h_{l,m-1}^{t}=0$;
-
-when $l=1$,  $\delta x_{l+1}=\Delta x/2$; when $m=1$, $\delta y_{m+1} = \Delta y/2$;
-
-**In implicit format**, 
+**In implicit format**, similarly we get that
 $$
 \begin{aligned}
-\dfrac{\rho c \Delta x \Delta y(u_{l,m}^{t+1}-u_{l,m}^{t})}{\Delta t} &= \kappa(\dfrac{u_{l+1,m}^{t+1}-u_{l,m}^{t+1}}{\delta x_{l+1}} +  h_{l-1,m}^{t+1})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t+1}-u_{l,m}^{t+1}}{\delta y_{m+1}} + h_{l,m-1}^{t+1})\Delta x\\
-a_{l,m}^{t+1} u_{l,m}^{t+1} &= a_{l+1,m}^{t+1}u_{l+1,m}^{t+1} + \kappa h_{l-1,m}^{t+1}\Delta y + a_{l,m+1}^{t+1}u_{l,m+1}^{t+1} + \kappa h_{l,m-1}^{t+1}\Delta x + a_{l,m}^{t}u_{l,m}^{t}\\
+a_{l,m}^{t+1}u_{l,m}^{t+1} &= a_{l+1,m}^{t+1}u_{l+1,m}^{t+1} + a_{l-1,m}^{t+1}u_{l-1,m}^{t+1} + a_{l,m+1}^{t+1}u_{l,m+1}^{t+1} + a_{l,m-1}^{t+1}u_{l,m-1}^{t+1} \\
+&+ \kappa h_{l+1,m}^{t+1}\Delta y + \kappa h_{l-1,m}^{t+1}\Delta y + \kappa h_{l,m+1}^{t+1}\Delta x + \kappa h_{l,m-1}^{t+1}\Delta x + a_{l,m}^{t}u_{l,m}^{t}\\
 \end{aligned}
 $$
-where
-$$
-\begin{aligned}
-\kappa h_{l-1,m}^{t+1}\Delta y + \kappa h_{l,m-1}^{t+1}\Delta x &= h\Delta x \Delta y\\
-a_{l+1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
-a_{l,m+1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
-a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t}\\
-a_{l,m}^{t+1} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t} + a_{l+1,m}^{t+1} + a_{l,m+1}^{t+1}\\
-\end{aligned}
-$$
-when $l=0$ , $h_{l-1,m}^{t}=0$; when $m=0$,  $h_{l,m-1}^{t}=0$;
 
-when $l=1$,  $\delta x_{l+1}=\Delta x/2$; when $m=1$, $\delta y_{m+1} = \Delta y/2$;
+##### (a) If prescribed $u=g$ for a boundary node
 
+$h_{l+1,m}=h_{l-1,m}=h_{l,m+1}=h_{l,m-1}=0$;
 
+when $l+1=1$, $u_{l+1,m}=g$  and $a_{l+1,m} = \dfrac{\kappa\Delta y}{\delta x_{l+1}} = \dfrac{\kappa\Delta y}{\Delta x/2}$;
 
+when $l-1=0$, $u_{l-1,m}=g$ and $a_{l-1,m} = \dfrac{\kappa\Delta y}{\delta x_{l-1}} = \dfrac{\kappa\Delta y}{\Delta x/2}$;
 
+when $m+1=0$, $u_{l,m+1}=g$ and  $a_{l,m+1} = \dfrac{\kappa\Delta x}{\delta y_{m+1}} = \dfrac{\kappa\Delta x}{\Delta y/2}$;
+
+when $m-1=0$, $u_{l,m-1}=g$ and  $a_{l,m-1} = \dfrac{\kappa\Delta x}{\delta y_{m-1}} = \dfrac{\kappa\Delta x}{\Delta y/2}$.
+
+##### (b) If prescribed $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$ for a boundary node
+
+when $l+1=1$ , $h_{l+1,m}=-h$ and $a_{l+1,m}=h_{l-1,m}=h_{l,m+1}=h_{l,m-1}=0$; 
+
+when $l-1=0$ , $h_{l-1,m}=h$ and $a_{l-1,m}=h_{l+1,m}=h_{l,m+1}=h_{l,m-1}=0$; 
+
+when $m+1=1$,  $h_{l,m+1}=-h$ and $a_{l,m+1}=h_{l+1,m}=h_{l-1,m}=h_{l,m-1}=0$; 
+
+when $m-1=0$,  $h_{l,m-1}=h$ and $a_{l,m-1}=h_{l+1,m}=h_{l-1,m}=h_{l,m+1}=0$; 
 
 
 
