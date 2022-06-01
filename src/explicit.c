@@ -10,22 +10,56 @@ int main(int argc,char **argv)
   PetscInt       nn;
   PetscInt       col[3];
 
-  PetscScalar    u0;
-  Vec            u_t,u_tplus
-  nn = 
+  PetscScalar    u0,kappa,rho,c;
+
+  /*
+    u_t refers to data including internal and boundary nodes.
+    */
+  Vec            u_t,u_tplus;
+  /*
+    u_b: the bottom face; u_t: the top face;
+    u_l: the left face; u_r: the right face;
+    These four vecs will load from the corresponding .h5 files.
+    in the data folder.
+    */
+  Vec            u_b,u_t,u_l,u_r;
+
+  /*
+    method of reading the vecs refers to:
+    https://petsc.org/release/src/vec/vec/tutorials/ex10.c.html
+    */
+  PetscViewer       viewer;
+  PetscBool         vstage2,vstage3,mpiio_use,isbinary = PETSC_FALSE;
+ #if defined(PETSC_HAVE_HDF5)
+  PetscBool         ishdf5 = PETSC_FALSE;
+ #endif
+ #if defined(PETSC_HAVE_ADIOS)
+  PetscBool         isadios = PETSC_FALSE;
+ #endif
+
+  mpiio_use = vstage2 = vstage3 = PETSC_FALSE;
+
+
+
+
+  nn = (n+1)*(n+1); //size of u
+
+  // Loading all boundary vectors
 
 
 
 
 
 
-  // Initialization
+
+
+  // Initialization of u
   ierr = PetscInitialize(&argc,&argv,(char*)0,help);if (ierr) return ierr;
   ierr = MPI_Comm_rank(PETSC_COMM_WORLD,&rank);CHKERRQ(ierr);
   ierr = PetscOptionsGetInt(NULL,NULL,"-n",&n,NULL);CHKERRQ(ierr);
 
   ierr = VecCreate(PETSC_COMM_WORLD,&u);CHKERRQ(ierr);
-  ierr = VecSetSizes(u,PETSC_DECIDE,n);CHKERRQ(ierr);
+  ierr = VecSetSizes(u,PETSC_DECIDE,nn);CHKERRQ(ierr);
   ierr = VecSetFromOptions(u);CHKERRQ(ierr);
 
   ierr = VecGetOwnershipRange(u,&istart,&iend);CHKERRQ(ierr);
@@ -33,6 +67,7 @@ int main(int argc,char **argv)
 
   if( rank == 0 )
   {
+   // Internal nodes
    for (i=1; i<n; i++)
     {
      for (j=1; j<n; j++) //u_{1 to 9, 1 to 9}
@@ -40,10 +75,13 @@ int main(int argc,char **argv)
       ierr = VecSetValues(u,1,&i,&u0,INSERT_VALUES);CHKERRQ(ierr);
      }
     }
+   // Boundary nodes
+   i = 0;
+
   }
 
+  // 
   
-
 
 
 
