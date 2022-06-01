@@ -30,17 +30,33 @@ int main(int argc,char **argv)
     */
   PetscViewer       viewer;
   PetscBool         vstage2,vstage3,mpiio_use,isbinary = PETSC_FALSE;
- #if defined(PETSC_HAVE_HDF5)
+#if defined(PETSC_HAVE_HDF5)
   PetscBool         ishdf5 = PETSC_FALSE;
- #endif
- #if defined(PETSC_HAVE_ADIOS)
+#endif
+#if defined(PETSC_HAVE_ADIOS)
   PetscBool         isadios = PETSC_FALSE;
- #endif
+#endif
+  PetscScalar const *values;
+#if defined(PETSC_USE_LOG)
+  PetscLogEvent  VECTOR_GENERATE,VECTOR_READ;
+#endif
 
+  ierr = PetscInitialize(&argc,&argv,(char*)0,help);if (ierr) return ierr;
   mpiio_use = vstage2 = vstage3 = PETSC_FALSE;
+  PetscOptionsGetBool(NULL,NULL,"-binary",&isbinary,NULL);
+#if defined(PETSC_HAVE_HDF5)
+  PetscOptionsGetBool(NULL,NULL,"-hdf5",&ishdf5,NULL);
+#endif
+#if defined(PETSC_HAVE_ADIOS)
+  PetscOptionsGetBool(NULL,NULL,"-adios",&isadios,NULL);
+#endif
+  PetscOptionsGetBool(NULL,NULL,"-mpiio",&mpiio_use,NULL);
+  PetscOptionsGetBool(NULL,NULL,"-sizes_set",&vstage2,NULL);
+  PetscOptionsGetBool(NULL,NULL,"-type_set",&vstage3,NULL);
 
-
-
+  ierr = MPI_Comm_rank(PETSC_COMM_WORLD,&rank);CHKERRQ(ierr);
+  MPI_Comm_size(PETSC_COMM_WORLD,&size);
+  ierr = PetscOptionsGetInt(NULL,NULL,"-n",&n,NULL);CHKERRQ(ierr);
 
   nn = (n+1)*(n+1); //size of u
 
@@ -51,10 +67,7 @@ int main(int argc,char **argv)
 
 
 
-
-
   // Initialization of u
-  ierr = PetscInitialize(&argc,&argv,(char*)0,help);if (ierr) return ierr;
   ierr = MPI_Comm_rank(PETSC_COMM_WORLD,&rank);CHKERRQ(ierr);
   ierr = PetscOptionsGetInt(NULL,NULL,"-n",&n,NULL);CHKERRQ(ierr);
 
