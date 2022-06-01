@@ -5,7 +5,7 @@ static char help[] = "Calculating a_{l,m}^{t+1} by the explicit method.";
 int main(int argc,char **argv)
 {
   PetscErrorCode ierr;
-  PetscMPIInt    rank;
+  PetscMPIInt    rank,size;
   PetscInt       i,j,istart,iend,n=10,nlocal;
   PetscInt       nn;
   PetscInt       col[3];
@@ -17,46 +17,65 @@ int main(int argc,char **argv)
     */
   Vec            u_t,u_tplus;
   /*
-    u_b: the bottom face; u_t: the top face;
-    u_l: the left face; u_r: the right face;
+    _b: the bottom face; _t: the top face;
+    _l: the left face;   _r: the right face;
     These four vecs will load from the corresponding .h5 files.
     in the data folder.
     */
-  Vec            u_b,u_t,u_l,u_r;
+  Vec            g_b,g_t,g_l,g_r;
+  Vec            h_b,h_t,h_l,h_r;
 
   /*
-    method of reading the vecs refers to:
-    https://petsc.org/release/src/vec/vec/tutorials/ex10.c.html
+    Method of reading the vecs refers to:
+    https://petsc.org/release/src/vec/vec/tutorials/ex19.c.html
+    We may be able to add a code for testing I/O, like:
+    https://petsc.org/release/src/vec/vec/tutorials/ex10.c.html 
     */
-  PetscViewer       viewer;
-  PetscBool         vstage2,vstage3,mpiio_use,isbinary = PETSC_FALSE;
-#if defined(PETSC_HAVE_HDF5)
-  PetscBool         ishdf5 = PETSC_FALSE;
-#endif
-#if defined(PETSC_HAVE_ADIOS)
-  PetscBool         isadios = PETSC_FALSE;
-#endif
-  PetscScalar const *values;
-#if defined(PETSC_USE_LOG)
-  PetscLogEvent  VECTOR_GENERATE,VECTOR_READ;
-#endif
+  PetscViewer    fd;
+  char           file[PETSC_MAX_PATH_LEN]="";    // input file name
+  PetscBool      hdf5=PETSC_FALSE;
 
   ierr = PetscInitialize(&argc,&argv,(char*)0,help);if (ierr) return ierr;
-  mpiio_use = vstage2 = vstage3 = PETSC_FALSE;
-  PetscOptionsGetBool(NULL,NULL,"-binary",&isbinary,NULL);
-#if defined(PETSC_HAVE_HDF5)
-  PetscOptionsGetBool(NULL,NULL,"-hdf5",&ishdf5,NULL);
-#endif
-#if defined(PETSC_HAVE_ADIOS)
-  PetscOptionsGetBool(NULL,NULL,"-adios",&isadios,NULL);
-#endif
-  PetscOptionsGetBool(NULL,NULL,"-mpiio",&mpiio_use,NULL);
-  PetscOptionsGetBool(NULL,NULL,"-sizes_set",&vstage2,NULL);
-  PetscOptionsGetBool(NULL,NULL,"-type_set",&vstage3,NULL);
-
   ierr = MPI_Comm_rank(PETSC_COMM_WORLD,&rank);CHKERRQ(ierr);
-  MPI_Comm_size(PETSC_COMM_WORLD,&size);
+  ierr = MPI_Comm_size(PETSC_COMM_WORLD,&size);CHKERRQ(ierr);
+  /*
+    Determine reading the boundary data from the boundata.h5
+    or randomly setting the boundary data according the dimension n.
+    */
+  ierr = PetscOptionsGetString(NULL,NULL,"-f",file,sizeof(file),NULL);CHKERRQ(ierr);
+  /*
+    Decide whether to use the HDF5 reader.
+    */
+  ierr = PetscOptionsGetBool(NULL,NULL,"-hdf5",&hdf5,NULL);CHKERRQ(ierr);
+
+  ierr = PetscPreLoadBegin(PETSC_FALSE,"Load system");CHKERRQ(ierr);
+  /*
+    Open hdf file.  Note that we use FILE_MODE_READ to indicate
+    reading from this file. This code refers to:
+    https://petsc.org/release/src/ksp/ksp/tutorials/ex27.c.html
+    */
+  if (hdf5) {
+#if defined(PETSC_HAVE_HDF5)
+    PetscViewerHDF5Open(PETSC_COMM_WORLD,file,FILE_MODE_READ,&fd);
+    PetscViewerPushFormat(fd,PETSC_VIEWER_HDF5_MAT);
+#else
+    SETERRQ(PETSC_COMM_WORLD,PETSC_ERR_SUP,"PETSc must be configured with HDF5 to use this feature");
+#endif
+  } else {
+    PetscViewerBinaryOpen(PETSC_COMM_WORLD,file,FILE_MODE_READ,&fd);
+  }
+
+
+  ierr = PetscViewerHDF5Open(PETSC_COMM_WORLD, "boundata.h5", FILE_MODE_WRITE, &viewer);CHKERRQ(ierr);
+  ierr = VecCreate(PETSC_COMM_WORLD,&g_b);CHKERRQ(ierr);
+  ierr = VecSetSizes(g_b,PETSC_DECIDE,n);CHKERRQ(ierr);
+  ierr = VecSetFromOptions(g_b);CHKERRQ(ierr);//Still need this?
+
+
+
+
   ierr = PetscOptionsGetInt(NULL,NULL,"-n",&n,NULL);CHKERRQ(ierr);
+
 
   nn = (n+1)*(n+1); //size of u
 
