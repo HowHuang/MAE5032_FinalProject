@@ -20,7 +20,7 @@ $$
 $$
 **In explicit format**, the relationship can be decribed by the following.
 $$
-\dfrac{\rho c \Delta x \Delta y}{\Delta t}(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} +  \dfrac{u_{l,m}^{t}-u_{l-1,m}^{t}}{\delta x_{l-1}})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} + \dfrac{u_{l,m}^{t}-u_{l,m-1}^{t}}{\delta y_{m+1}})\Delta x\\
+\dfrac{\rho c \Delta x \Delta y}{\Delta t}(u_{l,m}^{t+1}-u_{l,m}^{t}) &= \kappa(\dfrac{u_{l+1,m}^{t}-u_{l,m}^{t}}{\delta x_{l+1}} -  \dfrac{u_{l,m}^{t}-u_{l-1,m}^{t}}{\delta x_{l-1}})\Delta y + \kappa(\dfrac{u_{l,m+1}^{t}-u_{l,m}^{t}}{\delta y_{m+1}} - \dfrac{u_{l,m}^{t}-u_{l,m-1}^{t}}{\delta y_{m+1}})\Delta x\\
 $$
 $$
 a_{l,m}^{t+1} u_{l,m}^{t+1} = a_{l+1,m}^{t}u_{l+1,m}^{t} + a_{l-1,m}^{t}u_{l-1,m}^{t} + a_{l,m+1}^{t}u_{l,m+1}^{t} + a_{l,m-1}^{t}u_{l,m-1}^{t} + a_{l,m}^{t}u_{l,m}^{t}
