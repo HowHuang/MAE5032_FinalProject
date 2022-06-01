@@ -50,10 +50,10 @@ $$
 where
 $$
 \begin{aligned}
-a_{l+1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}}\\
-a_{l-1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l-1}}\\
-a_{l,m+1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}}\\
-a_{l,m-1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m-1}}\\
+a_{l+1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l+1}} = \dfrac{\kappa\Delta y}{\Delta x}\\
+a_{l-1,m}^{t+1} &= \dfrac{\kappa\Delta y}{\delta x_{l-1}} = \dfrac{\kappa\Delta y}{\Delta x}\\
+a_{l,m+1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m+1}} = \dfrac{\kappa\Delta x}{\Delta y}\\
+a_{l,m-1}^{t+1} &= \dfrac{\kappa\Delta x}{\delta y_{m-1}} = \dfrac{\kappa\Delta x}{\Delta y}\\
 a_{l,m}^{t} &= \dfrac{\rho c \Delta x \Delta y}{\Delta t}\\
 a_{l,m}^{t+1} &= a_{l+1,m}^{t+1} + a_{l-1,m}^{t+1} + a_{l,m+1}^{t+1} + a_{l,m-1}^{t+1} +a_{l,m}^{t}\\
 \end{aligned}
@@ -90,19 +90,19 @@ a_{l,m}^{t+1}u_{l,m}^{t+1} &= a_{l+1,m}^{t+1}u_{l+1,m}^{t+1} + a_{l-1,m}^{t+1}u_
 \end{aligned}
 $$
 
-##### (a) If prescribed $u=g$ for a boundary node
+##### (a) If prescribed $u=g$ for the boundary nodes in $\Omega$
 
 $h_{l+1,m}=h_{l-1,m}=h_{l,m+1}=h_{l,m-1}=0$;
 
-when $l+1=1$, $u_{l+1,m}=g$  and $a_{l+1,m} = \dfrac{\kappa\Delta y}{\delta x_{l+1}} = \dfrac{\kappa\Delta y}{\Delta x/2}$;
+when $l+\Delta x=1$, $u_{l+1,m}=g$;
 
-when $l-1=0$, $u_{l-1,m}=g$ and $a_{l-1,m} = \dfrac{\kappa\Delta y}{\delta x_{l-1}} = \dfrac{\kappa\Delta y}{\Delta x/2}$;
+when $l-\Delta x=0$, $u_{l-1,m}=g$;
 
-when $m+1=0$, $u_{l,m+1}=g$ and  $a_{l,m+1} = \dfrac{\kappa\Delta x}{\delta y_{m+1}} = \dfrac{\kappa\Delta x}{\Delta y/2}$;
+when $m+\Delta y=0$, $u_{l,m+1}=g$;
 
-when $m-1=0$, $u_{l,m-1}=g$ and  $a_{l,m-1} = \dfrac{\kappa\Delta x}{\delta y_{m-1}} = \dfrac{\kappa\Delta x}{\Delta y/2}$.
+when $m-\Delta y=0$, $u_{l,m-1}=g$.
 
-##### (b) If prescribed $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$ for a boundary node
+##### (b) If prescribed $\kappa\dfrac{\partial u}{\partial x}n_x+\kappa\dfrac{\partial u}{\partial y}n_y=h$ for the boundary nodes in $\Omega$
 
 when $l+1=1$ , $h_{l+1,m}=-h$ and $a_{l+1,m}=h_{l-1,m}=h_{l,m+1}=h_{l,m-1}=0$; 
 
@@ -110,7 +110,7 @@ when $l-1=0$ , $h_{l-1,m}=h$ and $a_{l-1,m}=h_{l+1,m}=h_{l,m+1}=h_{l,m-1}=0$;
 
 when $m+1=1$,  $h_{l,m+1}=-h$ and $a_{l,m+1}=h_{l+1,m}=h_{l-1,m}=h_{l,m-1}=0$; 
 
-when $m-1=0$,  $h_{l,m-1}=h$ and $a_{l,m-1}=h_{l+1,m}=h_{l-1,m}=h_{l,m+1}=0$; 
+when $m-1=0$,  $h_{l,m-1}=h$ and $a_{l,m-1}=h_{l+1,m}=h_{l-1,m}=h_{l,m+1}=0$.
 
 
 
