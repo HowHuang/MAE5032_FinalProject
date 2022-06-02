@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "assert.h": "c",
-        "hdf5.h": "c"
-    }
-}
