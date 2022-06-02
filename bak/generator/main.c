@@ -48,7 +48,7 @@ int main(int argc,char **argv)
     {
         iglobal=i+low;
         choose = rand()%100;       //根据0~100的随机数是否大于50来确定赋值给u还是h
-        rvalue = rand()%100/100.0; //赋的值为0~1
+        rvalue = (rand()%98+1)/100.0; //赋的值为0.01~0.99
         if(choose>=thres)  
         {
             VecSetValues(g_b,1,&iglobal,&rvalue,INSERT_VALUES);
@@ -66,7 +66,7 @@ int main(int argc,char **argv)
     {
         iglobal=i+low;
         choose = rand()%100;       //根据0~100的随机数是否大于50来确定赋值给u还是h
-        rvalue = rand()%100/100.0; //赋的值为0~1
+        rvalue = (rand()%98+1)/100.0; //赋的值为0.01~0.99
         if(choose>=thres)  
         {
             VecSetValues(g_t,1,&iglobal,&rvalue,INSERT_VALUES);
@@ -83,7 +83,7 @@ int main(int argc,char **argv)
     {
         iglobal=i+low;
         choose = rand()%100;       //根据0~100的随机数是否大于50来确定赋值给u还是h
-        rvalue = rand()%100/100.0; //赋的值为0~1
+        rvalue = (rand()%98+1)/100.0; //赋的值为0.01~0.99
         if(choose>=thres)  
         {
             VecSetValues(g_l,1,&iglobal,&rvalue,INSERT_VALUES);
@@ -100,7 +100,7 @@ int main(int argc,char **argv)
     {
         iglobal=i+low;
         choose = rand()%100;       //根据0~100的随机数是否大于50来确定赋值给u还是h
-        rvalue = rand()%100/100.0; //赋的值为0~1
+        rvalue = (rand()%98+1)/100.0; //赋的值为0.01~0.99
         if(choose>=thres)  
         {
             VecSetValues(g_r,1,&iglobal,&rvalue,INSERT_VALUES);
