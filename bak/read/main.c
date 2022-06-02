@@ -75,7 +75,7 @@ int main(int argc,char **argv)
     PetscViewerHDF5PopGroup(viewer);
     PetscViewerDestroy(&viewer);
     VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
-
+    VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
     // VecDestroy(&g_b);VecDestroy(&g_t);VecDestroy(&g_r);VecDestroy(&g_l);
     // VecDestroy(&h_b);VecDestroy(&h_t);VecDestroy(&h_r);VecDestroy(&h_l);
     // VecDestroy(&gg);
