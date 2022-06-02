@@ -62,7 +62,7 @@ int main(int argc,char **argv)
 
   ierr = PetscInitialize(&argc,&argv,(char*)0,help);if (ierr) return ierr;
   ierr = MPI_Comm_rank(PETSC_COMM_WORLD,&rank);CHKERRQ(ierr);
-  ierr = MPI_Comm_size(PETSC_COMM_WORLD,&size);CHKERRQ(ierr); //size需要吗？
+  ierr = MPI_Comm_size(PETSC_COMM_WORLD,&size);CHKERRQ(ierr);
   ierr = PetscOptionsGetInt(NULL,NULL,"-n",&n,NULL);CHKERRQ(ierr);
   /*
     Determine reading the boundary data from the boundata.h5
@@ -103,7 +103,7 @@ int main(int argc,char **argv)
     ierr = PetscRandomCreate(PETSC_COMM_WORLD, &rand);CHKERRQ(ierr);
     ierr = PetscRandomSetFromOptions(rand);CHKERRQ(ierr);
     ierr = VecCreate(PETSC_COMM_WORLD, &g_b);CHKERRQ(ierr);
-    ierr = VecSetSizes(x1, PETSC_DECIDE, n);
+    ierr = VecSetSizes(g_b, PETSC_DECIDE, n);
     ierr = VecSetFromOptions(g_b);CHKERRQ(ierr);
     ierr = VecSetRandom(g_b, rand);
     ierr = VecDuplicate(g_b, &g_t);CHKERRQ(ierr);
@@ -126,7 +126,9 @@ int main(int argc,char **argv)
     ierr = VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
     ierr = VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
     ierr = VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-  } else if {
+  } 
+  else
+  {
     ierr = VecCreate(PETSC_COMM_WORLD,&g_b);CHKERRQ(ierr);
     ierr = VecSetFromOptions(g_b);CHKERRQ(ierr);
     //bottom and check the group name
