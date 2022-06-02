@@ -24,32 +24,6 @@ int main(int argc,char **argv)
     if (n_timesteps < 0) SETERRQ(comm, PETSC_ERR_USER_INPUT, \
                             "-n_timesteps must be nonnegative");
 
-    // // init matrix A
-    // ierr = PetscMalloc2(n,&dnnz,n,&onnz);CHKERRQ(ierr);
-    // for (i=0; i<n; i++)
-    // {
-    //     dnnz[i] = 1;
-    //     onnz[i] = 1;
-    // }
-    // ierr = MatCreateAIJ(comm,n,n,PETSC_DETERMINE,PETSC_DETERMINE,PETSC_DECIDE,dnnz,PETSC_DECIDE,onnz,&A);CHKERRQ(ierr);
-    // ierr = MatSetFromOptions(A);CHKERRQ(ierr);
-    // ierr = MatSetUp(A);CHKERRQ(ierr);
-    // ierr = PetscFree2(dnnz,onnz);CHKERRQ(ierr);
-
-    // ierr = MatSetOption(A,MAT_NEW_NONZERO_ALLOCATION_ERR,PETSC_TRUE);CHKERRQ(ierr);
-    // ierr = MatGetOwnershipRange(A,&rstart,&rend);CHKERRQ(ierr);
-    // ierr = MatGetSize(A,&M,&N);CHKERRQ(ierr);
-    // ierr = PetscPrintf(comm, "Matrix size is %d by %d \n", M, N);
-    // ierr = PetscPrintf(PETSC_COMM_SELF, "rank [%d] rstart = %d , rend = %d \n", rank, rstart, rend);
-    // for (i=rstart; i<rend; i++)
-    // {
-    //     ierr = MatSetValue(A,i,i,2.0,INSERT_VALUES);CHKERRQ(ierr);
-    // }
-    // ierr = MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);CHKERRQ(ierr);
-    // ierr = MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY);CHKERRQ(ierr);
-    // ierr = MatView(A,PETSC_VIEWER_STDOUT_WORLD);
-    // // end of init matrix A
-
     PetscRandomCreate(comm,&rand);
     PetscRandomSetFromOptions(rand);
 
@@ -67,10 +41,6 @@ int main(int argc,char **argv)
     // 继续写入一个vec作为该目录下的另一个dataset
     PetscObjectSetName((PetscObject)x1,"x1.3");
     VecView(x1,viewer);
-    // //继续写入一个mat作为该目录下的另一个dataset
-    // PetscObjectSetName((PetscObject)A,"Matrix-M");
-    // MatView(A,viewer);
-
 
     // 在一个h5文件中的一个group写入一个vec
     PetscViewerHDF5PushGroup(viewer,"/test1");
