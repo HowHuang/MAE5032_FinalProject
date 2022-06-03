@@ -12,11 +12,10 @@ int main(int argc,char **argv)
     Vec            g_b,g_t,g_l,g_r;
     Vec            h_b,h_t,h_l,h_r;
     Vec            u_0;
-    PetscInt       low,high,ldim,iglobal;
+    PetscInt       low,high,ldim;
     PetscViewer    viewer;
-    PetscRandom    random;
     PetscMPIInt    rank;
-    PetscInt       i, n = 10;
+    PetscInt       n = 10;
     MPI_Comm       comm;
     PetscErrorCode ierr;
     PetscInt       bdry=1;
@@ -94,11 +93,6 @@ int main(int argc,char **argv)
         VecSet(g_l,zero);
         VecSet(g_r,zero);        
     }
-
-    VecAssemblyBegin(g_b);
-    VecAssemblyEnd(g_b);
-    VecAssemblyBegin(g_t);
-    VecAssemblyEnd(g_t);
 
     PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_WRITE,&viewer);
     PetscViewerHDF5PushGroup(viewer,"/boundary");
