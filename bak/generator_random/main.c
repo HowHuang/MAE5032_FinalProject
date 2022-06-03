@@ -1,36 +1,39 @@
+static char help[] = "Generate the input data. \n \
+            -bdry 1: all of boundary are given u\n\
+            -bdry 2: all of boundary are given h\n\
+            -bdry 3: all of boundary are given u or h.\n";
+
 #include <petsc.h>
 
 int main(int argc,char **argv)
 {
     Vec            g_b,g_t,g_l,g_r;
     Vec            h_b,h_t,h_l,h_r;
-    Vec            gg;
+    Vec            u_0;
     PetscInt       low,high,ldim,iglobal;
     PetscViewer    viewer;
     PetscRandom    random;
     PetscMPIInt    rank;
-    PetscInt       i, n = 10, n_timesteps = 5;
+    PetscInt       i, n = 10;
     MPI_Comm       comm;
     PetscErrorCode ierr;
-    PetscInt       block=1;
+    PetscInt       bdry=1;
     PetscInt       choose,thres=50;
-    PetscScalar    rvalue,zero=0;
-    PetscChar      fname[PETSC_MAX_PATH_LEN]="test.hdf5";
+    PetscScalar    rand_u,rand_h,zero=0;
+    PetscChar      fname[PETSC_MAX_PATH_LEN]="default.hdf5";
 
-    ierr = PetscInitialize(&argc, &argv, (char*) 0, NULL);if (ierr) return ierr;
+    ierr = PetscInitialize(&argc, &argv, (char*) 0, help);if (ierr) return ierr;
     comm = PETSC_COMM_WORLD;
     ierr = MPI_Comm_rank(comm, &rank);CHKERRMPI(ierr);
     ierr = PetscOptionsGetInt(NULL,NULL, "-n", &n, NULL);
-    ierr = PetscOptionsGetInt(NULL,NULL, "-n_timesteps", &n_timesteps, NULL);
-    if (n_timesteps < 0) SETERRQ(comm, PETSC_ERR_USER_INPUT, "-n_timesteps must be nonnegative");
-    ierr = PetscOptionsGetInt(NULL,NULL, "-block", &block, NULL);
+    PetscOptionsGetInt(NULL,NULL,"-bdry",&bdry,NULL);
     PetscOptionsGetString(NULL,NULL,"-fname",fname,sizeof(fname),NULL);
 
     PetscRandomCreate(comm,&random);
     PetscRandomSetFromOptions(random);
 
     VecCreate(comm,&g_b);
-    VecSetSizes(g_b,PETSC_DECIDE,n+1);
+    VecSetSizes(g_b,PETSC_DECIDE,n);
     VecSetFromOptions(g_b);
     VecDuplicate(g_b,&h_b);
 
@@ -43,23 +46,28 @@ int main(int argc,char **argv)
 
     VecGetOwnershipRange(g_b,&low,&high);
     VecGetLocalSize(g_b,&ldim); //获得向量在各进程的部分索引
-
     for (i=0;i<ldim;i++)
     {
+        rand_u = rand()%273;        //u赋值为0~273
+        rand_h = rand()%1000/100.0; //h赋值为0~10
         iglobal=i+low;
-        choose = rand()%100;       //根据0~100的随机数是否大于50来确定赋值给u还是h
-        rvalue = (rand()%98+1)/100.0; //赋的值为0.01~0.99
+        if(bdry==1)
+        {
+            VecSetValues(g_b,1,&iglobal,&rand_u,INSERT_VALUES);
+        }
+        choose = rand()%100;        //根据0~100的随机数是否大于50来确定赋值给u还是h
+        rand_u = rand()%273;        //u赋值为0~273
+        rand_h = rand()%1000/100.0; //h赋值为0~10
         if(choose>=thres)  
         {
-            VecSetValues(g_b,1,&iglobal,&rvalue,INSERT_VALUES);
+            VecSetValues(g_b,1,&iglobal,&rand_u,INSERT_VALUES);
             VecSetValues(h_b,1,&iglobal,&zero,INSERT_VALUES);
         }
         else
         {
             VecSetValues(g_b,1,&iglobal,&zero,INSERT_VALUES);
-            VecSetValues(h_b,1,&iglobal,&rvalue,INSERT_VALUES);
+            VecSetValues(h_b,1,&iglobal,&rand_h,INSERT_VALUES);
         }
-
     }
 
     for (i=0;i<ldim;i++)
