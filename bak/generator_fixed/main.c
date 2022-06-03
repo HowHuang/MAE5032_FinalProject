@@ -38,6 +38,11 @@ int main(int argc,char **argv)
     PetscOptionsGetScalar(NULL,NULL,"-hv",&h_value,NULL);
     PetscOptionsGetScalar(NULL,NULL,"-u0",&u0_value,NULL);
     PetscOptionsGetString(NULL,NULL,"-fname",fname,sizeof(fname),NULL);
+    if(g_value<0||u0_value<0)
+    {
+        PetscPrintf(comm,"Temperature(K) can not be negative!\n");
+        return -1;
+    }
 
     if(bdry==1)
     {
