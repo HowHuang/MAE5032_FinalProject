@@ -6,7 +6,8 @@ int main(int argc,char **argv)
     Vec             h_b,h_t,h_l,h_r;    //DIM = n x 1
     Vec             u_0,b,u_t,u_tplus;  //DIM = (n*n) x 1
     Mat             A;                  //DIM = (n*n) x (n*n)
-    PetscInt        low,high,ldim,iglobal,lsize;
+    PetscInt        low,high,ldim,lsize;
+    PetscInt        ilocal,iglobal;
     PetscViewer     viewerI,viewerO;    //I for input, O for output
     PetscMPIInt     rank,size;
     PetscInt        i, n = 10, N;
@@ -15,7 +16,10 @@ int main(int argc,char **argv)
     PetscScalar     zero=0.0,one=1.0;
     PetscChar       ifname[PETSC_MAX_PATH_LEN]="g_fixed.hdf5";
     PetscChar       ofname[PETSC_MAX_PATH_LEN]="default_Out.hdf5";
-
+    PetscInt        col[5];
+    PetscScalar     value[5];
+    PetscScalar     W,N,E,S,P;
+    PetscScalar     dt,dl,rho,c,k;
 
     ierr = PetscInitialize(&argc, &argv, (char*) 0, NULL);if (ierr) return ierr;
     comm = PETSC_COMM_WORLD;
@@ -25,6 +29,18 @@ int main(int argc,char **argv)
     ierr = PetscOptionsGetInt(NULL,NULL, "-n", &n, NULL);
     PetscOptionsGetString(NULL,NULL,"-ifname",ifname,sizeof(ifname),NULL);
     PetscOptionsGetString(NULL,NULL,"-ofname",ofname,sizeof(ofname),NULL);
+
+    PetscOptionsGetInt(NULL,NULL,"-dt",  &dt,  NULL);
+    PetscOptionsGetInt(NULL,NULL,"-dl",  &dl,  NULL);
+    PetscOptionsGetInt(NULL,NULL,"-rho", &rho, NULL);
+    PetscOptionsGetInt(NULL,NULL,"-c",   &c,   NULL);
+    PetscOptionsGetInt(NULL,NULL,"-k",   &k,   NULL);
+    
+    W=(k*dt)/(rho*c*PetscPowScalar(dl,2));
+    N=(k*dt)/(rho*c*PetscPowScalar(dl,2));
+    E=(k*dt)/(rho*c*PetscPowScalar(dl,2));
+    S=(k*dt)/(rho*c*PetscPowScalar(dl,2));
+    P=1-(4*k*dt)/(rho*c*PetscPowScalar(dl,2));
 
     // ~ Load data from specified hdf5 file.
     PetscViewerHDF5Open(PETSC_COMM_WORLD,ifname,FILE_MODE_READ,&viewerI);
@@ -71,27 +87,63 @@ int main(int argc,char **argv)
     PetscViewerHDF5PopGroup(viewerI);
 
     PetscViewerDestroy(&viewerI);
+    // ~ Load finished
 
+    // //~ Print vecs
+    // VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
 
-    VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
+    // VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
 
-    VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
+    // ~ Generate sparse matrix A (coefficient matrix)
+    // ~ A is a pentadiagonal matrix
+    MatCreate(comm,&A);
+    MatSetSizes(A,n,n,n*n,n*n);
+    MatSetFromOptions(A);
+    MatSetUp(A);
+    
+    // ~ Generate the vector b for Au_t+b=u_tplus
+    VecCreate(comm,&b);
+    VecSetSizes(b,n,n*n);
+    VecSetFromOptions(b);
+    VecSetUp(b);
+
+    // ~ Assign values to A and b
+    if(rank==0)
+    {
+        for(i=rank*n;i<rank*(n+1);++i)
+        {
+            if(i==0)
+            {
+                col[0]=0;col[1]=1,col[2]=n;
+                value[0]=
+            }
+        }
+    }
+    else(rank==size-1)
+    {
+
+    }
+    else
+    {
+
+    }
+
 
     VecDestroy(&g_b);VecDestroy(&g_t);VecDestroy(&g_r);VecDestroy(&g_l);
     VecDestroy(&h_b);VecDestroy(&h_t);VecDestroy(&h_r);VecDestroy(&h_l);
     VecDestroy(&u_0);
     PetscViewerDestroy(&viewerI);
-    // ~ Load finished
+   
 
 
     PetscFinalize();
