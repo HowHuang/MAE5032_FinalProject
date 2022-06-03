@@ -124,20 +124,73 @@ int main(int argc,char **argv)
         {
             if(i==0)
             {
-                col[0]=0;col[1]=1,col[2]=n;
-                value[0]=
+                col[0]=0;col[1]=1;col[2]=n;
+                value[0]=P;value[1]=E;value[2]=S;
+                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
+            }
+            else if(i==n-1)
+            {
+                col[0]=n-2;col[1]=n-1;col[2]=2*n-1;
+                value[0]=W;value[1]=P;value[2]=S;
+                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
+            }
+            else
+            {
+                col[0]=i-1;col[1]=i;col[2]=i+1;col[3]=i+n;
+                value[0]=W;value[1]=P;value[2]=E;value[3]=S;
+                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
             }
         }
     }
-    else(rank==size-1)
+    else if (rank==size-1)
     {
-
+        for(i=rank*n;i<rank*(n+1);i++)
+        {
+            if(i==rank*n)
+            {
+                col[0]=i-n;col[1]=i;col[2]=i+1;
+                value[0]=N;value[1]=P;value[2]=E;
+                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
+            }
+            else if(i==rank*(n+1)-1)
+            {
+                col[0]=i-n;col[1]=i-1;col[2]=i;
+                value[0]=N;value[1]=W;value[2]=P;
+                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
+            }
+            else
+            {
+                col[0]=i-n;col[1]=i-1;col[2]=i;col[3]=i+1;
+                value[0]=N;value[1]=W;value[2]=P;value[3]=E;
+                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
+            }
+        }
     }
     else
     {
-
+        for(i=rank*n;i<rank*(n+1);i++)
+        {
+            if(i==rank*n)
+            {
+                col[0]=i-n;col[1]=i;col[2]=i+1;col[3]=i+n;
+                value[0]=N;value[1]=P;value[2]=E;value[3]=S;
+                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
+            }
+            else if(i==rank*(n+1)-1)
+            {
+                col[0]=i-n;col[1]=i-1;col[2]=i;col[3]=i+n;
+                value[0]=N;value[1]=W;value[2]=P;value[3]=S;
+                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
+            }
+            else
+            {
+                col[0]=i-n;col[1]=i-1;col[2]=i;col[3]=i+1;col[4]=i+n;
+                value[0]=N;value[1]=W;value[2]=P;value[3]=E;value[4]=S;
+                MatSetValues(A,1,&i,5,col,value,INSERT_VALUES);
+            }            
+        }
     }
-
+    MatView(A,PETSC_VIEWER_STDOUT_WORLD);
 
     VecDestroy(&g_b);VecDestroy(&g_t);VecDestroy(&g_r);VecDestroy(&g_l);
     VecDestroy(&h_b);VecDestroy(&h_t);VecDestroy(&h_r);VecDestroy(&h_l);
