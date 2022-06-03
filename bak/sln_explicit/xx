@@ -24,7 +24,7 @@ int main(int *argc,char ***argv)
   // https://petsc.org/release/src/vec/vec/tutorials/ex10.c.html 
 
   PetscViewer    viewer;
-  PetscChar      file[PETSC_MAX_PATH_LEN]="";    // input file name
+  PetscChar      file[PETSC_MAX_PATH_LEN]="g_fixed.hdf5";    // input file name
   PetscChar      check_groupName;
   PetscBool      has;
 
