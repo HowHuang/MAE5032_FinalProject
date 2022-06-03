@@ -10,7 +10,7 @@ int main(int argc,char **argv)
     PetscInt        ilocal,iglobal;
     PetscViewer     viewerI,viewerO;    //I for input, O for output
     PetscMPIInt     rank,size;
-    PetscInt        i, n = 10, N;
+    PetscInt        i, n = 10;
     MPI_Comm        comm;
     PetscErrorCode  ierr;
     PetscScalar     zero=0.0,one=1.0;
@@ -27,14 +27,14 @@ int main(int argc,char **argv)
     ierr = MPI_Comm_size(comm, &size);CHKERRMPI(ierr);
 
     ierr = PetscOptionsGetInt(NULL,NULL, "-n", &n, NULL);
-    PetscOptionsGetString(NULL,NULL,"-ifname",ifname,sizeof(ifname),NULL);
-    PetscOptionsGetString(NULL,NULL,"-ofname",ofname,sizeof(ofname),NULL);
+    ierr = PetscOptionsGetString(NULL,NULL,"-ifname",ifname,sizeof(ifname),NULL);
+    ierr = PetscOptionsGetString(NULL,NULL,"-ofname",ofname,sizeof(ofname),NULL);
 
-    PetscOptionsGetInt(NULL,NULL,"-dt",  &dt,  NULL);
-    PetscOptionsGetInt(NULL,NULL,"-dl",  &dl,  NULL);
-    PetscOptionsGetInt(NULL,NULL,"-rho", &rho, NULL);
-    PetscOptionsGetInt(NULL,NULL,"-c",   &c,   NULL);
-    PetscOptionsGetInt(NULL,NULL,"-k",   &k,   NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-dt",  &dt,  NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-dl",  &dl,  NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-rho", &rho, NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-c",   &c,   NULL); 
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-k",   &k,   NULL);
     
     W=(k*dt)/(rho*c*PetscPowScalar(dl,2));
     N=(k*dt)/(rho*c*PetscPowScalar(dl,2));
@@ -90,19 +90,19 @@ int main(int argc,char **argv)
     // ~ Load finished
 
     // //~ Print vecs
-    // VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
+    VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
 
-    // VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
 
-    // VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
 
-    // VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
+    VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
 
-    // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
+    VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
 
     // ~ Generate sparse matrix A (coefficient matrix)
     // ~ A is a pentadiagonal matrix
@@ -190,6 +190,8 @@ int main(int argc,char **argv)
             }            
         }
     }
+    MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
+    MatAssemblyEnd(A,MAT_FILE_CLASSID);  
     MatView(A,PETSC_VIEWER_STDOUT_WORLD);
 
     VecDestroy(&g_b);VecDestroy(&g_t);VecDestroy(&g_r);VecDestroy(&g_l);
