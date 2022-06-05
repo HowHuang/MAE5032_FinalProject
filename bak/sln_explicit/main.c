@@ -10,7 +10,7 @@ int main(int argc,char **argv)
     PetscInt        ilocal,iglobal;
     PetscViewer     viewerI,viewerO;    //I for input, O for output
     PetscMPIInt     rank,size;
-    PetscInt        i, n = 10;
+    PetscInt        i, j, r, n = 10;
     MPI_Comm        comm;
     PetscErrorCode  ierr;
     PetscScalar     zero=0.0,one=1.0;
@@ -41,6 +41,8 @@ int main(int argc,char **argv)
     E=(k*dt)/(rho*c*PetscPowScalar(dl,2));
     S=(k*dt)/(rho*c*PetscPowScalar(dl,2));
     P=1-(4*k*dt)/(rho*c*PetscPowScalar(dl,2));
+    PetscPrintf(comm,"dt:%g, dl: %g, rho:%g, c:%g, k:%d\n",dt,dl,rho,k,c);
+    PetscPrintf(comm,"W:%g,N:%g,E:%g,S:%g,P:%g\n",W,N,E,S,P);
 
     // ~ Load data from specified hdf5 file.
     PetscViewerHDF5Open(PETSC_COMM_WORLD,ifname,FILE_MODE_READ,&viewerI);
@@ -90,24 +92,24 @@ int main(int argc,char **argv)
     // ~ Load finished
 
     // //~ Print vecs
-    VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
+    // VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
 
-    VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
+    // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
 
     // ~ Generate sparse matrix A (coefficient matrix)
     // ~ A is a pentadiagonal matrix
     MatCreate(comm,&A);
-    MatSetSizes(A,n,n,n*n,n*n);
+    MatSetSizes(A,PETSC_DECIDE,n*n,n*n,n*n);
     MatSetFromOptions(A);
     MatSetUp(A);
     
@@ -118,80 +120,85 @@ int main(int argc,char **argv)
     VecSetUp(b);
 
     // ~ Assign values to A and b
+
     if(rank==0)
     {
-        for(i=rank*n;i<rank*(n+1);++i)
+        for(i=0;i<n;i++)
         {
-            if(i==0)
+            for(j=0;j<n;j++)
             {
-                col[0]=0;col[1]=1;col[2]=n;
-                value[0]=P;value[1]=E;value[2]=S;
-                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
-            }
-            else if(i==n-1)
-            {
-                col[0]=n-2;col[1]=n-1;col[2]=2*n-1;
-                value[0]=W;value[1]=P;value[2]=S;
-                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
-            }
-            else
-            {
-                col[0]=i-1;col[1]=i;col[2]=i+1;col[3]=i+n;
-                value[0]=W;value[1]=P;value[2]=E;value[3]=S;
-                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
+                r=i*n+j;    //global row index of A
+                if(i==0)
+                {
+                    if(j==0)
+                    {
+                        col[0]=r;col[1]=r+1;col[2]=r+n;
+                        value[0]=P;value[1]=E;value[2]=S;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
+                    }
+                    else if(j==n-1)
+                    {
+                        col[0]=r-1;col[1]=r;col[2]=r+n;
+                        value[0]=W;value[1]=P;value[2]=S;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
+                    }
+                    else
+                    {
+                        col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
+                    }
+                }
+                else if(i==n-1)
+                {
+                    if(j==0)
+                    {
+                        col[0]=r-n;col[1]=r;col[2]=r+1;
+                        value[0]=N;value[1]=P;value[2]=E;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);                        
+                    }
+                    else if(j==n-1)
+                    {
+                        col[0]=r-n;col[1]=r-1;col[2]=r;
+                        value[0]=N;value[1]=W;value[2]=P;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);                        
+                    }
+                    else
+                    {
+                        col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
+                        value[0]=N;value[1]=W;value[2]=P;value[3]=E;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);                        
+                    }
+                }
+                else
+                {
+                    if(j==0)
+                    {
+                        col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
+                        value[0]=N;value[1]=P;value[2]=E;value[3]=S;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
+                    }
+                    else if(j==n-1)
+                    {
+                        col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
+                        value[0]=N;value[1]=W;value[2]=P;value[3]=S;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
+                    }
+                    else
+                    {
+                        col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
+                        value[0]=N;value[1]=W;value[2]=P;value[3]=E;value[4]=S;
+                        MatSetValues(A,1,&r,5,col,value,INSERT_VALUES);
+                    }
+                }
             }
         }
     }
-    else if (rank==size-1)
-    {
-        for(i=rank*n;i<rank*(n+1);i++)
-        {
-            if(i==rank*n)
-            {
-                col[0]=i-n;col[1]=i;col[2]=i+1;
-                value[0]=N;value[1]=P;value[2]=E;
-                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
-            }
-            else if(i==rank*(n+1)-1)
-            {
-                col[0]=i-n;col[1]=i-1;col[2]=i;
-                value[0]=N;value[1]=W;value[2]=P;
-                MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
-            }
-            else
-            {
-                col[0]=i-n;col[1]=i-1;col[2]=i;col[3]=i+1;
-                value[0]=N;value[1]=W;value[2]=P;value[3]=E;
-                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
-            }
-        }
-    }
-    else
-    {
-        for(i=rank*n;i<rank*(n+1);i++)
-        {
-            if(i==rank*n)
-            {
-                col[0]=i-n;col[1]=i;col[2]=i+1;col[3]=i+n;
-                value[0]=N;value[1]=P;value[2]=E;value[3]=S;
-                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
-            }
-            else if(i==rank*(n+1)-1)
-            {
-                col[0]=i-n;col[1]=i-1;col[2]=i;col[3]=i+n;
-                value[0]=N;value[1]=W;value[2]=P;value[3]=S;
-                MatSetValues(A,1,&i,4,col,value,INSERT_VALUES);
-            }
-            else
-            {
-                col[0]=i-n;col[1]=i-1;col[2]=i;col[3]=i+1;col[4]=i+n;
-                value[0]=N;value[1]=W;value[2]=P;value[3]=E;value[4]=S;
-                MatSetValues(A,1,&i,5,col,value,INSERT_VALUES);
-            }            
-        }
-    }
+
     MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
-    MatAssemblyEnd(A,MAT_FILE_CLASSID);  
+    MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY); 
+
+    
+
     MatView(A,PETSC_VIEWER_STDOUT_WORLD);
 
     VecDestroy(&g_b);VecDestroy(&g_t);VecDestroy(&g_r);VecDestroy(&g_l);
@@ -199,8 +206,6 @@ int main(int argc,char **argv)
     VecDestroy(&u_0);
     PetscViewerDestroy(&viewerI);
    
-
-
     PetscFinalize();
     return 0;
 
