@@ -13,7 +13,7 @@ int main(int argc,char **argv)
     PetscInt        i, j, r, n = 10;
     MPI_Comm        comm;
     PetscErrorCode  ierr;
-    PetscScalar     zero=0.0,one=1.0;
+    PetscScalar     zero=0.0,one=1.0,bb;
     PetscChar       ifname[PETSC_MAX_PATH_LEN]="g_fixed.hdf5";
     PetscChar       ofname[PETSC_MAX_PATH_LEN]="default_Out.hdf5";
     PetscInt        col[5];
@@ -130,19 +130,21 @@ int main(int argc,char **argv)
                 r=i*n+j;    //global row index of A
                 if(i==0)
                 {
-                    if(j==0)
+                    if(j==0)            //! 左上角的点
                     {
                         col[0]=r;col[1]=r+1;col[2]=r+n;
                         value[0]=P;value[1]=E;value[2]=S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
+
+                        
                     }
-                    else if(j==n-1)
+                    else if(j==n-1)     //! 右上角的点
                     {
                         col[0]=r-1;col[1]=r;col[2]=r+n;
                         value[0]=W;value[1]=P;value[2]=S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
                     }
-                    else
+                    else                //! 上边界的点（除顶点外）
                     {
                         col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
@@ -150,19 +152,19 @@ int main(int argc,char **argv)
                 }
                 else if(i==n-1)
                 {
-                    if(j==0)
+                    if(j==0)            //! 左下角的点
                     {
                         col[0]=r-n;col[1]=r;col[2]=r+1;
                         value[0]=N;value[1]=P;value[2]=E;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);                        
                     }
-                    else if(j==n-1)
+                    else if(j==n-1)     //! 右下角的点
                     {
                         col[0]=r-n;col[1]=r-1;col[2]=r;
                         value[0]=N;value[1]=W;value[2]=P;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);                        
                     }
-                    else
+                    else                //! 下边界的点 （除顶点外）
                     {
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
                         value[0]=N;value[1]=W;value[2]=P;value[3]=E;
@@ -171,19 +173,19 @@ int main(int argc,char **argv)
                 }
                 else
                 {
-                    if(j==0)
+                    if(j==0)            //! 左边界的点（除顶点外）
                     {
                         col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
                         value[0]=N;value[1]=P;value[2]=E;value[3]=S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
                     }
-                    else if(j==n-1)
+                    else if(j==n-1)     //! 右边界的点（除顶点外）
                     {
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
                         value[0]=N;value[1]=W;value[2]=P;value[3]=S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
                     }
-                    else
+                    else                //! 内部点
                     {
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
                         value[0]=N;value[1]=W;value[2]=P;value[3]=E;value[4]=S;
@@ -197,7 +199,7 @@ int main(int argc,char **argv)
     MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
     MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY); 
 
-    
+
 
     MatView(A,PETSC_VIEWER_STDOUT_WORLD);
 
