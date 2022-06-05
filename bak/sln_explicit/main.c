@@ -1,5 +1,21 @@
 #include <petsc.h>
 
+typedef struct InputPara
+{
+    PetscScalar dt;     PetscScalar dl;     PetscScalar rho;
+    PetscScalar c;      PetscScalar k;      PetscScalar f;
+}InputPara;
+
+PetscScalar CalElementOfRightVec(InputPara *IP, PetscInt N1, PetscInt N2, PetscScalar U, PetscScalar H)
+{   
+    PetscScalar P1 = IP->f * IP->dt / (IP->rho * IP->c);
+    PetscScalar P2 = U * 2 * N1 * IP->k * (pow(IP->dt,2)) / (pow(IP->rho,2) * pow(IP->c,2) * (pow(IP->dl,4)));
+    PetscScalar P3 = H * N2 * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
+    
+    return P1+P2+P3;
+}
+
+
 int main(int argc,char **argv)
 {
     Vec             g_b,g_t,g_l,g_r;    //DIM = n x 1
@@ -19,7 +35,10 @@ int main(int argc,char **argv)
     PetscInt        col[5];
     PetscScalar     value[5];
     PetscScalar     W,N,E,S,P;
-    PetscScalar     dt,dl,rho,c,k;
+    PetscScalar     U, H;
+    //PetscScalar     dt,dl,rho,c,k,f;
+    
+    InputPara IP;
 
     ierr = PetscInitialize(&argc, &argv, (char*) 0, NULL);if (ierr) return ierr;
     comm = PETSC_COMM_WORLD;
@@ -30,18 +49,19 @@ int main(int argc,char **argv)
     ierr = PetscOptionsGetString(NULL,NULL,"-ifname",ifname,sizeof(ifname),NULL);
     ierr = PetscOptionsGetString(NULL,NULL,"-ofname",ofname,sizeof(ofname),NULL);
 
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-dt",  &dt,  NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-dl",  &dl,  NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-rho", &rho, NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-c",   &c,   NULL); 
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-k",   &k,   NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-dt",  &(IP.dt),  NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-dl",  &(IP.dl),  NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-rho", &(IP.rho), NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-c",   &(IP.c),   NULL); 
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-k",   &(IP.k),   NULL);
+    ierr = PetscOptionsGetScalar(NULL,NULL,"-f",   &(IP.f),   NULL);
     
-    W=(k*dt)/(rho*c*PetscPowScalar(dl,2));
-    N=(k*dt)/(rho*c*PetscPowScalar(dl,2));
-    E=(k*dt)/(rho*c*PetscPowScalar(dl,2));
-    S=(k*dt)/(rho*c*PetscPowScalar(dl,2));
-    P=1-(4*k*dt)/(rho*c*PetscPowScalar(dl,2));
-    PetscPrintf(comm,"dt:%g, dl: %g, rho:%g, c:%g, k:%d\n",dt,dl,rho,k,c);
+    W=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
+    N=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
+    E=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
+    S=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
+    P=1-(4*IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
+    PetscPrintf(comm,"dt:%g, dl: %g, rho:%g, c:%g, k:%d\n",IP.dt,IP.dl,IP.rho,IP.k,IP.c);
     PetscPrintf(comm,"W:%g,N:%g,E:%g,S:%g,P:%g\n",W,N,E,S,P);
 
     // ~ Load data from specified hdf5 file.
@@ -136,6 +156,7 @@ int main(int argc,char **argv)
                         value[0]=P;value[1]=E;value[2]=S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
 
+                        
                         
                     }
                     else if(j==n-1)     //! 右上角的点
