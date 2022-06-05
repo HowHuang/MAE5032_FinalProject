@@ -48,6 +48,8 @@ int main(int argc,char **argv)
     */
   Vec            g_b,g_t,g_l,g_r;
   Vec            h_b,h_t,h_l,h_r;
+  Vec            gh, zero_vec;
+  IS             *z_is;
 
   /*
     Method of reading the vecs refers to:
@@ -113,7 +115,20 @@ int main(int argc,char **argv)
     ierr = VecDuplicate(g_b, &h_t);CHKERRQ(ierr);
     ierr = VecDuplicate(g_b, &h_l);CHKERRQ(ierr);
     ierr = VecDuplicate(g_b, &h_r);CHKERRQ(ierr);
-    //怎么确保g和h不同时为0，也不同时不为零
+    
+    /*
+      checking whether the components of h and g would not be nonzero in a location.
+      将h g哈达玛积，检查是否结果为零向量
+      */
+    ierr = VecDuplicate(g_b, &gh);CHKERRQ(ierr);
+    ierr = VecDuplicate(g_b, &zero_vec);CHKERRQ(ierr);
+    ierr = VecPointwiseMult(gh, g_b, h_b);CHKERRQ(ierr);
+    ierr = VecZeroEntries(zero_vec);
+    ierr = VecWhichEqual(gh, zero_vec, z_is);
+    if (sizeof(z_is) != n){
+      ierr = PetscPrintf(PETSC_COMM_WORLD,"h and g can not be nonzero simultaneously.\n");CHKERRQ(ierr);
+      return;
+    }
 
     //print the randomly set data
     PetscPrintf(PETSC_COMM_WORLD,"The randomly set boundary g data along bottom, top, left, right face'.\n");
