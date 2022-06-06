@@ -7,19 +7,191 @@ typedef struct InputPara
     PetscScalar c;      PetscScalar k;      PetscScalar f;
 }InputPara;
 
-inline PetscScalar CalElementOfRightVec(InputPara *IP, PetscScalar U1, PetscInt U2, PetscScalar H1, PetscScalar H2)
-{   
-    // PetscScalar P1 = IP->f * IP->dt / (IP->rho * IP->c);
-    // PetscScalar P2_1 = U1 * 2 * IP->k * (pow(IP->dt,2)) / (pow(IP->rho,2) * pow(IP->c,2) * (pow(IP->dl,4)));
-    // PetscScalar P2_2 = U2 * 2 * IP->k * (pow(IP->dt,2)) / (pow(IP->rho,2) * pow(IP->c,2) * (pow(IP->dl,4)));
-    // PetscScalar P3_1 = H1 * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
-    // PetscScalar P3_2 = H2 * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
+typedef struct Bound
+{
+    PetscScalar ub;     PetscScalar hb;
+    PetscScalar ut;     PetscScalar ht;
+    PetscScalar ul;     PetscScalar hl;
+    PetscScalar ur;     PetscScalar hr;    
+}Bound; // ~ for a point
 
-    return  IP->f * IP->dt / (IP->rho * IP->c) + \
-            U1 * 2 * IP->k * (pow(IP->dt,2)) / (pow(IP->rho,2) * pow(IP->c,2) * (pow(IP->dl,4))) + \
-            U2 * 2 * IP->k * (pow(IP->dt,2)) / (pow(IP->rho,2) * pow(IP->c,2) * (pow(IP->dl,4))) + \
-            H1 * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
-            H2 * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
+typedef struct IterMaterial
+{
+    PetscScalar W;      PetscScalar E;
+    PetscScalar N;      PetscScalar S;
+    PetscScalar P;      PetscScalar b;
+}IterMaterial;
+
+enum Location
+{
+    RightTop    = 1,    TopSide     = 2,
+    LeftTop     = 3,    LeftSide    = 4,
+    LeftBottom  = 5,    BottomSide  = 6,
+    RightBottom = 7,    RightSide   = 8,
+    Internal    = 9
+};
+
+void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
+{
+    //~ InputPara       Known;
+    //~ bound           Known;
+    //~ IterMaterial    Unknown;
+    PetscScalar base = (IP->k * IP->dt) / (IP->rho * IP->c * PetscPowScalar(IP->dl,2));
+    PetscScalar partF = IP->f * IP->dt / (IP->rho * IP->c);
+    PetscScalar partH = bound->hb * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
+                        bound->ht * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
+                        bound->hl * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
+                        bound->hr * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
+    PetscScalar partU = 2 * base * (bound->ut + bound->ur + bound->ub + bound->ul);                    
+    switch (loc)
+    {
+    case RightTop:
+    {
+        IM->W = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;            
+        if(bound->ut!=0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ut==0 && bound->ur==0 && bound->ht==0 && bound->hr==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->ut==0 && bound->ur==0 && (bound->ht!=0 || bound->hr==0))
+            IM->P = 1-(1+1)*base;
+        else printf("u and g can not be both given at same boundary");
+    }
+    break;
+
+    case LeftTop:
+    {
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;            
+        if(bound->ut!=0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ut==0 && bound->ul==0 && bound->ht==0 && bound->hl==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->ut==0 && bound->ul==0 && (bound->ht!=0 || bound->hl==0))
+            IM->P = 1-(1+1)*base;
+        else printf("u and g can not be both given at same boundary");
+    }
+    break;
+
+    case LeftBottom:
+    {
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;            
+        if(bound->ub!=0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ub==0 && bound->ul==0 && bound->hb==0 && bound->hl==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->ub==0 && bound->ul==0 && (bound->hb!=0 || bound->hl==0))
+            IM->P = 1-(1+1)*base;
+        else printf("u and g can not be both given at same boundary");
+    }
+    break;
+
+    case RightBottom:
+    {
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;            
+        if(bound->ub!=0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+            IM->P = 1-(1+1+2)*base;
+        else if(bound->ub==0 && bound->ur==0 && bound->hb==0 && bound->hr==0)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->ub==0 && bound->ur==0 && (bound->hb!=0 || bound->hr==0))
+            IM->P = 1-(1+1)*base;
+        else printf("u and g can not be both given at same boundary");
+    }
+    break;
+
+    case RightSide:
+    {
+        IM->W = base;
+        IM->S = base;
+        IM->N = base;
+        IM->b = partF + partU + partH;            
+        if(bound->hr==0)
+            IM->P = 1-(1+1+1+2)*base;
+        else if (bound->hr!=0 && bound->ur==0)
+            IM->P = 1-(1+1+1)*base;
+        else printf("u and g can not be both given at same boundary\n");
+    }
+    break;
+
+    case TopSide:
+    {
+        IM->W = base;
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;   
+        if(bound->ht==0)
+            IM->P = 1-(1+1+1+2)*base;
+        else if(bound->ht!=0 && bound->ut==0)
+            IM->P = 1-(1+1+1)*base;
+        else printf("u and g can not be both given at same boundary\n");
+    }
+    break;
+
+    case LeftSide:
+    {
+        IM->N = base;
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;   
+        if(bound->hl==0)
+            IM->P = 1-(1+1+1+2)*base;
+        else if(bound->hl!=0 && bound->ul==0)
+            IM->P = 1-(1+1+1)*base;
+        else printf("u and g can not be both given at same boundary\n");
+    }   
+    break;
+
+    case BottomSide:
+    {
+        IM->N = base;
+        IM->E = base;
+        IM->W = base;
+        IM->b = partF + partU + partH;   
+        if(bound->hb==0)
+            IM->P = 1-(1+1+1+2)*base;
+        else if(bound->hb!=0 && bound->ub==0)
+            IM->P = 1-(1+1+1)*base;
+        else printf("u and g can not be both given at same boundary\n");
+    }    
+    break;
+
+    case Internal:
+    {
+        IM->b = partF;   
+        IM->N = base;
+        IM->E = base;
+        IM->W = base;
+        IM->S = base;
+        IM->P = 1-4*base;
+    }    
+    break;
+
+    default:
+        printf("Please specify the location\n");
+    }
+
 }
     
 int main(int argc,char **argv)
@@ -33,15 +205,17 @@ int main(int argc,char **argv)
     PetscInt        i, j, r, n = 10;
     MPI_Comm        comm;
     PetscErrorCode  ierr;
-    PetscScalar     bb;
     PetscChar       ifname[PETSC_MAX_PATH_LEN]="g_fixed.hdf5";
     PetscChar       ofname[PETSC_MAX_PATH_LEN]="u_t_output.hdf5";
     PetscChar       dsname[PETSC_MAX_PATH_LEN]="default";
     PetscInt        col[5];
     PetscScalar     value[5];
-    PetscScalar     W,N,E,S,P;
-    PetscScalar     U1, U2, H1, H2;
+
     InputPara       IP; //PetscScalar     dt,dl,rho,c,k,f;
+    Bound           bound;
+    IterMaterial    IM;
+    enum Location   loc;
+
 
     PetscScalar     *g_b, *g_t, *g_l, *g_r;
     PetscScalar     *h_b, *h_t, *h_l, *h_r;
@@ -67,14 +241,6 @@ int main(int argc,char **argv)
     ierr = PetscOptionsGetScalar(NULL,NULL,"-k",   &(IP.k),   NULL);
     ierr = PetscOptionsGetScalar(NULL,NULL,"-f",   &(IP.f),   NULL);
 
-    
-    W=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
-    N=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
-    E=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
-    S=(IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
-    P=1-(4*IP.k*IP.dt)/(IP.rho*IP.c*PetscPowScalar(IP.dl,2));
-    // PetscPrintf(comm,"dt:%g, dl: %g, rho:%g, c:%g, k:%d\n",IP.dt,IP.dl,IP.rho,IP.k,IP.c);
-    // PetscPrintf(comm,"W:%g,N:%g,E:%g,S:%g,P:%g\n",W,N,E,S,P);
 
     PetscMalloc4(n, &g_b, n, &g_t, n, &g_l, n, &g_r);
     PetscMalloc4(n, &h_b, n, &h_t, n, &h_l, n, &h_r);
@@ -203,133 +369,128 @@ int main(int argc,char **argv)
                 if(i==0)
                 {
                     if(j==0)            //! 左上角的点
-                    {
+                    {   
+                        loc = LeftTop;
+                        bound.ut=g_t[j];bound.ht=h_t[j];
+                        bound.ul=g_l[i];bound.hl=h_l[i];
+                        bound.ub=0;     bound.hb=0;
+                        bound.ur=0;     bound.hr=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r;col[1]=r+1;col[2]=r+n;
-                        value[0]=P;value[1]=E;value[2]=S;
-                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
-
-
-                        U1=g_t[j];  // VecGetValues(g_t,1,&j,&U1);
-                        H1=h_t[j];  // VecGetValues(h_t,1,&j,&H1);
-                        U2=g_l[i];  // VecGetValues(g_l,1,&i,&U2);
-                        H2=h_l[i];  // VecGetValues(h_l,1,&i,&H2);
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);
-                        
+                        value[0]=IM.P;value[1]=IM.E;value[2]=IM.S;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES); 
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);
                     }
                     else if(j==n-1)     //! 右上角的点
                     {
+                        loc = RightTop;
+                        bound.ut=g_t[j];bound.ht=h_t[j];
+                        bound.ur=g_r[i];bound.hr=h_r[i];
+                        bound.ub=0;     bound.hb=0;
+                        bound.ul=0;     bound.hl=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+n;
-                        value[0]=W;value[1]=P;value[2]=S;
-                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);
-
-                        U1=g_t[j];  // VecGetValues(g_t,1,&j,&U1);
-                        H1=h_t[j];  // VecGetValues(h_t,1,&j,&H1);
-                        U2=g_r[i];  // VecGetValues(g_r,1,&i,&U2);
-                        H2=h_r[i];  // VecGetValues(h_r,1,&i,&H2);             
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);       
+                        value[0]=IM.W;value[1]=IM.P;value[2]=IM.S;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);   
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);       
                     }
                     else                //! 上边界的点（除顶点外）
-                    {
+                    {   
+                        loc = TopSide;
+                        bound.ut=g_t[j];bound.ht=h_t[j];
+                        bound.ur=0;     bound.hr=0;
+                        bound.ub=0;     bound.hb=0;
+                        bound.ul=0;     bound.hl=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
-                        value[0]=W;value[1]=P;value[2]=E;value[3]=S;
+                        value[0]=IM.W;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
-
-                        U1=g_t[j];  // VecGetValues(g_t,1,&j,&U1);
-                        H1=h_t[j];  // VecGetValues(h_t,1,&j,&H1);
-                        U2=0.0;
-                        H2=0.0;
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);              
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);              
                     }
                 }
                 else if(i==n-1)
                 {
                     if(j==0)            //! 左下角的点
                     {
+                        loc = LeftBottom;
+                        bound.ub=g_b[j];bound.hb=h_b[j];
+                        bound.ur=0;     bound.hr=0;
+                        bound.ut=0;     bound.ht=0;
+                        bound.ul=g_l[i];bound.hl=h_l[i];
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;
-                        value[0]=N;value[1]=P;value[2]=E;
+                        value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);  
-
-                        U1=g_b[j];  // VecGetValues(g_b,1,&j,&U1);
-                        H1=h_b[j];  // VecGetValues(h_b,1,&j,&H1);
-                        U2=g_l[i];  // VecGetValues(g_l,1,&i,&U2);
-                        H2=h_l[i];  // VecGetValues(h_l,1,&i,&H2);
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);                                   
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                                   
                     }
                     else if(j==n-1)     //! 右下角的点
-                    {
+                    {   
+                        loc = RightBottom;
+                        bound.ub=g_b[j];bound.hb=h_b[j];
+                        bound.ul=0;     bound.hl=0;
+                        bound.ut=0;     bound.ht=0;
+                        bound.ur=g_r[i];bound.hr=h_r[i];
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;
-                        value[0]=N;value[1]=W;value[2]=P;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);      
-
-                        U1=g_b[i];  // VecGetValues(g_b,1,&j,&U1);
-                        H1=h_b[j];  // VecGetValues(h_b,1,&j,&H1);
-                        U2=g_r[i];  // VecGetValues(g_r,1,&i,&U2);
-                        H2=h_r[i];  // VecGetValues(h_r,1,&i,&H2);
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);                                     
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                                     
                     }
                     else                //! 下边界的点 （除顶点外）
                     {
+                        loc = BottomSide;
+                        bound.ub=g_b[j];bound.hb=h_b[j];
+                        bound.ul=0;     bound.hl=0;
+                        bound.ut=0;     bound.ht=0;
+                        bound.ur=0;     bound.hr=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
-                        value[0]=N;value[1]=W;value[2]=P;value[3]=E;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);  
-
-                        U1=g_b[j];  // VecGetValues(g_b,1,&j,&U1);
-                        H1=h_b[j];  // VecGetValues(h_b,1,&j,&H1);
-                        U2=0.0;
-                        H2=0.0;
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);                                       
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                                       
                     }
                 }
                 else
                 {
                     if(j==0)            //! 左边界的点（除顶点外）
                     {
+                        loc = LeftSide;
+                        bound.ub=0;     bound.hb=0;
+                        bound.ul=g_l[i];bound.hl=h_l[i];
+                        bound.ut=0;     bound.ht=0;
+                        bound.ur=0;     bound.hr=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
-                        value[0]=N;value[1]=P;value[2]=E;value[3]=S;
+                        value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
-                        col[0]=r-n;col[1]=r;col[2]=r+1;
-                        value[0]=N;value[1]=P;value[2]=E;
-                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);  
-
-                        U1=g_l[i];  // VecGetValues(g_l,1,&i,&U1);
-                        H1=h_l[i];// VecGetValues(h_l,1,&i,&H1);
-                        U2=0.0;
-                        H2=0.0;
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);
 
                     }
                     else if(j==n-1)     //! 右边界的点（除顶点外）
                     {
+                        loc = RightSide;
+                        bound.ub=0;     bound.hb=0;
+                        bound.ur=g_r[i];bound.hr=h_r[i];
+                        bound.ut=0;     bound.ht=0;
+                        bound.ul=0;     bound.hl=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
-                        value[0]=N;value[1]=W;value[2]=P;value[3]=S;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
-
-                        U1=g_r[i];  // VecGetValues(g_r,1,&i,&U1);
-                        H1=h_r[i];  // VecGetValues(h_r,1,&i,&H1);
-                        U2=0.0;
-                        H2=0.0;
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);                  
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                  
                     }
                     else                //! 内部点
                     {
+                        loc = Internal;
+                        bound.ub=0;     bound.hb=0;
+                        bound.ur=0;     bound.hr=0;
+                        bound.ut=0;     bound.ht=0;
+                        bound.ul=0;     bound.hl=0;
+                        CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
-                        value[0]=N;value[1]=W;value[2]=P;value[3]=E;value[4]=S;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;value[4]=IM.S;
                         MatSetValues(A,1,&r,5,col,value,INSERT_VALUES);
-
-                        U1=0.0;
-                        H1=0.0;
-                        U2=0.0;
-                        H2=0.0;
-                        bb = CalElementOfRightVec(&IP,U1,U2,H1,H2);
-                        VecSetValue(b,r,bb,INSERT_VALUES);
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);
                     }
                 }
             }
