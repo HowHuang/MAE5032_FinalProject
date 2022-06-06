@@ -1,0 +1,14 @@
+#!/bin/bash
+#BSUB -J petsc-test
+#BSUB -q debug
+#BSUB -n 10
+#BSUB -e %J-petsc.err
+#BSUB -o %J-petsc.out
+
+module purge
+module load intel/2018.4
+module load mpi/intel/2018.4
+
+cd /work/ese-chenph/github/MAE5032_FinalProject/bak/sln_explicit
+make main.out
+mpirun -np 5 ./main.out -n 10 -dt 100 -dl 0.1 -rho 500 -c 1000 -k 10 -f 0 -maxIts 1000
