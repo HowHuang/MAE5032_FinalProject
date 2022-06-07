@@ -1,24 +1,31 @@
-#include "vtkIntArray.h"
-#include "vtkDoubleArray.h"
-#include "vtkPolyData.h"
-#include "vtkCellData.h"
-#include "vtkCellArray.h"
-#include "vtkPointData.h"
-#include "vtkTetra.h"
-#include "vtkGenericCell.h"
-#include "vtkUnstructuredGrid.h"
-#include "vtkUnstructuredGridWriter.h"
-#include "vtkXMLUnstructuredGridWriter.h"
-#include "vtkXMLUnstructuredGridReader.h"
-#include "vtkXMLPolyDataWriter.h"
-#include "vtkXMLGenericDataObjectReader.h"
+#define FILE "../default.hdf5"
+#define GROUP "u_t"
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
 #include <stdlib.h>
 
-#define FILE "../default.hdf5"
-#define GROUP "u_t"
+#include <vtkActor.h>
+#include <vtkCamera.h>
+#include <vtkCellArray.h>
+#include <vtkDEMReader.h>
+#include <vtkFitToHeightMapFilter.h>
+#include <vtkImageData.h>
+#include <vtkImageDataGeometryFilter.h>
+#include <vtkLookupTable.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
+#include <vtkPlaneSource.h>
+#include <vtkPoints.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkProbeFilter.h>
+#include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkTriangleFilter.h>
+#include <vtkWarpScalar.h>
 
 int main(int argc, char * argv[])
 {
@@ -29,7 +36,6 @@ int main(int argc, char * argv[])
   herr_t              status;
   int                 da_size;
   char                dsname[10000];
-
   
   if((file_test = H5Fis_hdf5(FILE)) > 0)
   {
@@ -84,7 +90,8 @@ int main(int argc, char * argv[])
   double    *u_t = (double*)malloc(ds_size);
   status = H5Dclose(dataset_id);
 
-  //
+  //declare vkt objects 
+  vtkNew<vtkFloatArray>    zvalues;
 
 
   for(int img = 1; img < ds_num-1; ++img)
@@ -95,6 +102,13 @@ int main(int argc, char * argv[])
     ds_size = H5Dget_storage_size(dataset_id);
     
     status = H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,u_t);
+
+
+
+
+
+
+
 
 
     status = H5Dclose(dataset_id);
