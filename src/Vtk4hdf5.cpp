@@ -64,7 +64,7 @@ int main(int argc, char * argv[])
     // printf("The number of datasets in the group (u_t): %d.\n", ginfo.nlinks);
 
   //use the first dataset to get the size of every dataset
-  sprintf(dsname, "%08d", 0);
+  sprintf(dsname, "%08d", 1);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size = H5Dget_storage_size(dataset_id);
   printf("The number of data in each dataset: %d\n", ds_size/sizeof(double));
@@ -77,6 +77,7 @@ int main(int argc, char * argv[])
     //std::cout << da_size << std::endl;
   
   double    *u_t = (double*)malloc(ds_size);
+  status = H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,u_t);
   // status = H5Dclose(dataset_id);               ///暂时注释，指读一个dataset测试
 
   //declare vkt objects
@@ -97,7 +98,7 @@ int main(int argc, char * argv[])
     {
       points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,u_t[i*n+j]);
       zvalues -> InsertNextValue(u_t[i*n+j]);
-      // std::cout << delta/2+i*delta << std::endl;
+      std::cout << u_t[i*n+j] << std::endl;
     }
   }
   status = H5Dclose(dataset_id);
@@ -107,6 +108,7 @@ int main(int argc, char * argv[])
   /*GetBounds() Return a pointer to the geometry bounding box in the form 
     (xmin,xmax, ymin, ymax, zmin, zmax).
     */
+  printf("The min and max of u : %f and %f", bounds[4], bounds[5]);
 
   // Add the grid points to a polydata object
   vtkPolyData * inputPolyData = vtkPolyData::New();
