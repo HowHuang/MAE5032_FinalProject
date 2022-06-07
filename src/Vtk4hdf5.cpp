@@ -7,6 +7,13 @@
 #include "vtkElevationFilter.h"
 #include "vtkLookupTable.h"
 #include "vtkTypedDataArray.h"
+#include "vtkPolyDataMapper.h"
+#include "vtkRenderWindow.h"
+#include "vtkRenderWindowInteractor.h"
+#include "vtkRenderer.h"
+#include "vtkNamedColors.h"
+#include "vtkCamera.h"
+#include "vtkXMLPolyDataWriter.h"
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
@@ -98,7 +105,7 @@ int main(int argc, char * argv[])
     {
       points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,u_t[i*n+j]);
       zvalues -> InsertNextValue(u_t[i*n+j]);
-      std::cout << u_t[i*n+j] << std::endl;
+      // std::cout << u_t[i*n+j] << std::endl;
     }
   }
   status = H5Dclose(dataset_id);
@@ -142,13 +149,13 @@ int main(int argc, char * argv[])
 
   // Generate the colors for each point based on the color map
   vtkUnsignedCharArray * colors = vtkUnsignedCharArray::New();
-  colors->SetNumberOfComponents(3);
-  colors->SetName("Colors");
+  colors -> SetNumberOfComponents(3);
+  colors -> SetName("Colors");
 
   for (vtkIdType i = 0; i < output->GetNumberOfPoints(); i++)
   {
     double val = elevation->GetValue(i);
-    std::cout << "val: " << val << std::endl;
+    // std::cout << "val: " << val << std::endl; //checked
 
     double dcolor[3];
     colorLookupTable -> GetColor(val, dcolor);
@@ -162,14 +169,55 @@ int main(int argc, char * argv[])
     // std::cout << "color: " << (int)color[0] << " " << (int)color[1] << " " <<
     // (int)color[2] << std::endl;
 
-    colors->InsertNextTypedTuple(color);
+    colors -> InsertNextTypedTuple(color);
     /*
       InsertNextTupleValue is now InsertNextTypedTuple:
       https://vtk.org/doc/nightly/html/VTK-7-1-Changes.html
       */
   }
 
+  output -> GetPointData() -> AddArray(colors);
 
+  /*****************
+   * Setup outputs *
+   * ***************/
+  vtkXMLPolyDataWriter * writer = vtkXMLPolyDataWriter::New();
+  writer -> SetFileName("Test.vtp");
+  writer -> SetInputData(output);
+  writer -> Write();
+
+  /***********************
+   * Setup visualization *
+   * *********************/
+  // vtkPolyDataMapper * mapper = vtkPolyDataMapper::New();
+  // mapper -> SetInputData(output);
+
+  // vtkActor * actor = vtkActor::New();
+  // actor  -> SetMapper(mapper);
+
+  // vtkRenderer * renderer = vtkRenderer::New();
+  // vtkRenderWindow * renderWindow = vtkRenderWindow::New();
+  // renderWindow -> AddRenderer(renderer);
+  // renderWindow -> SetWindowName("ElevationFilter");
+
+  // vtkRenderWindowInteractor * renderWindowInteractor = vtkRenderWindowInteractor::New();
+  // renderWindowInteractor -> SetRenderWindow(renderWindow);
+
+  // vtkNamedColors * namedColors = vtkNamedColors::New();  
+  // renderer -> AddActor(actor);
+  // renderer -> SetBackground(namedColors->GetColor3d("ForestGreen").GetData());
+
+  // // z-axis points upwards and y-axis is lower right edge
+  // auto camera = renderer->GetActiveCamera();
+  // camera->SetPosition(-13.3586, 20.7305, 22.5147);
+  // camera->SetFocalPoint(4.5, 4.5, 4.5);
+  // camera->SetViewUp(0.506199, -0.328212, 0.797521);
+  // camera->SetDistance(30.1146);
+  // camera->SetClippingRange(14.3196, 50.0698);
+
+  // renderWindow->Render();
+
+  // renderWindowInteractor->Start();
 
   // for(int img = 1; img < ds_num-1; ++img)
   // {
