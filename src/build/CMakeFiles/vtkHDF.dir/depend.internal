@@ -90,6 +90,7 @@ CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.o
  /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtkXMLWriter.h
  /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtk_hdf5.h
  /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtk_kwiml.h
+ /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtkhdf5/H5pubconf.h
  /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtkhdf5/hl/src/H5DOpublic.h
  /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtkhdf5/hl/src/H5DSpublic.h
  /work/ese-huangh/lib/VTK-8.2.0/include/vtk-8.2/vtkhdf5/hl/src/H5IMpublic.h
