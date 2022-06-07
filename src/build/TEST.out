@@ -1,0 +1,102 @@
+Sender: LSF System <lsfadmin@r13n47>
+Subject: Job 3823148: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 15:30:00 2022.
+Job was executed on host(s) <r13n47>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 15:30:00 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 15:30:00 2022.
+Terminated at Tue Jun  7 15:30:01 2022.
+Results reported at Tue Jun  7 15:30:01 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.11 sec.
+    Max Memory :                                 4 MB
+    Average Memory :                             4.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   1 sec.
+    Turnaround time :                            1 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n44>
+Subject: Job 3823154: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 15:33:23 2022.
+Job was executed on host(s) <r13n44>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 15:33:24 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 15:33:24 2022.
+Terminated at Tue Jun  7 15:33:26 2022.
+Results reported at Tue Jun  7 15:33:26 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.11 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
