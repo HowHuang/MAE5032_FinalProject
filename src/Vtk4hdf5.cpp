@@ -1,5 +1,12 @@
 #include "vtkFloatArray.h"
+#include "vtkArrayData.h"
+#include "vtkPointData.h"
 #include "vtkPoints.h"
+#include "vtkPolyData.h"
+#include "vtkDelaunay2D.h"
+#include "vtkElevationFilter.h"
+#include "vtkLookupTable.h"
+#include "vtkTypedDataArray.h"
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
@@ -88,14 +95,78 @@ int main(int argc, char * argv[])
   {
     for(int j=0; j<n; ++j)
     {
-      points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,0);
+      points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,u_t[i*n+j]);
       zvalues -> InsertNextValue(u_t[i*n+j]);
       // std::cout << delta/2+i*delta << std::endl;
     }
   }
-  
-  
   status = H5Dclose(dataset_id);
+  
+  double    bounds[6];
+  points -> GetBounds(bounds);
+  /*GetBounds() Return a pointer to the geometry bounding box in the form 
+    (xmin,xmax, ymin, ymax, zmin, zmax).
+    */
+
+  // Add the grid points to a polydata object
+  vtkPolyData * inputPolyData = vtkPolyData::New();
+  inputPolyData -> SetPoints(points);
+
+  // Triangulate the grid points
+  vtkDelaunay2D * delaunay = vtkDelaunay2D::New();
+  delaunay -> SetInputData(inputPolyData);
+  delaunay -> Update();
+
+  vtkElevationFilter * elevationFilter = vtkElevationFilter::New();
+  elevationFilter -> SetInputConnection(delaunay->GetOutputPort());
+  elevationFilter -> SetLowPoint(0.0, 0.0, bounds[4]);
+  elevationFilter -> SetHighPoint(0.0, 0.0, bounds[5]);
+  elevationFilter -> Update();
+
+  vtkPolyData * output = vtkPolyData::New();
+  output -> ShallowCopy(dynamic_cast<vtkPolyData*>(elevationFilter->GetOutput()));
+  std::cout << "output here: " << output->GetNumberOfPoints() << std::endl;
+
+  vtkFloatArray * elevation = vtkFloatArray::New();
+  elevation = dynamic_cast<vtkFloatArray*>(output->GetPointData()->GetArray("Elevation"));
+    /*GetArray will Returns the n-th vtkArray in the collection.
+      https://vtk.org/doc/nightly/html/classvtkArrayData.html#ae404ca06bbffe9927ac59cb908c4ab95
+      */
+
+  // Create the color map
+  vtkLookupTable * colorLookupTable = vtkLookupTable::New();
+  colorLookupTable -> SetTableRange(bounds[4], bounds[5]);
+  colorLookupTable -> Build();
+
+  // Generate the colors for each point based on the color map
+  vtkUnsignedCharArray * colors = vtkUnsignedCharArray::New();
+  colors->SetNumberOfComponents(3);
+  colors->SetName("Colors");
+
+  for (vtkIdType i = 0; i < output->GetNumberOfPoints(); i++)
+  {
+    double val = elevation->GetValue(i);
+    std::cout << "val: " << val << std::endl;
+
+    double dcolor[3];
+    colorLookupTable -> GetColor(val, dcolor);
+    // std::cout << "dcolor: " << dcolor[0] << " " << dcolor[1] << " " <<
+    // dcolor[2] << std::endl;
+    unsigned char color[3];
+    for (unsigned int j = 0; j < 3; j++)
+    {
+      color[j] = 255 * dcolor[j] / 1.0;
+    }
+    // std::cout << "color: " << (int)color[0] << " " << (int)color[1] << " " <<
+    // (int)color[2] << std::endl;
+
+    colors->InsertNextTypedTuple(color);
+    /*
+      InsertNextTupleValue is now InsertNextTypedTuple:
+      https://vtk.org/doc/nightly/html/VTK-7-1-Changes.html
+      */
+  }
+
 
 
   // for(int img = 1; img < ds_num-1; ++img)
@@ -116,7 +187,7 @@ int main(int argc, char * argv[])
 
 
   
-
+  zvalues -> Delete();
   points -> Delete();
 
   // 

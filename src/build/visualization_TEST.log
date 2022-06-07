@@ -1,204 +1,109 @@
 file type of temperature (u) for vtk visualization is committed
 group was opened.
 The number of datasets in the group (u_t): 102
-The grid is 100*0.10
-0.05
-0.05
-0.05
-0.05
-0.05
-0.05
-0.05
-0.05
-0.05
-0.05
-0.15
-0.15
-0.15
-0.15
-0.15
-0.15
-0.15
-0.15
-0.15
-0.15
-0.25
-0.25
-0.25
-0.25
-0.25
-0.25
-0.25
-0.25
-0.25
-0.25
-0.35
-0.35
-0.35
-0.35
-0.35
-0.35
-0.35
-0.35
-0.35
-0.35
-0.45
-0.45
-0.45
-0.45
-0.45
-0.45
-0.45
-0.45
-0.45
-0.45
-0.55
-0.55
-0.55
-0.55
-0.55
-0.55
-0.55
-0.55
-0.55
-0.55
-0.65
-0.65
-0.65
-0.65
-0.65
-0.65
-0.65
-0.65
-0.65
-0.65
-0.75
-0.75
-0.75
-0.75
-0.75
-0.75
-0.75
-0.75
-0.75
-0.75
-0.85
-0.85
-0.85
-0.85
-0.85
-0.85
-0.85
-0.85
-0.85
-0.85
-0.95
-0.95
-0.95
-0.95
-0.95
-0.95
-0.95
-0.95
-0.95
-0.95
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
-dataset was opened.
+The number of data in each dataset: 100
+The partitioning n for data is: 10*10
+ERROR: In /work/ese-huangh/VTK-8.2.0/Filters/Core/vtkElevationFilter.cxx, line 188
+vtkElevationFilter (0x14d9440): Bad vector, using (0,0,1).
+
+output here: 100
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
+val: 0
