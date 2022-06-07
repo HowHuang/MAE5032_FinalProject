@@ -9,10 +9,10 @@ typedef struct InputPara
 
 typedef struct Bound
 {
-    PetscScalar ub;     PetscScalar hb;
-    PetscScalar ut;     PetscScalar ht;
-    PetscScalar ul;     PetscScalar hl;
-    PetscScalar ur;     PetscScalar hr;    
+    PetscScalar ub;     PetscScalar hb;     PetscScalar tb;
+    PetscScalar ut;     PetscScalar ht;     PetscScalar tt;
+    PetscScalar ul;     PetscScalar hl;     PetscScalar tl;
+    PetscScalar ur;     PetscScalar hr;     PetscScalar tr;
 }Bound; // ~ for a point
 
 typedef struct IterMaterial
@@ -49,18 +49,26 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
     {
         IM->W = base;
         IM->S = base;
-        IM->b = partF + partU + partH;            
-        if(bound->ut!=0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+        IM->b = partF + partU + partH;     
+
+        if(bound->tr==1 && bound->tt==1)
             IM->P = 1-(1+1+2+2)*base;
-        else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ut==0 && bound->ur==0 && bound->ht==0 && bound->hr==0)
-            IM->P = 1-(1+1+2+2)*base;
-        else if (bound->ut==0 && bound->ur==0 && (bound->ht!=0 || bound->hr==0))
+        else if (bound->tr==2 && bound->tt==2)
             IM->P = 1-(1+1)*base;
-        else printf("u and g can not be both given at same boundary");
+        else 
+            IM->P = 1-(1+1+2)*base;
+       
+        // if(bound->ut!=0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ut==0 && bound->ur==0 && bound->ht==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if (bound->ut==0 && bound->ur==0 && (bound->ht!=0 || bound->hr==0))
+        //     IM->P = 1-(1+1)*base;
+        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -68,18 +76,25 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
     {
         IM->E = base;
         IM->S = base;
-        IM->b = partF + partU + partH;            
-        if(bound->ut!=0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+        IM->b = partF + partU + partH;   
+
+        if(bound->tl==1 && bound->tt==1)
             IM->P = 1-(1+1+2+2)*base;
-        else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ut==0 && bound->ul==0 && bound->ht==0 && bound->hl==0)
-            IM->P = 1-(1+1+2+2)*base;
-        else if (bound->ut==0 && bound->ul==0 && (bound->ht!=0 || bound->hl==0))
+        else if (bound->tl==2 && bound->tt==2)
             IM->P = 1-(1+1)*base;
-        else printf("u and g can not be both given at same boundary");
+        else 
+            IM->P = 1-(1+1+2)*base;         
+        // if(bound->ut!=0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ut==0 && bound->ul==0 && bound->ht==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if (bound->ut==0 && bound->ul==0 && (bound->ht!=0 || bound->hl==0))
+        //     IM->P = 1-(1+1)*base;
+        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -87,18 +102,25 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
     {
         IM->E = base;
         IM->S = base;
-        IM->b = partF + partU + partH;            
-        if(bound->ub!=0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+        IM->b = partF + partU + partH;   
+        if(bound->tl==1 && bound->tb==1)
             IM->P = 1-(1+1+2+2)*base;
-        else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ub==0 && bound->ul==0 && bound->hb==0 && bound->hl==0)
-            IM->P = 1-(1+1+2+2)*base;
-        else if (bound->ub==0 && bound->ul==0 && (bound->hb!=0 || bound->hl==0))
+        else if (bound->tl==2 && bound->tb==2)
             IM->P = 1-(1+1)*base;
-        else printf("u and g can not be both given at same boundary");
+        else 
+            IM->P = 1-(1+1+2)*base;
+
+        // if(bound->ub!=0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ub==0 && bound->ul==0 && bound->hb==0 && bound->hl==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if (bound->ub==0 && bound->ul==0 && (bound->hb!=0 || bound->hl==0))
+        //     IM->P = 1-(1+1)*base;
+        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -106,18 +128,26 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
     {
         IM->E = base;
         IM->S = base;
-        IM->b = partF + partU + partH;            
-        if(bound->ub!=0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+        IM->b = partF + partU + partH;  
+
+        if(bound->tr==1 && bound->tb==1)
             IM->P = 1-(1+1+2+2)*base;
-        else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
-            IM->P = 1-(1+1+2)*base;
-        else if(bound->ub==0 && bound->ur==0 && bound->hb==0 && bound->hr==0)
-            IM->P = 1-(1+1+2+2)*base;
-        else if (bound->ub==0 && bound->ur==0 && (bound->hb!=0 || bound->hr==0))
+        else if (bound->tr==2 && bound->tb==2)
             IM->P = 1-(1+1)*base;
-        else printf("u and g can not be both given at same boundary");
+        else 
+            IM->P = 1-(1+1+2)*base;    
+
+        // if(bound->ub!=0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2)*base;
+        // else if(bound->ub==0 && bound->ur==0 && bound->hb==0 && bound->hr==0)
+        //     IM->P = 1-(1+1+2+2)*base;
+        // else if (bound->ub==0 && bound->ur==0 && (bound->hb!=0 || bound->hr==0))
+        //     IM->P = 1-(1+1)*base;
+        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -126,12 +156,17 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
         IM->W = base;
         IM->S = base;
         IM->N = base;
-        IM->b = partF + partU + partH;            
-        if(bound->hr==0)
-            IM->P = 1-(1+1+1+2)*base;
-        else if (bound->hr!=0 && bound->ur==0)
-            IM->P = 1-(1+1+1)*base;
-        else printf("u and g can not be both given at same boundary\n");
+        IM->b = partF + partU + partH;   
+
+        if(bound->tr==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base;   
+        // if(bound->hr==0)
+        //     IM->P = 1-(1+1+1+2)*base;
+        // else if (bound->hr!=0 && bound->ur==0)
+        //     IM->P = 1-(1+1+1)*base;
+        // else printf("u and h can not be both given at same boundary\n");
     }
     break;
 
@@ -141,11 +176,17 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
         IM->E = base;
         IM->S = base;
         IM->b = partF + partU + partH;   
-        if(bound->ht==0)
-            IM->P = 1-(1+1+1+2)*base;
-        else if(bound->ht!=0 && bound->ut==0)
-            IM->P = 1-(1+1+1)*base;
-        else printf("u and g can not be both given at same boundary\n");
+
+        if(bound->tt==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base;   
+
+        // if(bound->ht==0)
+        //     IM->P = 1-(1+1+1+2)*base;
+        // else if(bound->ht!=0 && bound->ut==0)
+        //     IM->P = 1-(1+1+1)*base;
+        // else printf("u and h can not be both given at same boundary\n");
     }
     break;
 
@@ -154,12 +195,18 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
         IM->N = base;
         IM->E = base;
         IM->S = base;
-        IM->b = partF + partU + partH;   
-        if(bound->hl==0)
-            IM->P = 1-(1+1+1+2)*base;
-        else if(bound->hl!=0 && bound->ul==0)
-            IM->P = 1-(1+1+1)*base;
-        else printf("u and g can not be both given at same boundary\n");
+        IM->b = partF + partU + partH;  
+
+        if(bound->tl==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base;    
+
+        // if(bound->hl==0)
+        //     IM->P = 1-(1+1+1+2)*base;
+        // else if(bound->hl!=0 && bound->ul==0)
+        //     IM->P = 1-(1+1+1)*base;
+        // else printf("u and h can not be both given at same boundary\n");
     }   
     break;
 
@@ -169,11 +216,17 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
         IM->E = base;
         IM->W = base;
         IM->b = partF + partU + partH;   
-        if(bound->hb==0)
-            IM->P = 1-(1+1+1+2)*base;
-        else if(bound->hb!=0 && bound->ub==0)
-            IM->P = 1-(1+1+1)*base;
-        else printf("u and g can not be both given at same boundary\n");
+
+        if(bound->tb==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base; 
+
+        // if(bound->hb==0)
+        //     IM->P = 1-(1+1+1+2)*base;
+        // else if(bound->hb!=0 && bound->ub==0)
+        //     IM->P = 1-(1+1+1)*base;
+        // else printf("u and h can not be both given at same boundary\n");
     }    
     break;
 
@@ -196,17 +249,15 @@ void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Lo
     
 int main(int argc,char **argv)
 {
-    //Vec             g_b,g_t,g_l,g_r;    //DIM = n x 1
-    //Vec             h_b,h_t,h_l,h_r;    //DIM = n x 1
     Vec             u_0,b,u_t,u_tplus,temp;  //DIM = (n*n) x 1
     Mat             A;                  //DIM = (n*n) x (n*n)
-    PetscViewer     viewerI,viewerO;    //I for input, O for output
+    PetscViewer     viewer;    
     PetscMPIInt     rank,size;
     PetscInt        i, j, r, n = 10;
+    PetscInt        restart;
     MPI_Comm        comm;
     PetscErrorCode  ierr;
-    PetscChar       ifname[PETSC_MAX_PATH_LEN]="g_fixed.hdf5";
-    PetscChar       ofname[PETSC_MAX_PATH_LEN]="u_t_output.hdf5";
+    PetscChar       fname[PETSC_MAX_PATH_LEN]="input.hdf5";
     PetscChar       dsname[PETSC_MAX_PATH_LEN]="default";
     PetscInt        col[5];
     PetscScalar     value[5];
@@ -216,40 +267,48 @@ int main(int argc,char **argv)
     IterMaterial    IM;
     enum Location   loc;
 
-
     PetscScalar     *g_b, *g_t, *g_l, *g_r;
     PetscScalar     *h_b, *h_t, *h_l, *h_r;
+    PetscScalar     *t_b, *t_t, *t_l, *t_r;
 
+    PetscScalar     paras[7];
     // iteration parts
-    PetscInt        its=0 , maxIts = 100;
-    Vec             *u;         
+    PetscInt        its=0 , maxIts = 100, maxItsW = 1000;
+    Vec             *u; 
+    Vec             step;
+    PetscInt        istep;        
 
     ierr = PetscInitialize(&argc, &argv, (char*) 0, NULL);if (ierr) return ierr;
     comm = PETSC_COMM_WORLD;
     ierr = MPI_Comm_rank(comm, &rank);CHKERRMPI(ierr);
     ierr = MPI_Comm_size(comm, &size);CHKERRMPI(ierr);
 
-    ierr = PetscOptionsGetInt(NULL,NULL, "-n", &n, NULL);
-    ierr = PetscOptionsGetString(NULL,NULL,"-ifname",ifname,sizeof(ifname),NULL);
-    ierr = PetscOptionsGetString(NULL,NULL,"-ofname",ofname,sizeof(ofname),NULL);
+    ierr = PetscOptionsGetString(NULL,NULL,"-fname",fname,sizeof(fname),NULL);
     ierr = PetscOptionsGetInt(NULL,NULL, "-maxIts", &maxIts, NULL);
+    ierr = PetscOptionsGetInt(NULL,NULL, "-maxItsW", &maxItsW, NULL);
+    ierr = PetscOptionsGetInt(NULL,NULL, "-restart", &restart, NULL);
 
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-dt",  &(IP.dt),  NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-dl",  &(IP.dl),  NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-rho", &(IP.rho), NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-c",   &(IP.c),   NULL); 
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-k",   &(IP.k),   NULL);
-    ierr = PetscOptionsGetScalar(NULL,NULL,"-f",   &(IP.f),   NULL);
+    hid_t   file_id, group_id, dataset_id;
 
+    file_id=H5Fopen(fname,H5F_ACC_RDONLY,H5P_DEFAULT);
+
+    group_id=H5Gopen(file_id,"/Parameters",H5P_DEFAULT);
+    dataset_id=H5Dopen(group_id,"paras",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,paras);
+    H5Dclose(dataset_id);
+    H5Gclose(group_id);
+
+    IP.dt=paras[0]; IP.dl=paras[1]; IP.rho=paras[2];
+    IP.c=paras[3];  IP.k=paras[4];  IP.f=paras[5];
+
+    n = (PetscInt)(paras[6]);
 
     PetscMalloc4(n, &g_b, n, &g_t, n, &g_l, n, &g_r);
     PetscMalloc4(n, &h_b, n, &h_t, n, &h_l, n, &h_r);
+    PetscMalloc4(n, &t_b, n, &t_t, n, &t_l, n, &t_r);
 
-    hid_t   file_id, group_id, dataset_id;
-    file_id=H5Fopen(ifname,H5F_ACC_RDONLY,H5P_DEFAULT);
     group_id=H5Gopen(file_id,"/boundary",H5P_DEFAULT);
 
-    
     dataset_id=H5Dopen(group_id,"g_bottom",H5P_DEFAULT);
     H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,g_b);
     H5Dclose(dataset_id);
@@ -276,68 +335,33 @@ int main(int argc,char **argv)
     H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,h_r);
     H5Dclose(dataset_id);
 
+    dataset_id=H5Dopen(group_id,"t_bottom",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_b);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"t_top",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_t);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"t_left",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_l);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"t_right",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_r);
+    H5Dclose(dataset_id);
+
     H5Gclose(group_id);
+
     H5Fclose(file_id);
 
     // ~ Load data from specified hdf5 file.
-    PetscViewerHDF5Open(PETSC_COMM_WORLD,ifname,FILE_MODE_READ,&viewerI);
-    /*
-    // PetscViewerHDF5PushGroup(viewerI,"/boundary");
-
-    // VecCreate(comm,&g_b);
-    // PetscObjectSetName((PetscObject)g_b, "g_bottom");
-    // VecCreate(comm,&h_b);
-    // PetscObjectSetName((PetscObject)h_b, "h_bottom");
+    PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_READ,&viewer);
     
-    // VecCreate(comm,&g_t);
-    // PetscObjectSetName((PetscObject)g_t, "g_top");
-    // VecCreate(comm,&h_t);
-    // PetscObjectSetName((PetscObject)h_t, "h_top");
-    
-    // VecCreate(comm,&g_r);
-    // PetscObjectSetName((PetscObject)g_r, "g_right");  
-    // VecCreate(comm,&h_r);
-    // PetscObjectSetName((PetscObject)h_r, "h_right");
-    
-    // VecCreate(comm,&g_l);
-    // PetscObjectSetName((PetscObject)g_l, "g_left"); 
-    // VecCreate(comm,&h_l);
-    // PetscObjectSetName((PetscObject)h_l, "h_left");
-
-    // VecLoad(g_b,viewerI);
-    // VecLoad(h_b,viewerI);
-
-    // VecLoad(g_t,viewerI);
-    // VecLoad(h_t,viewerI);
-
-    // VecLoad(g_r,viewerI);
-    // VecLoad(h_r,viewerI);
-
-    // VecLoad(g_l,viewerI);
-    // VecLoad(h_l,viewerI);        
-
-    // PetscViewerHDF5PopGroup(viewerI);
-    */
-    
-    PetscViewerHDF5PushGroup(viewerI,"/u0_2D");
+    PetscViewerHDF5PushGroup(viewer,"/Init");
     VecCreate(comm,&u_0);
-    PetscObjectSetName((PetscObject)u_0, "u0_2DInit");
-    VecLoad(u_0,viewerI);
-    PetscViewerHDF5PopGroup(viewerI);
+    PetscObjectSetName((PetscObject)u_0, "u_0");
+    VecLoad(u_0,viewer);
+    PetscViewerHDF5PopGroup(viewer);
 
-    PetscViewerDestroy(&viewerI);
     // ~ Load finished
-
-    // //~ Print vecs
-    // VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);     
-    // VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);
-    // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);  
 
     // ~ Generate sparse matrix A (coefficient matrix)
     // ~ A is a pentadiagonal matrix
@@ -371,10 +395,16 @@ int main(int argc,char **argv)
                     if(j==0)            //! 左上角的点
                     {   
                         loc = LeftTop;
-                        bound.ut=g_t[j];bound.ht=h_t[j];
-                        bound.ul=g_l[i];bound.hl=h_l[i];
-                        bound.ub=0;     bound.hb=0;
-                        bound.ur=0;     bound.hr=0;
+                        bound.ut=g_t[j];bound.ht=h_t[j];bound.tt=t_t[j];
+                        bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+
+                        
+                        
+                        
+                        
+
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r;col[1]=r+1;col[2]=r+n;
                         value[0]=IM.P;value[1]=IM.E;value[2]=IM.S;
@@ -384,10 +414,10 @@ int main(int argc,char **argv)
                     else if(j==n-1)     //! 右上角的点
                     {
                         loc = RightTop;
-                        bound.ut=g_t[j];bound.ht=h_t[j];
-                        bound.ur=g_r[i];bound.hr=h_r[i];
-                        bound.ub=0;     bound.hb=0;
-                        bound.ul=0;     bound.hl=0;
+                        bound.ut=g_t[j];bound.ht=h_t[j];bound.tt=t_t[j];
+                        bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+n;
                         value[0]=IM.W;value[1]=IM.P;value[2]=IM.S;
@@ -397,10 +427,10 @@ int main(int argc,char **argv)
                     else                //! 上边界的点（除顶点外）
                     {   
                         loc = TopSide;
-                        bound.ut=g_t[j];bound.ht=h_t[j];
-                        bound.ur=0;     bound.hr=0;
-                        bound.ub=0;     bound.hb=0;
-                        bound.ul=0;     bound.hl=0;
+                        bound.ut=g_t[j];bound.ht=h_t[j];bound.tt=t_t[j];
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
                         value[0]=IM.W;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
@@ -413,10 +443,10 @@ int main(int argc,char **argv)
                     if(j==0)            //! 左下角的点
                     {
                         loc = LeftBottom;
-                        bound.ub=g_b[j];bound.hb=h_b[j];
-                        bound.ur=0;     bound.hr=0;
-                        bound.ut=0;     bound.ht=0;
-                        bound.ul=g_l[i];bound.hl=h_l[i];
+                        bound.ub=g_b[j];bound.hb=h_b[j];bound.tb=t_b[j];
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;
                         value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;
@@ -426,10 +456,10 @@ int main(int argc,char **argv)
                     else if(j==n-1)     //! 右下角的点
                     {   
                         loc = RightBottom;
-                        bound.ub=g_b[j];bound.hb=h_b[j];
-                        bound.ul=0;     bound.hl=0;
-                        bound.ut=0;     bound.ht=0;
-                        bound.ur=g_r[i];bound.hr=h_r[i];
+                        bound.ub=g_b[j];bound.hb=h_b[j];bound.tb=t_b[j];
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;
                         value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;
@@ -439,10 +469,10 @@ int main(int argc,char **argv)
                     else                //! 下边界的点 （除顶点外）
                     {
                         loc = BottomSide;
-                        bound.ub=g_b[j];bound.hb=h_b[j];
-                        bound.ul=0;     bound.hl=0;
-                        bound.ut=0;     bound.ht=0;
-                        bound.ur=0;     bound.hr=0;
+                        bound.ub=g_b[j];bound.hb=h_b[j];bound.tb=t_b[j];
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
                         value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;
@@ -455,10 +485,10 @@ int main(int argc,char **argv)
                     if(j==0)            //! 左边界的点（除顶点外）
                     {
                         loc = LeftSide;
-                        bound.ub=0;     bound.hb=0;
-                        bound.ul=g_l[i];bound.hl=h_l[i];
-                        bound.ut=0;     bound.ht=0;
-                        bound.ur=0;     bound.hr=0;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
                         value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
@@ -469,10 +499,10 @@ int main(int argc,char **argv)
                     else if(j==n-1)     //! 右边界的点（除顶点外）
                     {
                         loc = RightSide;
-                        bound.ub=0;     bound.hb=0;
-                        bound.ur=g_r[i];bound.hr=h_r[i];
-                        bound.ut=0;     bound.ht=0;
-                        bound.ul=0;     bound.hl=0;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
                         value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.S;
@@ -482,10 +512,10 @@ int main(int argc,char **argv)
                     else                //! 内部点
                     {
                         loc = Internal;
-                        bound.ub=0;     bound.hb=0;
-                        bound.ur=0;     bound.hr=0;
-                        bound.ut=0;     bound.ht=0;
-                        bound.ul=0;     bound.hl=0;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
                         CalIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
                         value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;value[4]=IM.S;
@@ -505,32 +535,74 @@ int main(int argc,char **argv)
     // ~ ---------------------------------------------------------------------------
     // ~ Now, we have A, u_t(u_0), b and u_tplus(unknown) Let's begin the iteration.
     // ~ We will store u_t at any timestep in a HDF5 file.
+    VecCreate(comm,&step);
+    VecSetSizes(step,PETSC_DECIDE,1);
+    VecSetFromOptions(step);
 
-    PetscViewerHDF5Open(PETSC_COMM_WORLD,ofname,FILE_MODE_WRITE,&viewerO);
-    PetscViewerHDF5PushGroup(viewerO,"/u_t");
-    
-    VecCopy(u_0,u[0]);
-    sprintf(dsname, "%d",0);
-    PetscObjectSetName((PetscObject)(u[0]),dsname);
-    VecView(u[0],viewerO); 
-    while(its<maxIts)
+    if(restart==0)
     {
-        MatMultAdd(A,u[its],b,u[its+1]);
-        its++;
-        sprintf(dsname, "%d",its);
-        PetscObjectSetName((PetscObject)(u[its]),dsname);
-        VecView(u[its],viewerO); 
+        PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_APPEND,&viewer);
+        PetscViewerHDF5PushGroup(viewer,"/u_t");     
+
+        VecCopy(u_0,u[0]);
+        sprintf(dsname, "%08d",0);
+        PetscObjectSetName((PetscObject)(u[0]),dsname);
+        VecView(u[0],viewer); 
+        while(its<maxIts)
+        {
+            MatMultAdd(A,u[its],b,u[its+1]);
+            its++;
+            sprintf(dsname, "%08d",its);
+            PetscObjectSetName((PetscObject)(u[its]),dsname);
+            VecView(u[its],viewer); 
+        }
+        VecSet(step,its);
+        PetscObjectSetName((PetscObject)(step),"step");
+        VecView(step,viewer); 
+        PetscViewerHDF5PopGroup(viewer);
     }
+    else
+    {
+        file_id=H5Fopen(fname,H5F_ACC_RDONLY,H5P_DEFAULT);
+        group_id=H5Gopen(file_id,"/u_t",H5P_DEFAULT);
+        dataset_id=H5Dopen(group_id,"step",H5P_DEFAULT);
+        H5Dread(dataset_id,H5T_NATIVE_INT32,H5S_ALL,H5S_ALL,H5P_DEFAULT,&istep);
+        H5Gclose(group_id);
+        H5Fclose(file_id);      
 
-    PetscViewerHDF5PopGroup(viewerO);
+        its=istep;
+        sprintf(dsname, "%08d",its);
+        printf("dsname:%s\n",dsname);
+        PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_UPDATE,&viewer);
+        PetscViewerHDF5PushGroup(viewer,"/u_t");     
+        PetscObjectSetName((PetscObject)(u[its]),dsname);
+        VecLoad(u[its],viewer);
+        printf("istep=%d\n",istep);    
+        VecView(u[its],PETSC_VIEWER_STDOUT_WORLD);
 
+        while(its<maxIts)
+        {
+            MatMultAdd(A,u[its],b,u[its+1]);
+            its++;
+            sprintf(dsname, "%08d",its);
+            PetscObjectSetName((PetscObject)(u[its]),dsname);
+            VecView(u[its],viewer); 
 
-    MatView(A,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(b,PETSC_VIEWER_STDOUT_WORLD);
-    VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);
+        }
+        VecSet(step,its);
+        PetscObjectSetName((PetscObject)(step),"step");
+        VecView(step,viewer); 
+
+        PetscViewerHDF5PopGroup(viewer);
+    }
+    
+
+    // MatView(A,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(b,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);
 
     VecDestroy(&u_0);
-    PetscViewerDestroy(&viewerI);
+    PetscViewerDestroy(&viewer);
    
     PetscFinalize();
     return 0;

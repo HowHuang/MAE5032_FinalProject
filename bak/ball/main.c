@@ -6,8 +6,8 @@
 int main(int argc, char** argv)
 {   
     //~ generate the input data to HDF5 file
-    if(strcmp(argv[1],"generate")==0)
-        Generate(argc-1,argv+1);
+    if(strcmp(argv[1],"generator")==0)
+        Generator(argc-1,argv+1);
 
     //~ iteration by explicit method
     else if(strcmp(argv[1],"explicit")==0)

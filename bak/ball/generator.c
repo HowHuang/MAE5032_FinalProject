@@ -22,7 +22,7 @@ static char help[] = "Generate the  input data. \n \
 
 #include <petsc.h>
 
-int main(int argc, char** argv)
+int Gnerator(int argc, char** argv)
 {
     PetscInt        i, n, maxIts;
     PetscScalar     g, gl, gr, gt, gb;
@@ -109,6 +109,7 @@ int main(int argc, char** argv)
     
     if(rank==0)
     {   
+        printf("Setting finished for parameters. n:   %g\n",n);
         for(i=0;i<7;i++)
             ip[i]=i;
         vp[0]=dt;   vp[1]=dl;   vp[2]=rho;
@@ -121,7 +122,7 @@ int main(int argc, char** argv)
         printf("Setting finished for parameters. c:   %g\n",c);
         printf("Setting finished for parameters. k:   %g\n",k);
         printf("Setting finished for parameters. f:   %g\n",f);
-        printf("Setting finished for parameters. n:   %d\n",n);
+        printf("Setting finished for parameters. n:   %g\n",n);
     }
     if(u0<0)
     {
@@ -153,14 +154,14 @@ int main(int argc, char** argv)
             {
                 VecSet(g_l,gl);
                 VecSet(h_l,0.0);
-                VecSet(t_l,1.0);
+                VecSet(t_l,0.0);
                 PetscPrintf(comm,"Setting finished for the left face of g: %g.\n",gl);
             }
             else
             {
                 VecSet(g_l,0.0);
                 VecSet(h_l,hl);
-                VecSet(t_l,2.0);
+                VecSet(t_l,1.0);
                 PetscPrintf(comm,"Setting finished for the left face of h: %g.\n",hl);
             }
 
@@ -168,14 +169,14 @@ int main(int argc, char** argv)
             {
                 VecSet(g_r,gr);
                 VecSet(h_r,0.0);
-                VecSet(t_r,1.0);
+                VecSet(t_r,0.0);
                 PetscPrintf(comm,"Setting finished for the right face of g: %g.\n",gr);
             }
             else
             {
                 VecSet(g_r,0.0);
                 VecSet(h_r,hr);
-                VecSet(t_r,2.0);
+                VecSet(t_r,1.0);
                 PetscPrintf(comm,"Setting finished for the right face of h: %g.\n",hr);
             }            
 
@@ -183,14 +184,14 @@ int main(int argc, char** argv)
             {
                 VecSet(g_t,gt);
                 VecSet(h_t,0.0);
-                VecSet(t_t,1.0);
+                VecSet(t_t,0.0);
                 PetscPrintf(comm,"Setting finished for the top face of g: %g.\n",gt);
             }
             else
             {
                 VecSet(g_t,0.0);
                 VecSet(h_t,ht);
-                VecSet(t_t,2.0);
+                VecSet(t_t,1.0);
                 PetscPrintf(comm,"Setting finished for the top face of h: %g.\n",ht);
             }    
 
@@ -198,14 +199,14 @@ int main(int argc, char** argv)
             {
                 VecSet(g_b,gb);
                 VecSet(h_b,0.0);
-                VecSet(t_b,1.0);
+                VecSet(t_b,0.0);
                 PetscPrintf(comm,"Setting finished for the bottom face of g: %g.\n",gb);
             }
             else
             {
                 VecSet(g_b,0.0);
                 VecSet(h_b,hb);
-                VecSet(t_b,2.0);
+                VecSet(t_b,1.0);
                 PetscPrintf(comm,"Setting finished for the bottom face of h: %g.\n",hb);
             }                    
         }
@@ -217,19 +218,19 @@ int main(int argc, char** argv)
     }
     else if(g!=0)
     {
-        VecSet(g_b,g);  VecSet(h_b,0.0);    VecSet(t_b,1.0);
-        VecSet(g_t,g);  VecSet(h_t,0.0);    VecSet(t_t,1.0);
-        VecSet(g_l,g);  VecSet(h_l,0.0);    VecSet(t_l,1.0);
-        VecSet(g_r,g);  VecSet(h_r,0.0);    VecSet(t_r,1.0);
+        VecSet(g_b,g);  VecSet(h_b,0.0);    VecSet(t_b,0.0);
+        VecSet(g_t,g);  VecSet(h_t,0.0);    VecSet(t_t,0.0);
+        VecSet(g_l,g);  VecSet(h_l,0.0);    VecSet(t_l,0.0);
+        VecSet(g_r,g);  VecSet(h_r,0.0);    VecSet(t_r,0.0);
         PetscPrintf(comm,"Setting finished for g of all the boundary: %g.\n",g);
 
     }
     else 
     {
-        VecSet(g_b,0.0);  VecSet(h_b,h);    VecSet(t_b,2.0);
-        VecSet(g_t,0.0);  VecSet(h_t,h);    VecSet(t_t,2.0);
-        VecSet(g_l,0.0);  VecSet(h_l,h);    VecSet(t_l,2.0);
-        VecSet(g_r,0.0);  VecSet(h_r,h);    VecSet(t_r,2.0);
+        VecSet(g_b,0.0);  VecSet(h_b,h);    VecSet(t_b,1.0);
+        VecSet(g_t,0.0);  VecSet(h_t,h);    VecSet(t_t,1.0);
+        VecSet(g_l,0.0);  VecSet(h_l,h);    VecSet(t_l,1.0);
+        VecSet(g_r,0.0);  VecSet(h_r,h);    VecSet(t_r,1.0);
         PetscPrintf(comm,"Setting finished for h of all the boundary: %g.\n",h);
     }
 
