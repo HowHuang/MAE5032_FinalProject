@@ -13,7 +13,8 @@
 #include "vtkXMLPolyDataWriter.h"
 #include "vtkXMLGenericDataObjectReader.h"
 
-#include "vtkHDFReader.h"
+#include "H5pubconf.h"
+#include "vtk_hdf5.h"
 
 int main(int argc, char * argv[])
 {
