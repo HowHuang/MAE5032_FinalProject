@@ -100,3 +100,258 @@ PS:
 
 Read file <TEST.err> for stderr output of this job.
 
+Sender: LSF System <lsfadmin@r13n45>
+Subject: Job 3823386: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 16:24:57 2022.
+Job was executed on host(s) <r13n45>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 16:24:57 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 16:24:57 2022.
+Terminated at Tue Jun  7 16:24:58 2022.
+Results reported at Tue Jun  7 16:24:58 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.11 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            1 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n45>
+Subject: Job 3823405: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 16:26:58 2022.
+Job was executed on host(s) <r13n45>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 16:27:00 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 16:27:00 2022.
+Terminated at Tue Jun  7 16:27:01 2022.
+Results reported at Tue Jun  7 16:27:01 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.11 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   0 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n46>
+Subject: Job 3823614: <vtk> in cluster <sustchpc> Exited
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 17:02:22 2022.
+Job was executed on host(s) <r13n46>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 17:02:23 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 17:02:23 2022.
+Terminated at Tue Jun  7 17:02:24 2022.
+Results reported at Tue Jun  7 17:02:24 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Exited with exit code 139.
+
+Resource usage summary:
+
+    CPU time :                                   0.13 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            2 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n44>
+Subject: Job 3823687: <vtk> in cluster <sustchpc> Exited
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 17:13:55 2022.
+Job was executed on host(s) <r13n44>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 17:13:55 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 17:13:55 2022.
+Terminated at Tue Jun  7 17:13:56 2022.
+Results reported at Tue Jun  7 17:13:56 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Exited with exit code 139.
+
+Resource usage summary:
+
+    CPU time :                                   0.13 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            1 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n46>
+Subject: Job 3823704: <vtk> in cluster <sustchpc> Exited
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 17:15:21 2022.
+Job was executed on host(s) <r13n46>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Tue Jun  7 17:15:22 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build> was used as the working directory.
+Started at Tue Jun  7 17:15:22 2022.
+Terminated at Tue Jun  7 17:15:24 2022.
+Results reported at Tue Jun  7 17:15:24 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 1
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+module load mpi/intel/2020.4
+
+./vtkHDF > visualization_TEST.log 2>&1
+------------------------------------------------------------
+
+Exited with exit code 139.
+
+Resource usage summary:
+
+    CPU time :                                   0.13 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
