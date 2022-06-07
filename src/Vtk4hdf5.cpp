@@ -13,6 +13,7 @@
 #include "vtkRenderer.h"
 #include "vtkNamedColors.h"
 #include "vtkCamera.h"
+#include "vtkWarpScalar.h"
 #include "vtkXMLPolyDataWriter.h"
 
 #include "vtk_hdf5.h"
@@ -115,7 +116,7 @@ int main(int argc, char * argv[])
   /*GetBounds() Return a pointer to the geometry bounding box in the form 
     (xmin,xmax, ymin, ymax, zmin, zmax).
     */
-  printf("The min and max of u : %f and %f", bounds[4], bounds[5]);
+  printf("The min and max of u : %f and %f\n", bounds[4], bounds[5]);
 
   // Add the grid points to a polydata object
   vtkPolyData * inputPolyData = vtkPolyData::New();
@@ -181,9 +182,15 @@ int main(int argc, char * argv[])
   /*****************
    * Setup outputs *
    * ***************/
+  // Map the output zvalues to the z-coordinates of the data
+  vtkWarpScalar * warpScalar = vtkWarpScalar::New();
+  warpScalar -> SetInputConnection(delaunay->GetOutputPort());
+  warpScalar -> Update();
+
   vtkXMLPolyDataWriter * writer = vtkXMLPolyDataWriter::New();
   writer -> SetFileName("Test.vtp");
   writer -> SetInputData(output);
+  writer -> SetInputConnection(warpScalar->GetOutputPort());
   writer -> Write();
 
   /***********************
