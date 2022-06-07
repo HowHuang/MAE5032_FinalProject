@@ -1,9 +1,13 @@
 # MAE5032_FinalProject
+```bash
+mpirun -np X ./program [FUNCTION] [PARAMETERS]
+```
+
 ## Gnerator
 
 需要指定FUNCTIONS为generator
 
-```
+```bash
 mpirun -np 4 ./main.out generator [PARAMETERS]
 ```
 
@@ -11,6 +15,8 @@ mpirun -np 4 ./main.out generator [PARAMETERS]
 
 | PARAMETERS | 说明                                                     |
 | ---------- | -------------------------------------------------------- |
+| -fname     | 指定文件名                                               |
+| -n         | 指定矩阵规模，为dl的倒数                                 |
 | -g         | 指定所有边界给定g，使用给定的g的值                       |
 | -h         | 指定所有边界给定h，使用给定的h的值h                      |
 | -gl        | 指定左边界给定g，其他边同理(gr, gt, gb)                  |
@@ -23,8 +29,6 @@ mpirun -np 4 ./main.out generator [PARAMETERS]
 | -k         | 指定conductivity                                         |
 | -f         | 指定heat supply                                          |
 | -u0        | 指定初始平面温度                                         |
-| -fname     | 指定文件名                                               |
-| -n         | 指定矩阵规模，为dl的倒数                                 |
 
 
 
@@ -40,8 +44,27 @@ mpirun -np 4 ./main.out explicit [PARAMETERS]
 
 | PARAMETERS | 说明                             |
 | ---------- | -------------------------------- |
+| -fname     | 指定存储信息的HDF5文件名         |
 | -maxItsW   | 多次重启任务中，最大迭代次数     |
 | -maxIts    | 该次任务中，累计最大迭代次数     |
 | -restart   | 0代表非重启型任务，1代表重启任务 |
+
+
+
+## Implicit
+
+需要指定FUNCTIONS为implicit
+
+```bash
+mpirun -np 4 ./main.out imxplicit [PARAMETERS]
+```
+
+**PARAMETERS**
+
+| PARAMETERS | 说明                             |
+| ---------- | -------------------------------- |
 | -fname     | 指定存储信息的HDF5文件名         |
+| -maxItsW   | 多次重启任务中，最大迭代次数     |
+| -maxIts    | 该次任务中，累计最大迭代次数     |
+| -restart   | 0代表非重启型任务，1代表重启任务 |
 

@@ -539,13 +539,10 @@ int Explicit(int argc,char **argv)
 
         its=istep;
         sprintf(dsname, "%08d",its);
-        printf("dsname:%s\n",dsname);
         PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_UPDATE,&viewer);
         PetscViewerHDF5PushGroup(viewer,"/u_t");     
         PetscObjectSetName((PetscObject)(u[its]),dsname);
         VecLoad(u[its],viewer);
-        printf("istep=%d\n",istep);    
-        VecView(u[its],PETSC_VIEWER_STDOUT_WORLD);
 
         while(its<maxIts)
         {
