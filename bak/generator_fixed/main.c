@@ -6,7 +6,7 @@ static char help[] = "Generate the fixed input data. \n \
             -u0: specify the init(T=0) value of u ";
 
 #include <petsc.h>
-
+#include <hdf5.h>
 int main(int argc,char **argv)
 {
     Vec            g_b,g_t,g_l,g_r;

@@ -12,10 +12,10 @@ typedef struct InputPara
 
 typedef struct Bound
 {
-    PetscScalar ub;     PetscScalar hb;
-    PetscScalar ut;     PetscScalar ht;
-    PetscScalar ul;     PetscScalar hl;
-    PetscScalar ur;     PetscScalar hr;    
+    PetscScalar ub;     PetscScalar hb;     PetscScalar tb;
+    PetscScalar ut;     PetscScalar ht;     PetscScalar tt;
+    PetscScalar ul;     PetscScalar hl;     PetscScalar tl;
+    PetscScalar ur;     PetscScalar hr;     PetscScalar tr;
 }Bound; // ~ for a point
 
 typedef struct IterMaterial
@@ -25,14 +25,14 @@ typedef struct IterMaterial
     PetscScalar P;      PetscScalar b;
 }IterMaterial;
 
-typedef enum Location
+enum Location
 {
     RightTop    = 1,    TopSide     = 2,
     LeftTop     = 3,    LeftSide    = 4,
     LeftBottom  = 5,    BottomSide  = 6,
     RightBottom = 7,    RightSide   = 8,
     Internal    = 9
-}Location;
+};
 
 void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc);
 
