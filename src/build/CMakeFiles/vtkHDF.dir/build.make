@@ -82,6 +82,9 @@ vtkHDF: CMakeFiles/vtkHDF.dir/build.make
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkhdf5-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkhdf5_hl-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkFiltersModeling-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOXML-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOXMLParser-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkexpat-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOImage-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkDICOMParser-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkmetaio-8.2.so.1
@@ -97,6 +100,10 @@ vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkRenderingFreeType-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkfreetype-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkRenderingGL2PSOpenGL2-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkgl2ps-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOCore-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkdoubleconversion-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtklz4-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtklzma-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkImagingCore-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkRenderingOpenGL2-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkRenderingCore-8.2.so.1

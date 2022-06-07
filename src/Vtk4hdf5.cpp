@@ -1,40 +1,20 @@
-#define FILE "../default.hdf5"
-#define GROUP "u_t"
+#include "vtkFloatArray.h"
+#include "vtkPoints.h"
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
+#include <math.h>
 #include <stdlib.h>
 
-#include <vtkActor.h>
-#include <vtkCamera.h>
-#include <vtkCellArray.h>
-#include <vtkDEMReader.h>
-#include <vtkFitToHeightMapFilter.h>
-#include <vtkImageData.h>
-#include <vtkImageDataGeometryFilter.h>
-#include <vtkLookupTable.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkPlaneSource.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkProbeFilter.h>
-#include <vtkProperty.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-#include <vtkTriangleFilter.h>
-#include <vtkWarpScalar.h>
+#define FILE "../default.hdf5"
+#define GROUP "u_t"
 
 int main(int argc, char * argv[])
 {
   htri_t              file_test;
   hid_t               file_id, group_id, dataset_id;
-  hid_t               data;
   hsize_t             ds_num, ds_size;
   herr_t              status;
-  int                 da_size;
   char                dsname[10000];
   
   if((file_test = H5Fis_hdf5(FILE)) > 0)
@@ -80,46 +60,64 @@ int main(int argc, char * argv[])
   sprintf(dsname, "%08d", 0);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size = H5Dget_storage_size(dataset_id);
+  printf("The number of data in each dataset: %d\n", ds_size/sizeof(double));
   /*
     another way to get the u_t's size:
     */
+    //int       da_size;
     //da_size = ds_size/sizeof(double);
     //double    u_t[da_size];
     //std::cout << da_size << std::endl;
-  std::cout << ds_size << std::endl;
+  
   double    *u_t = (double*)malloc(ds_size);
+  // status = H5Dclose(dataset_id);               ///暂时注释，指读一个dataset测试
+
+  //declare vkt objects
+  int        n = sqrt(ds_size/sizeof(double));
+  double     delta = 1.0/n;
+
+  printf("The partitioning n for data is: %d*%d\n", n, n);
+
+  vtkFloatArray * zvalues = vtkFloatArray::New();
+  zvalues -> SetName("UValues");
+  
+  vtkPoints * points = vtkPoints::New();
+  points -> SetDataTypeToDouble();
+
+  for(int i=0; i<n; ++i)
+  {
+    for(int j=0; j<n; ++j)
+    {
+      points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,0);
+      zvalues -> InsertNextValue(u_t[i*n+j]);
+      // std::cout << delta/2+i*delta << std::endl;
+    }
+  }
+  
+  
   status = H5Dclose(dataset_id);
 
-  //declare vkt objects 
-  vtkNew<vtkFloatArray>    zvalues;
 
+  // for(int img = 1; img < ds_num-1; ++img)
+  // {
+  //   sprintf(dsname, "%08d", img);
+  //   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
 
-  for(int img = 1; img < ds_num-1; ++img)
-  {
-    sprintf(dsname, "%08d", img);
-    dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
-
-    ds_size = H5Dget_storage_size(dataset_id);
+  //   ds_size = H5Dget_storage_size(dataset_id);
     
-    status = H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,u_t);
+  //   status = H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,u_t);
 
 
 
-
-
-
-
-
-
-    status = H5Dclose(dataset_id);
-    printf("dataset was opened.\n");
-  }
+  //   status = H5Dclose(dataset_id);
+  //   printf("dataset was opened.\n");
+  // }
   
 
 
+  
 
-
-
+  points -> Delete();
 
   // 
 

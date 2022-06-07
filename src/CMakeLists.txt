@@ -17,6 +17,7 @@ find_package(VTK COMPONENTS
   vtkFiltersGeometry
   vtkFiltersModeling
   vtkFiltersSources
+  vtkIOXML
   vtkIOImage
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
