@@ -1,5 +1,5 @@
-#ifndef _EXPLICIT_H_
-#define _EXPLICIT_H_
+#ifndef _PLICIT_H_
+#define _PLICIT_H_
 
 #include <petsc.h>
 #include <hdf5.h>
