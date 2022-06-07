@@ -27,30 +27,32 @@ static char help[] = "Generate the  input data. \n \
 int Generator(int argc, char** argv)
 {
     PetscInt        i, n;
-    PetscScalar     g, gl, gr, gt, gb;
-    PetscScalar     h, hl, hr, ht, hb;
-    PetscScalar     u0;
-    PetscScalar     f, dl, dt, k, rho, c;
+    PetscScalar     g, gl, gr, gt, gb;      //指定边界条件
+    PetscScalar     h, hl, hr, ht, hb;      //指定边界条件
+    PetscScalar     u0;                     //初始温度
+    PetscScalar     f, dl, dt, k, rho, c;   //物理参数
     PetscMPIInt     rank;
     MPI_Comm        comm;
     PetscViewer     viewer;
     PetscChar       fname[PETSC_MAX_PATH_LEN]="default.hdf5";
 
-    Vec             g_b,g_t,g_l,g_r;
+    Vec             g_b,g_t,g_l,g_r;        //存储边界条件及初始温度
     Vec             h_b,h_t,h_l,h_r;
     Vec             t_b,t_t,t_l,t_r;
     Vec             u_0;
 
-    Vec             paras;    
+    Vec             paras;                  //存储参数
     PetscInt        ip[7];
     PetscScalar     vp[7];
 
-    g=gl=gr=gt=gb=0; //specify -1 for random input
+    g=gl=gr=gt=gb=0; 
     h=hl=hr=ht=hb=0;
 
     PetscInitialize(&argc, &argv, (char*) 0, help);  
     comm = PETSC_COMM_WORLD;
     MPI_Comm_rank(comm, &rank);
+
+    // 通过命令行参数指定各参数。
 
     PetscOptionsGetInt(NULL,NULL, "-n", &n, NULL);
 
@@ -102,12 +104,14 @@ int Generator(int argc, char** argv)
     VecSetSizes(u_0,PETSC_DECIDE,n*n);
     VecSetFromOptions(u_0);
 
+    // 如果空间分辨率与问题规模不互为倒数，则退出
     if(dl*n!=1.0)
     {
         PetscPrintf(comm,"n and dl should be reciprocals of each other.\n");
         return -1;
     }
     
+    // 将命令行指定的部分参数写入一个vec中方便存储
     if(rank==0)
     {   
         for(i=0;i<7;i++)
@@ -124,7 +128,9 @@ int Generator(int argc, char** argv)
         printf("Setting finished for parameters. f:   %g\n",f);
         printf("Setting finished for parameters. n:   %d\n",n);
     }
-    if(u0<0)
+
+    // 温度不能为负数
+    if(u0<0||g<0||gl<0||gr<0||gt<0||gb<0)
     {
         PetscPrintf(comm,"Temperature(K) can not be negative.\n");
         return -1;
@@ -135,6 +141,7 @@ int Generator(int argc, char** argv)
         PetscPrintf(comm,"Setting finished for the initial u0: %g.\n",u0);
     }
 
+    // 通过用户输入的命令行参数来生成边界条件的vec
     if(g==0&&h==0)
     {
         if((gl==0&&hl==0)||(gr==0&&hr==0)||(gb==0&&hb==0)||(gt==0&&ht==0))
@@ -234,6 +241,7 @@ int Generator(int argc, char** argv)
         PetscPrintf(comm,"Setting finished for h of all the boundary: %g.\n",h);
     }
 
+    // 将边界条件存储到HDF5文件中
     PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_WRITE,&viewer);
     PetscViewerHDF5PushGroup(viewer,"/boundary");
 

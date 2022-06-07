@@ -3,18 +3,22 @@
 #include <hdf5.h>
 #include "plicit.h"
 
+// 根据给定的边界条件和物理参数，计算对应点关联系数矩阵行及右手向量中的元素值
 void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
 {
     //~ InputPara       Known;
     //~ bound           Known;
     //~ IterMaterial    Unknown;
+    // 计算右手向量b中的温度热源部分、热流热源部分和热补给部分。
     PetscScalar base = (IP->k * IP->dt) / (IP->rho * IP->c * PetscPowScalar(IP->dl,2));
     PetscScalar partF = IP->f * IP->dt / (IP->rho * IP->c);
     PetscScalar partH = bound->hb * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
                         bound->ht * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
                         bound->hl * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
                         bound->hr * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
-    PetscScalar partU = 2 * base * (bound->ut + bound->ur + bound->ub + bound->ul);                    
+    PetscScalar partU = 2 * base * (bound->ut + bound->ur + bound->ub + bound->ul);      
+
+    // 根据不同的位置对系数矩阵和右手向量进行特别计算              
     switch (loc)
     {
     case RightTop:
@@ -29,18 +33,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1)*base;
         else 
             IM->P = 1-(1+1+2)*base;
-       
-        // if(bound->ut!=0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ut==0 && bound->ur==0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if (bound->ut==0 && bound->ur==0 && (bound->ht!=0 || bound->hr==0))
-        //     IM->P = 1-(1+1)*base;
-        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -56,17 +48,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1)*base;
         else 
             IM->P = 1-(1+1+2)*base;         
-        // if(bound->ut!=0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ut==0 && bound->ul==0 && bound->ht==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if (bound->ut==0 && bound->ul==0 && (bound->ht!=0 || bound->hl==0))
-        //     IM->P = 1-(1+1)*base;
-        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -81,18 +62,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1)*base;
         else 
             IM->P = 1-(1+1+2)*base;
-
-        // if(bound->ub!=0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ub==0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ub==0 && bound->ul==0 && bound->hb==0 && bound->hl==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if (bound->ub==0 && bound->ul==0 && (bound->hb!=0 || bound->hl==0))
-        //     IM->P = 1-(1+1)*base;
-        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -108,18 +77,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1)*base;
         else 
             IM->P = 1-(1+1+2)*base;    
-
-        // if(bound->ub!=0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ub==0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ub==0 && bound->ur==0 && bound->hb==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if (bound->ub==0 && bound->ur==0 && (bound->hb!=0 || bound->hr==0))
-        //     IM->P = 1-(1+1)*base;
-        // else printf("u and h can not be both given at same boundary");
     }
     break;
 
@@ -134,11 +91,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1+1+2)*base;    
         else
             IM->P = 1-(1+1+1)*base;   
-        // if(bound->hr==0)
-        //     IM->P = 1-(1+1+1+2)*base;
-        // else if (bound->hr!=0 && bound->ur==0)
-        //     IM->P = 1-(1+1+1)*base;
-        // else printf("u and h can not be both given at same boundary\n");
     }
     break;
 
@@ -153,12 +105,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1+1+2)*base;    
         else
             IM->P = 1-(1+1+1)*base;   
-
-        // if(bound->ht==0)
-        //     IM->P = 1-(1+1+1+2)*base;
-        // else if(bound->ht!=0 && bound->ut==0)
-        //     IM->P = 1-(1+1+1)*base;
-        // else printf("u and h can not be both given at same boundary\n");
     }
     break;
 
@@ -173,12 +119,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1+1+2)*base;    
         else
             IM->P = 1-(1+1+1)*base;    
-
-        // if(bound->hl==0)
-        //     IM->P = 1-(1+1+1+2)*base;
-        // else if(bound->hl!=0 && bound->ul==0)
-        //     IM->P = 1-(1+1+1)*base;
-        // else printf("u and h can not be both given at same boundary\n");
     }   
     break;
 
@@ -193,12 +133,6 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
             IM->P = 1-(1+1+1+2)*base;    
         else
             IM->P = 1-(1+1+1)*base; 
-
-        // if(bound->hb==0)
-        //     IM->P = 1-(1+1+1+2)*base;
-        // else if(bound->hb!=0 && bound->ub==0)
-        //     IM->P = 1-(1+1+1)*base;
-        // else printf("u and h can not be both given at same boundary\n");
     }    
     break;
 
@@ -221,8 +155,8 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
     
 int Explicit(int argc,char **argv)
 {
-    Vec             u_0,b,u_t,u_tplus,temp;  //DIM = (n*n) x 1
-    Mat             A;                  //DIM = (n*n) x (n*n)
+    Vec             u_0,b,u_t,u_tplus,temp;     //DIM = (n*n) x 1
+    Mat             A;                          //DIM = (n*n) x (n*n)
     PetscViewer     viewer;    
     PetscMPIInt     rank,size;
     PetscInt        i, j, r, n = 10;
@@ -234,16 +168,17 @@ int Explicit(int argc,char **argv)
     PetscInt        col[5];
     PetscScalar     value[5];
 
-    InputPara       IP; //PetscScalar     dt,dl,rho,c,k,f;
+    InputPara       IP; 
     Bound           bound;
     IterMaterial    IM;
-    enum Location   loc;
+    Location        loc;
 
     PetscScalar     *g_b, *g_t, *g_l, *g_r;
     PetscScalar     *h_b, *h_t, *h_l, *h_r;
     PetscScalar     *t_b, *t_t, *t_l, *t_r;
 
     PetscScalar     paras[7];
+    
     // iteration parts
     PetscInt        its=0 , maxIts = 100, maxItsW = 1000;
     Vec             *u; 
