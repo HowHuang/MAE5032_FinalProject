@@ -1,18 +1,18 @@
-PROJECT(vtk-demo)
+PROJECT(vtk-HDF)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
-SET(MPI_DIR /share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi)
-find_package(MPI REQUIRED)
 SET(VTK_DIR /work/ese-huangh/lib/VTK-8.2.0/lib64/cmake/vtk-8.2)
 FIND_PACKAGE(VTK COMPONENTS vtkCommonCore vtkCommonSystem
-  vtkCommonMisc vtkCommonMath vtkIOCore vtkIOLegacy vtkIOXML vtkIOParallelXML REQUIRED)
+  vtkCommonMisc vtkCommonMath vtkIOCore vtkIOLegacy
+  vtkIOXML vtkIOParallelXML vtkhdf5 REQUIRED)
 
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS})
-include_directories(${MPI_INCLUDE_PATH})
+INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5)
+INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/src)
+INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/hl/src)
 
-ADD_EXECUTABLE( vtkTESTmpi t6_cube4tet_TESTmpi.cpp )
-TARGET_LINK_LIBRARIES( vtkTESTmpi ${VTK_LIBRARIES} )
-target_link_libraries( vtkTESTmpi ${MPI_LIBRARIES} )
+ADD_EXECUTABLE( vtkHDF Vtk4hdf5.cpp )
+TARGET_LINK_LIBRARIES( vtkHDF ${VTK_LIBRARIES} )
 
 # EOF
