@@ -3,7 +3,7 @@
 #include <hdf5.h>
 #include "plicit.h"
 
-void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
+void ImplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
 {
     //~ InputPara       Known;
     //~ bound           Known;
@@ -24,23 +24,11 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;     
 
         if(bound->tr==1 && bound->tt==1)
-            IM->P = 1-(1+1+2+2)*base;
+            IM->P = 1+(1+1+2+2)*base;
         else if (bound->tr==2 && bound->tt==2)
-            IM->P = 1-(1+1)*base;
+            IM->P = 1+(1+1)*base;
         else 
-            IM->P = 1-(1+1+2)*base;
-       
-        // if(bound->ut!=0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ut==0 && bound->ur!=0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2)*base;
-        // else if(bound->ut==0 && bound->ur==0 && bound->ht==0 && bound->hr==0)
-        //     IM->P = 1-(1+1+2+2)*base;
-        // else if (bound->ut==0 && bound->ur==0 && (bound->ht!=0 || bound->hr==0))
-        //     IM->P = 1-(1+1)*base;
-        // else printf("u and h can not be both given at same boundary");
+            IM->P = 1+(1+1+2)*base;
     }
     break;
 
@@ -51,11 +39,11 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;   
 
         if(bound->tl==1 && bound->tt==1)
-            IM->P = 1-(1+1+2+2)*base;
+            IM->P = 1+(1+1+2+2)*base;
         else if (bound->tl==2 && bound->tt==2)
-            IM->P = 1-(1+1)*base;
+            IM->P = 1+(1+1)*base;
         else 
-            IM->P = 1-(1+1+2)*base;         
+            IM->P = 1+(1+1+2)*base;         
         // if(bound->ut!=0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
         //     IM->P = 1-(1+1+2+2)*base;
         // else if(bound->ut==0 && bound->ul!=0 && bound->ht==0 && bound->hl==0)
@@ -76,11 +64,11 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->S = base;
         IM->b = partF + partU + partH;   
         if(bound->tl==1 && bound->tb==1)
-            IM->P = 1-(1+1+2+2)*base;
+            IM->P = 1+(1+1+2+2)*base;
         else if (bound->tl==2 && bound->tb==2)
-            IM->P = 1-(1+1)*base;
+            IM->P = 1+(1+1)*base;
         else 
-            IM->P = 1-(1+1+2)*base;
+            IM->P = 1+(1+1+2)*base;
 
         // if(bound->ub!=0 && bound->ul!=0 && bound->hb==0 && bound->hl==0)
         //     IM->P = 1-(1+1+2+2)*base;
@@ -103,11 +91,11 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;  
 
         if(bound->tr==1 && bound->tb==1)
-            IM->P = 1-(1+1+2+2)*base;
+            IM->P = 1+(1+1+2+2)*base;
         else if (bound->tr==2 && bound->tb==2)
-            IM->P = 1-(1+1)*base;
+            IM->P = 1+(1+1)*base;
         else 
-            IM->P = 1-(1+1+2)*base;    
+            IM->P = 1+(1+1+2)*base;    
 
         // if(bound->ub!=0 && bound->ur!=0 && bound->hb==0 && bound->hr==0)
         //     IM->P = 1-(1+1+2+2)*base;
@@ -131,9 +119,9 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;   
 
         if(bound->tr==1)
-            IM->P = 1-(1+1+1+2)*base;    
+            IM->P = 1+(1+1+1+2)*base;    
         else
-            IM->P = 1-(1+1+1)*base;   
+            IM->P = 1+(1+1+1)*base;   
         // if(bound->hr==0)
         //     IM->P = 1-(1+1+1+2)*base;
         // else if (bound->hr!=0 && bound->ur==0)
@@ -150,9 +138,9 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;   
 
         if(bound->tt==1)
-            IM->P = 1-(1+1+1+2)*base;    
+            IM->P = 1+(1+1+1+2)*base;    
         else
-            IM->P = 1-(1+1+1)*base;   
+            IM->P = 1+(1+1+1)*base;   
 
         // if(bound->ht==0)
         //     IM->P = 1-(1+1+1+2)*base;
@@ -170,9 +158,9 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;  
 
         if(bound->tl==1)
-            IM->P = 1-(1+1+1+2)*base;    
+            IM->P = 1+(1+1+1+2)*base;    
         else
-            IM->P = 1-(1+1+1)*base;    
+            IM->P = 1+(1+1+1)*base;    
 
         // if(bound->hl==0)
         //     IM->P = 1-(1+1+1+2)*base;
@@ -190,9 +178,9 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->b = partF + partU + partH;   
 
         if(bound->tb==1)
-            IM->P = 1-(1+1+1+2)*base;    
+            IM->P = 1+(1+1+1+2)*base;    
         else
-            IM->P = 1-(1+1+1)*base; 
+            IM->P = 1+(1+1+1)*base; 
 
         // if(bound->hb==0)
         //     IM->P = 1-(1+1+1+2)*base;
@@ -209,7 +197,7 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
         IM->E = base;
         IM->W = base;
         IM->S = base;
-        IM->P = 1-4*base;
+        IM->P = 1+4*base;
     }    
     break;
 
@@ -219,10 +207,10 @@ void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, en
 
 }
     
-int Explicit(int argc,char **argv)
+int Implicit(int argc,char **argv)
 {
-    Vec             u_0,b,u_t,u_tplus,temp;  //DIM = (n*n) x 1
-    Mat             A;                  //DIM = (n*n) x (n*n)
+    Vec             u_0,b,u_t,u_tplus,temp;     //DIM = (n*n) x 1
+    Mat             A;                          //DIM = (n*n) x (n*n)
     PetscViewer     viewer;    
     PetscMPIInt     rank,size;
     PetscInt        i, j, r, n = 10;
@@ -233,7 +221,8 @@ int Explicit(int argc,char **argv)
     PetscChar       dsname[PETSC_MAX_PATH_LEN]="default";
     PetscInt        col[5];
     PetscScalar     value[5];
-
+    KSP             ksp;
+    PC              pc;
     InputPara       IP; //PetscScalar     dt,dl,rho,c,k,f;
     Bound           bound;
     IterMaterial    IM;
@@ -372,9 +361,9 @@ int Explicit(int argc,char **argv)
                         bound.ub=0;     bound.hb=0;     bound.tb=0;
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
 
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r;col[1]=r+1;col[2]=r+n;
-                        value[0]=IM.P;value[1]=IM.E;value[2]=IM.S;
+                        value[0]=IM.P;value[1]=-IM.E;value[2]=-IM.S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES); 
                         VecSetValue(b,r,IM.b,INSERT_VALUES);
                     }
@@ -385,9 +374,9 @@ int Explicit(int argc,char **argv)
                         bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
                         bound.ub=0;     bound.hb=0;     bound.tb=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+n;
-                        value[0]=IM.W;value[1]=IM.P;value[2]=IM.S;
+                        value[0]=-IM.W;value[1]=IM.P;value[2]=-IM.S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);   
                         VecSetValue(b,r,IM.b,INSERT_VALUES);       
                     }
@@ -398,9 +387,9 @@ int Explicit(int argc,char **argv)
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
                         bound.ub=0;     bound.hb=0;     bound.tb=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
-                        value[0]=IM.W;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
+                        value[0]=-IM.W;value[1]=IM.P;value[2]=-IM.E;value[3]=-IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
                         VecSetValue(b,r,IM.b,INSERT_VALUES);              
                     }
@@ -414,9 +403,9 @@ int Explicit(int argc,char **argv)
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;
-                        value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;
+                        value[0]=-IM.N;value[1]=IM.P;value[2]=-IM.E;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);  
                         VecSetValue(b,r,IM.b,INSERT_VALUES);                                   
                     }
@@ -427,9 +416,9 @@ int Explicit(int argc,char **argv)
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;
-                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;
+                        value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);      
                         VecSetValue(b,r,IM.b,INSERT_VALUES);                                     
                     }
@@ -440,9 +429,9 @@ int Explicit(int argc,char **argv)
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
-                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;
+                        value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;value[3]=-IM.E;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);  
                         VecSetValue(b,r,IM.b,INSERT_VALUES);                                       
                     }
@@ -456,9 +445,9 @@ int Explicit(int argc,char **argv)
                         bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
-                        value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
+                        value[0]=-IM.N;value[1]=IM.P;value[2]=-IM.E;value[3]=-IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
                         VecSetValue(b,r,IM.b,INSERT_VALUES);
 
@@ -470,9 +459,9 @@ int Explicit(int argc,char **argv)
                         bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
-                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.S;
+                        value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;value[3]=-IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
                         VecSetValue(b,r,IM.b,INSERT_VALUES);                  
                     }
@@ -483,9 +472,9 @@ int Explicit(int argc,char **argv)
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
-                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;value[4]=IM.S;
+                        value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;value[3]=-IM.E;value[4]=-IM.S;
                         MatSetValues(A,1,&r,5,col,value,INSERT_VALUES);
                         VecSetValue(b,r,IM.b,INSERT_VALUES);
                     }
@@ -506,6 +495,15 @@ int Explicit(int argc,char **argv)
     VecSetSizes(step,PETSC_DECIDE,1);
     VecSetFromOptions(step);
 
+
+    KSPCreate(PETSC_COMM_WORLD,&ksp);CHKERRQ(ierr);
+    KSPSetOperators(ksp,A,A);
+    KSPGetPC(ksp,&pc);
+    PCSetType(pc,PCJACOBI);
+    KSPSetTolerances(ksp,1.e-7,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT);
+    KSPSetFromOptions(ksp);
+
+
     if(restart==0)
     {
         PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_APPEND,&viewer);
@@ -516,13 +514,15 @@ int Explicit(int argc,char **argv)
         PetscObjectSetName((PetscObject)(u[0]),dsname);
         VecView(u[0],viewer); 
         while(its<maxIts)
-        {
-            MatMultAdd(A,u[its],b,u[its+1]);
+        {   
+            VecAXPBYPCZ(temp,1,1,0,u[its],b);
+            KSPSolve(ksp,temp,u[its+1]);
             its++;
             sprintf(dsname, "%08d",its);
             PetscObjectSetName((PetscObject)(u[its]),dsname);
             VecView(u[its],viewer); 
         }
+
         VecSet(step,its);
         PetscObjectSetName((PetscObject)(step),"step");
         VecView(step,viewer); 
@@ -539,23 +539,21 @@ int Explicit(int argc,char **argv)
 
         its=istep;
         sprintf(dsname, "%08d",its);
-        printf("dsname:%s\n",dsname);
         PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_UPDATE,&viewer);
         PetscViewerHDF5PushGroup(viewer,"/u_t");     
         PetscObjectSetName((PetscObject)(u[its]),dsname);
         VecLoad(u[its],viewer);
-        printf("istep=%d\n",istep);    
-        VecView(u[its],PETSC_VIEWER_STDOUT_WORLD);
 
         while(its<maxIts)
-        {
-            MatMultAdd(A,u[its],b,u[its+1]);
+        {   
+            VecAXPBYPCZ(temp,1,1,0,u[its],b);
+            KSPSolve(ksp,temp,u[its+1]);
             its++;
             sprintf(dsname, "%08d",its);
             PetscObjectSetName((PetscObject)(u[its]),dsname);
             VecView(u[its],viewer); 
-
         }
+        
         VecSet(step,its);
         PetscObjectSetName((PetscObject)(step),"step");
         VecView(step,viewer); 

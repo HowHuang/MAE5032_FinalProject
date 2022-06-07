@@ -34,6 +34,7 @@ enum Location
     Internal    = 9
 };
 
-void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc);
+void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc);
+void ImplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc);
 
 #endif

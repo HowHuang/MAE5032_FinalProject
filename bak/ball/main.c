@@ -1,6 +1,10 @@
 #include <petsc.h>
 #include <hdf5.h>
-#include "explicit.h"
+#include "plicit.h"
+
+extern int Generator(int argc, char** argv);
+extern int Explicit(int argc, char** argv);
+extern int Implicit(int argc, char** argv);
 
 
 int main(int argc, char** argv)

@@ -21,17 +21,18 @@ static char help[] = "Generate the  input data. \n \
             -c : heat capacity";
 
 #include <petsc.h>
+#include "petscviewerhdf5.h" 
+//PetscErrorCode  PetscViewerHDF5Open(MPI_Comm comm, const char name[], PetscFileMode type, PetscViewer *hdf5v);
 
-int Gnerator(int argc, char** argv)
+int Generator(int argc, char** argv)
 {
-    PetscInt        i, n, maxIts;
+    PetscInt        i, n;
     PetscScalar     g, gl, gr, gt, gb;
     PetscScalar     h, hl, hr, ht, hb;
     PetscScalar     u0;
     PetscScalar     f, dl, dt, k, rho, c;
     PetscMPIInt     rank;
     MPI_Comm        comm;
-    PetscErrorCode  ierr;
     PetscViewer     viewer;
     PetscChar       fname[PETSC_MAX_PATH_LEN]="default.hdf5";
 
@@ -49,7 +50,7 @@ int Gnerator(int argc, char** argv)
 
     PetscInitialize(&argc, &argv, (char*) 0, help);  
     comm = PETSC_COMM_WORLD;
-    MPI_Comm_rank(comm, &rank);CHKERRMPI(ierr);
+    MPI_Comm_rank(comm, &rank);
 
     PetscOptionsGetInt(NULL,NULL, "-n", &n, NULL);
 
@@ -109,7 +110,6 @@ int Gnerator(int argc, char** argv)
     
     if(rank==0)
     {   
-        printf("Setting finished for parameters. n:   %g\n",n);
         for(i=0;i<7;i++)
             ip[i]=i;
         vp[0]=dt;   vp[1]=dl;   vp[2]=rho;
@@ -122,7 +122,7 @@ int Gnerator(int argc, char** argv)
         printf("Setting finished for parameters. c:   %g\n",c);
         printf("Setting finished for parameters. k:   %g\n",k);
         printf("Setting finished for parameters. f:   %g\n",f);
-        printf("Setting finished for parameters. n:   %g\n",n);
+        printf("Setting finished for parameters. n:   %d\n",n);
     }
     if(u0<0)
     {

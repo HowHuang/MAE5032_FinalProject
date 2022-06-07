@@ -33,7 +33,7 @@ enum Location
     Internal    = 9
 };
 
-void CalIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
+void ImplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
 {
     //~ InputPara       Known;
     //~ bound           Known;
@@ -391,7 +391,7 @@ int main(int argc,char **argv)
                         bound.ub=0;     bound.hb=0;     bound.tb=0;
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
 
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r;col[1]=r+1;col[2]=r+n;
                         value[0]=IM.P;value[1]=-IM.E;value[2]=-IM.S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES); 
@@ -404,7 +404,7 @@ int main(int argc,char **argv)
                         bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
                         bound.ub=0;     bound.hb=0;     bound.tb=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+n;
                         value[0]=-IM.W;value[1]=IM.P;value[2]=-IM.S;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);   
@@ -417,7 +417,7 @@ int main(int argc,char **argv)
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
                         bound.ub=0;     bound.hb=0;     bound.tb=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
                         value[0]=-IM.W;value[1]=IM.P;value[2]=-IM.E;value[3]=-IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
@@ -433,7 +433,7 @@ int main(int argc,char **argv)
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;
                         value[0]=-IM.N;value[1]=IM.P;value[2]=-IM.E;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);  
@@ -446,7 +446,7 @@ int main(int argc,char **argv)
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;
                         value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;
                         MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);      
@@ -459,7 +459,7 @@ int main(int argc,char **argv)
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
                         value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;value[3]=-IM.E;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);  
@@ -475,7 +475,7 @@ int main(int argc,char **argv)
                         bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
                         value[0]=-IM.N;value[1]=IM.P;value[2]=-IM.E;value[3]=-IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
@@ -489,7 +489,7 @@ int main(int argc,char **argv)
                         bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
                         value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;value[3]=-IM.S;
                         MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
@@ -502,7 +502,7 @@ int main(int argc,char **argv)
                         bound.ur=0;     bound.hr=0;     bound.tr=0;
                         bound.ut=0;     bound.ht=0;     bound.tt=0;
                         bound.ul=0;     bound.hl=0;     bound.tl=0;
-                        CalIterationMaterial(&IP,&bound,&IM,loc);
+                        ImplicitIterationMaterial(&IP,&bound,&IM,loc);
                         col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
                         value[0]=-IM.N;value[1]=-IM.W;value[2]=IM.P;value[3]=-IM.E;value[4]=-IM.S;
                         MatSetValues(A,1,&r,5,col,value,INSERT_VALUES);
