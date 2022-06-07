@@ -71,7 +71,7 @@ int main(int argc, char * argv[])
     // printf("The number of datasets in the group (u_t): %d.\n", ginfo.nlinks);
 
   //use the first dataset to get the size of every dataset
-  sprintf(dsname, "%08d", 1);
+  sprintf(dsname, "%08d", 66);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size = H5Dget_storage_size(dataset_id);
   printf("The number of data in each dataset: %d\n", ds_size/sizeof(double));
