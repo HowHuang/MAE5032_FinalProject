@@ -1,0 +1,10 @@
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 2
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+
+./vtk_EleFilter > EF_TEST.log 2>&1
