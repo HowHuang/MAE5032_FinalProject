@@ -48,10 +48,10 @@ RM = /share/base/cmake/3.12.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/src
+CMAKE_SOURCE_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build
+CMAKE_BINARY_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named vtkHDF
+# Target rules for targets named vtkHDFdemo
 
 # Build rule for target.
-vtkHDF: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vtkHDF
-.PHONY : vtkHDF
+vtkHDFdemo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 vtkHDFdemo
+.PHONY : vtkHDFdemo
 
 # fast build rule for target.
-vtkHDF/fast:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/build
-.PHONY : vtkHDF/fast
+vtkHDFdemo/fast:
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/build
+.PHONY : vtkHDFdemo/fast
 
-Vtk4hdf5.o: Vtk4hdf5.cpp.o
+SGexample.o: SGexample.cpp.o
 
-.PHONY : Vtk4hdf5.o
+.PHONY : SGexample.o
 
 # target to build an object file
-Vtk4hdf5.cpp.o:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.o
-.PHONY : Vtk4hdf5.cpp.o
+SGexample.cpp.o:
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/SGexample.cpp.o
+.PHONY : SGexample.cpp.o
 
-Vtk4hdf5.i: Vtk4hdf5.cpp.i
+SGexample.i: SGexample.cpp.i
 
-.PHONY : Vtk4hdf5.i
+.PHONY : SGexample.i
 
 # target to preprocess a source file
-Vtk4hdf5.cpp.i:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.i
-.PHONY : Vtk4hdf5.cpp.i
+SGexample.cpp.i:
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/SGexample.cpp.i
+.PHONY : SGexample.cpp.i
 
-Vtk4hdf5.s: Vtk4hdf5.cpp.s
+SGexample.s: SGexample.cpp.s
 
-.PHONY : Vtk4hdf5.s
+.PHONY : SGexample.s
 
 # target to generate assembly for a file
-Vtk4hdf5.cpp.s:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.s
-.PHONY : Vtk4hdf5.cpp.s
+SGexample.cpp.s:
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/SGexample.cpp.s
+.PHONY : SGexample.cpp.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... vtkHDF"
-	@echo "... Vtk4hdf5.o"
-	@echo "... Vtk4hdf5.i"
-	@echo "... Vtk4hdf5.s"
+	@echo "... vtkHDFdemo"
+	@echo "... SGexample.o"
+	@echo "... SGexample.i"
+	@echo "... SGexample.s"
 .PHONY : help
 
 

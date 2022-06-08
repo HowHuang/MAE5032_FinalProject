@@ -8,4 +8,4 @@
 module purge
 module load mpi/intel/2020.4
 
-./vtkHDF > visualization_TEST.log 2>&1
+./vtkHDFdemo > demo_TEST.log 2>&1

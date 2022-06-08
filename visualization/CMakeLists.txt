@@ -32,8 +32,8 @@ INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/src)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/hl/src)
 
-ADD_EXECUTABLE( vtkHDF Vtk4hdf5.cpp )
-TARGET_LINK_LIBRARIES( vtkHDF ${VTK_LIBRARIES} )
+ADD_EXECUTABLE( vtkHDFdemo SGexample.cpp )
+TARGET_LINK_LIBRARIES( vtkHDFdemo ${VTK_LIBRARIES} )
 
 # # vtk_module_autoinit is needed??
 # # this is cited from https://kitware.github.io/vtk-examples/site/Cxx/Meshes/FitToHeightMap/

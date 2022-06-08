@@ -59,45 +59,45 @@ RM = /share/base/cmake/3.12.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/src
+CMAKE_SOURCE_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build
+CMAKE_BINARY_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/vtkHDF.dir
+# Target rules for target CMakeFiles/vtkHDFdemo.dir
 
 # All Build rule for target.
-CMakeFiles/vtkHDF.dir/all:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/depend
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles --progress-num=1,2 "Built target vtkHDF"
-.PHONY : CMakeFiles/vtkHDF.dir/all
+CMakeFiles/vtkHDFdemo.dir/all:
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/depend
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles --progress-num=1,2 "Built target vtkHDFdemo"
+.PHONY : CMakeFiles/vtkHDFdemo.dir/all
 
 # Include target in all.
-all: CMakeFiles/vtkHDF.dir/all
+all: CMakeFiles/vtkHDFdemo.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/vtkHDF.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/vtkHDF.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles 0
-.PHONY : CMakeFiles/vtkHDF.dir/rule
+CMakeFiles/vtkHDFdemo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/vtkHDFdemo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles 0
+.PHONY : CMakeFiles/vtkHDFdemo.dir/rule
 
 # Convenience name for target.
-vtkHDF: CMakeFiles/vtkHDF.dir/rule
+vtkHDFdemo: CMakeFiles/vtkHDFdemo.dir/rule
 
-.PHONY : vtkHDF
-
-# clean rule for target.
-CMakeFiles/vtkHDF.dir/clean:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/clean
-.PHONY : CMakeFiles/vtkHDF.dir/clean
+.PHONY : vtkHDFdemo
 
 # clean rule for target.
-clean: CMakeFiles/vtkHDF.dir/clean
+CMakeFiles/vtkHDFdemo.dir/clean:
+	$(MAKE) -f CMakeFiles/vtkHDFdemo.dir/build.make CMakeFiles/vtkHDFdemo.dir/clean
+.PHONY : CMakeFiles/vtkHDFdemo.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/vtkHDFdemo.dir/clean
 
 .PHONY : clean
 
