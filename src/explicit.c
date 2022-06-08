@@ -1,229 +1,509 @@
-static char help[] = "Calculating a_{l,m}^{t+1} by the explicit method.";
-
 #include <petsc.h>
+#include "petscviewerhdf5.h" 
+#include <hdf5.h>
+#include "plicit.h"
 
-static PetscErrorCode VecLoadIfExists_Private(Vec b,PetscViewer viewer,PetscBool *has)
+// 根据给定的边界条件和物理参数，计算对应点关联系数矩阵行及右手向量中的元素值
+void ExplicitIterationMaterial(InputPara* IP, Bound* bound, IterMaterial* IM, enum Location loc)
 {
-  PetscBool      hdf5=PETSC_FALSE;
+    //~ InputPara       Known;
+    //~ bound           Known;
+    //~ IterMaterial    Unknown;
+    // 计算右手向量b中的温度热源部分、热流热源部分和热补给部分。
+    PetscScalar base = (IP->k * IP->dt) / (IP->rho * IP->c * PetscPowScalar(IP->dl,2));
+    PetscScalar partF = IP->f * IP->dt / (IP->rho * IP->c);
+    PetscScalar partH = bound->hb * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
+                        bound->ht * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
+                        bound->hl * IP->dt / (IP->rho * IP->c * pow(IP->dl,2)) + \
+                        bound->hr * IP->dt / (IP->rho * IP->c * pow(IP->dl,2));
+    PetscScalar partU = 2 * base * (bound->ut + bound->ur + bound->ub + bound->ul);      
 
-  PetscObjectTypeCompare((PetscObject)viewer,PETSCVIEWERHDF5,&hdf5);
-  if (hdf5) {
-#if defined(PETSC_HAVE_HDF5)
-  PetscViewerHDF5HasObject(viewer,(PetscObject)b,has);
-  if (*has) VecLoad(b,viewer);
-#else
-  SETERRQ(PETSC_COMM_WORLD,PETSC_ERR_SUP,"PETSc must be configured with HDF5 to use this feature");
-#endif
-  } else {
-    PetscErrorCode ierrp;
-    PetscPushErrorHandler(PetscReturnErrorHandler,NULL);
-    ierrp = VecLoad(b,viewer);
-    PetscPopErrorHandler();
-    *has  = ierrp ? PETSC_FALSE : PETSC_TRUE;
-  }
-  return 0;
-}
-
-
-int main(int argc,char **argv)
-{
-  PetscErrorCode ierr;
-  PetscMPIInt    rank,size;
-  PetscRandom    rand;
-  PetscInt       i,j,istart,iend,n=10,nlocal;
-  PetscInt       nn;
-  PetscInt       col[3];
-
-  PetscScalar    u0,kappa,rho,c;
-
-  /*
-    u_t refers to data including internal and boundary nodes.
-    */
-  Vec            u_t,u_tplus;
-  /*
-    _b: the bottom face; _t: the top face;
-    _l: the left face;   _r: the right face;
-    These four vecs will load from the corresponding .h5 files.
-    in the data folder.
-    */
-  Vec            g_b,g_t,g_l,g_r;
-  Vec            h_b,h_t,h_l,h_r;
-  Vec            gh, zero_vec;
-  IS             *z_is;
-
-  /*
-    Method of reading the vecs refers to:
-    https://petsc.org/release/src/vec/vec/tutorials/ex19.c.html
-    We may be able to add a code for testing I/O, like:
-    https://petsc.org/release/src/vec/vec/tutorials/ex10.c.html 
-    */
-  PetscViewer    viewer;
-  char           file[PETSC_MAX_PATH_LEN]="";    // input file name
-  char           check_groupName;
-  PetscBool      hdf5=PETSC_FALSE;
-
-  ierr = PetscInitialize(&argc,&argv,(char*)0,help);if (ierr) return ierr;
-  ierr = MPI_Comm_rank(PETSC_COMM_WORLD,&rank);CHKERRQ(ierr);
-  ierr = MPI_Comm_size(PETSC_COMM_WORLD,&size);CHKERRQ(ierr);
-  ierr = PetscOptionsGetInt(NULL,NULL,"-n",&n,NULL);CHKERRQ(ierr);
-  /*
-    Determine reading the boundary data from the boundata.h5
-    or randomly setting the boundary data according the dimension n.
-    */
-  ierr = PetscOptionsGetString(NULL,NULL,"-f",file,sizeof(file),NULL);CHKERRQ(ierr);
-  /*
-    Decide whether to use the HDF5 reader.
-    */
-  ierr = PetscOptionsGetBool(NULL,NULL,"-hdf5",&hdf5,NULL);CHKERRQ(ierr);
-  
-  /*
-    Begin a segment of code that may be preloaded (run twice) to get accurate timings
-    */
-  ierr = PetscPreLoadBegin(PETSC_FALSE,"Load system");CHKERRQ(ierr); //需要预加载吗?
-  /*
-    Open hdf file.  Note that we use FILE_MODE_READ to indicate
-    reading from this file. This code refers to:
-    https://petsc.org/release/src/ksp/ksp/tutorials/ex27.c.html
-    */
-  if (hdf5) {
-#if defined(PETSC_HAVE_HDF5)
-    PetscViewerHDF5Open(PETSC_COMM_WORLD,file,FILE_MODE_READ,&viewer);
-    PetscViewerPushFormat(viewer,PETSC_VIEWER_HDF5_MAT);
-#else
-    SETERRQ(PETSC_COMM_WORLD,PETSC_ERR_SUP,"PETSc must be configured with HDF5 to use this feature");
-#endif
-  } else {
-    PetscViewerBinaryOpen(PETSC_COMM_WORLD,file,FILE_MODE_READ,&viewer);
-  }
-  /*
-    Load the vectors if it is present in the file, otherwise set up random data.
-    */
-  ierr = VecLoadIfExists_Private(g_b,viewer,&has);CHKERRQ(ierr);
-  if (!has) {
-    ierr = PetscPrintf(PETSC_COMM_WORLD,"Failed to load boundary data, so use random data.\n");CHKERRQ(ierr);
-    // randomly set boundary data，and the length is dependent on n
-    ierr = PetscRandomCreate(PETSC_COMM_WORLD, &rand);CHKERRQ(ierr);
-    ierr = PetscRandomSetFromOptions(rand);CHKERRQ(ierr);
-    ierr = VecCreate(PETSC_COMM_WORLD, &g_b);CHKERRQ(ierr);
-    ierr = VecSetSizes(g_b, PETSC_DECIDE, n);
-    ierr = VecSetFromOptions(g_b);CHKERRQ(ierr);
-    ierr = VecSetRandom(g_b, rand);
-    ierr = VecDuplicate(g_b, &g_t);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &g_l);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &g_r);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &h_b);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &h_t);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &h_l);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &h_r);CHKERRQ(ierr);
-    
-    /*
-      checking whether the components of h and g would not be nonzero in a location.
-      将h g哈达玛积，检查是否结果为零向量
-      */
-    ierr = VecDuplicate(g_b, &gh);CHKERRQ(ierr);
-    ierr = VecDuplicate(g_b, &zero_vec);CHKERRQ(ierr);
-    ierr = VecPointwiseMult(gh, g_b, h_b);CHKERRQ(ierr);
-    ierr = VecZeroEntries(zero_vec);
-    ierr = VecWhichEqual(gh, zero_vec, z_is);
-    if (sizeof(z_is) != n){
-      ierr = PetscPrintf(PETSC_COMM_WORLD,"h and g can not be nonzero simultaneously.\n");CHKERRQ(ierr);
-      return;
-    }
-
-    //print the randomly set data
-    PetscPrintf(PETSC_COMM_WORLD,"The randomly set boundary g data along bottom, top, left, right face'.\n");
-    ierr = VecView(g_b,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    ierr = VecView(g_t,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    ierr = VecView(g_l,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    ierr = VecView(g_r,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    PetscPrintf(PETSC_COMM_WORLD,"The randomly set boundary h data along bottom, top, left, right face'.\n");
-    ierr = VecView(h_b,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    ierr = VecView(h_t,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    ierr = VecView(h_l,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-    ierr = VecView(h_r,PETSC_VIEWER_STDOUT_WORLD);CHKERRQ(ierr);
-  } 
-  else
-  {
-    ierr = VecCreate(PETSC_COMM_WORLD,&g_b);CHKERRQ(ierr);
-    ierr = VecSetFromOptions(g_b);CHKERRQ(ierr);
-    //bottom and check the group name
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_u/bottom_u");
-    ierr = PetscViewerHDF5GetGroup(viewer, check_groupName);
-    if (check_groupName != "/boundary_u/bottom_u") {
-      PetscPrintf(PETSC_COMM_WORLD,"Please use unified group name, which should be '/boundary_u/bottom_u'.\n");
-      PetscPrintf(PETSC_COMM_WORLD,"'/boundary_u/top_u','/boundary_u/left_u','/boundary_u/right_u'\n");
-    }
-    ierr = VecLoad(g_b, viewer); //需要PetscObjectSetName((PetscObject) x2r, "x2");设名字吗？
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    //top
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_u/top_u");
-    ierr = VecDuplicate(g_b, &g_t);CHKERRQ(ierr);
-    ierr = VecLoad(g_t, viewer);
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    //left
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_u/left_u");
-    ierr = VecDuplicate(g_b, &g_l);CHKERRQ(ierr);
-    ierr = VecLoad(g_l, viewer);
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    //right
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_u/left_u");
-    ierr = VecDuplicate(g_b, &g_r);CHKERRQ(ierr);
-    ierr = VecLoad(g_r, viewer);
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    //similarly for h
-    ierr = VecDuplicate(g_b, &h_b);CHKERRQ(ierr);
-    //also check the group name
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_h/bottom_h");
-    ierr = PetscViewerHDF5GetGroup(viewer, check_groupName);
-    if (check_groupName != "/boundary_h/bottom_h") {
-      PetscPrintf(PETSC_COMM_WORLD,"Please use unified group name, which should be '/boundary_h/bottom_h'.\n");
-      PetscPrintf(PETSC_COMM_WORLD,"'/boundary_h/top_h','/boundary_h/left_h','/boundary_h/right_h'\n");
-    }
-    ierr = VecLoad(h_b, viewer); //需要PetscObjectSetName((PetscObject) x2r, "x2");设名字吗？
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_h/top_h");
-    ierr = VecDuplicate(g_b, &h_t);CHKERRQ(ierr);
-    ierr = VecLoad(h_t, viewer);
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_h/left_h");
-    ierr = VecDuplicate(g_b, &h_l);CHKERRQ(ierr);
-    ierr = VecLoad(h_l, viewer);
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-    ierr = PetscViewerHDF5PushGroup(viewer, "/boundary_h/left_h");
-    ierr = VecDuplicate(g_b, &h_r);CHKERRQ(ierr);
-    ierr = VecLoad(h_r, viewer);
-    ierr = PetscViewerHDF5PopGroup(viewer);CHKERRQ(ierr);
-  }
-  ierr = PetscViewerDestroy(&viewer);CHKERRQ(ierr);
-
-
-  // Create u
-  nn = (n+1)*(n+1); //size of u
-
-  ierr = VecCreate(PETSC_COMM_WORLD,&u);CHKERRQ(ierr);
-  ierr = VecSetSizes(u,PETSC_DECIDE,nn);CHKERRQ(ierr);
-  ierr = VecSetFromOptions(u);CHKERRQ(ierr);
-
-  ierr = VecGetOwnershipRange(u,&istart,&iend);CHKERRQ(ierr);
-  ierr = VecGetLocalSize(u,&nlocal);CHKERRQ(ierr);
-
-  if( rank == 0 )
-  {
-   // Internal nodes
-   for (i=1; i<n; i++)
+    // 根据不同的位置对系数矩阵和右手向量进行特别计算              
+    switch (loc)
     {
-     for (j=1; j<n; j++) //u_{1 to 9, 1 to 9}
-     {
-      ierr = VecSetValues(u,1,&i,&u0,INSERT_VALUES);CHKERRQ(ierr);
-     }
+    case RightTop:
+    {
+        IM->W = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;     
+
+        if(bound->tr==1 && bound->tt==1)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->tr==2 && bound->tt==2)
+            IM->P = 1-(1+1)*base;
+        else 
+            IM->P = 1-(1+1+2)*base;
     }
-   // Boundary nodes
-   i = 0;
+    break;
 
-  }
+    case LeftTop:
+    {
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;   
 
-  // 
-  
+        if(bound->tl==1 && bound->tt==1)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->tl==2 && bound->tt==2)
+            IM->P = 1-(1+1)*base;
+        else 
+            IM->P = 1-(1+1+2)*base;         
+    }
+    break;
 
+    case LeftBottom:
+    {
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;   
+        if(bound->tl==1 && bound->tb==1)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->tl==2 && bound->tb==2)
+            IM->P = 1-(1+1)*base;
+        else 
+            IM->P = 1-(1+1+2)*base;
+    }
+    break;
+
+    case RightBottom:
+    {
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;  
+
+        if(bound->tr==1 && bound->tb==1)
+            IM->P = 1-(1+1+2+2)*base;
+        else if (bound->tr==2 && bound->tb==2)
+            IM->P = 1-(1+1)*base;
+        else 
+            IM->P = 1-(1+1+2)*base;    
+    }
+    break;
+
+    case RightSide:
+    {
+        IM->W = base;
+        IM->S = base;
+        IM->N = base;
+        IM->b = partF + partU + partH;   
+
+        if(bound->tr==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base;   
+    }
+    break;
+
+    case TopSide:
+    {
+        IM->W = base;
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;   
+
+        if(bound->tt==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base;   
+    }
+    break;
+
+    case LeftSide:
+    {
+        IM->N = base;
+        IM->E = base;
+        IM->S = base;
+        IM->b = partF + partU + partH;  
+
+        if(bound->tl==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base;    
+    }   
+    break;
+
+    case BottomSide:
+    {
+        IM->N = base;
+        IM->E = base;
+        IM->W = base;
+        IM->b = partF + partU + partH;   
+
+        if(bound->tb==1)
+            IM->P = 1-(1+1+1+2)*base;    
+        else
+            IM->P = 1-(1+1+1)*base; 
+    }    
+    break;
+
+    case Internal:
+    {
+        IM->b = partF;   
+        IM->N = base;
+        IM->E = base;
+        IM->W = base;
+        IM->S = base;
+        IM->P = 1-4*base;
+    }    
+    break;
+
+    default:
+        printf("Please specify the location\n");
+    }
+
+}
+    
+int Explicit(int argc,char **argv)
+{
+    Vec             u_0,b,u_t,u_tplus,temp;     //DIM = (n*n) x 1
+    Mat             A;                          //DIM = (n*n) x (n*n)
+    PetscViewer     viewer;    
+    PetscMPIInt     rank,size;
+    PetscInt        i, j, r, n = 10;
+    PetscInt        restart;
+    MPI_Comm        comm;
+    PetscErrorCode  ierr;
+    PetscChar       fname[PETSC_MAX_PATH_LEN]="input.hdf5";
+    PetscChar       dsname[PETSC_MAX_PATH_LEN]="default";
+    PetscInt        col[5];
+    PetscScalar     value[5];
+
+    InputPara       IP; 
+    Bound           bound;
+    IterMaterial    IM;
+    Location        loc;
+
+    PetscScalar     *g_b, *g_t, *g_l, *g_r;
+    PetscScalar     *h_b, *h_t, *h_l, *h_r;
+    PetscScalar     *t_b, *t_t, *t_l, *t_r;
+
+    PetscScalar     paras[7];
+    
+    // iteration parts
+    PetscInt        its=0 , maxIts = 100, maxItsW = 1000;
+    Vec             *u; 
+    Vec             step;
+    PetscInt        istep;        
+
+    ierr = PetscInitialize(&argc, &argv, (char*) 0, NULL);if (ierr) return ierr;
+    comm = PETSC_COMM_WORLD;
+    ierr = MPI_Comm_rank(comm, &rank);CHKERRMPI(ierr);
+    ierr = MPI_Comm_size(comm, &size);CHKERRMPI(ierr);
+
+    ierr = PetscOptionsGetString(NULL,NULL,"-fname",fname,sizeof(fname),NULL);
+    ierr = PetscOptionsGetInt(NULL,NULL, "-maxIts", &maxIts, NULL);
+    ierr = PetscOptionsGetInt(NULL,NULL, "-maxItsW", &maxItsW, NULL);
+    ierr = PetscOptionsGetInt(NULL,NULL, "-restart", &restart, NULL);
+
+    hid_t   file_id, group_id, dataset_id;
+
+    file_id=H5Fopen(fname,H5F_ACC_RDONLY,H5P_DEFAULT);
+
+    group_id=H5Gopen(file_id,"/Parameters",H5P_DEFAULT);
+    dataset_id=H5Dopen(group_id,"paras",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,paras);
+    H5Dclose(dataset_id);
+    H5Gclose(group_id);
+
+    IP.dt=paras[0]; IP.dl=paras[1]; IP.rho=paras[2];
+    IP.c=paras[3];  IP.k=paras[4];  IP.f=paras[5];
+
+    n = (PetscInt)(paras[6]);
+
+    PetscMalloc4(n, &g_b, n, &g_t, n, &g_l, n, &g_r);
+    PetscMalloc4(n, &h_b, n, &h_t, n, &h_l, n, &h_r);
+    PetscMalloc4(n, &t_b, n, &t_t, n, &t_l, n, &t_r);
+
+    group_id=H5Gopen(file_id,"/boundary",H5P_DEFAULT);
+
+    dataset_id=H5Dopen(group_id,"g_bottom",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,g_b);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"g_top",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,g_t);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"g_left",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,g_l);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"g_right",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,g_r);
+    H5Dclose(dataset_id);
+
+    dataset_id=H5Dopen(group_id,"h_bottom",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,h_b);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"h_top",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,h_t);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"h_left",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,h_l);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"h_right",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,h_r);
+    H5Dclose(dataset_id);
+
+    dataset_id=H5Dopen(group_id,"t_bottom",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_b);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"t_top",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_t);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"t_left",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_l);
+    H5Dclose(dataset_id);
+    dataset_id=H5Dopen(group_id,"t_right",H5P_DEFAULT);
+    H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,t_r);
+    H5Dclose(dataset_id);
+
+    H5Gclose(group_id);
+
+    H5Fclose(file_id);
+
+    // ~ Load data from specified hdf5 file.
+    PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_READ,&viewer);
+    
+    PetscViewerHDF5PushGroup(viewer,"/Init");
+    VecCreate(comm,&u_0);
+    PetscObjectSetName((PetscObject)u_0, "u_0");
+    VecLoad(u_0,viewer);
+    PetscViewerHDF5PopGroup(viewer);
+
+    // ~ Load finished
+
+    // ~ Generate sparse matrix A (coefficient matrix)
+    // ~ A is a pentadiagonal matrix
+    MatCreate(comm,&A);
+    MatSetSizes(A,PETSC_DECIDE,PETSC_DECIDE,n*n,n*n);
+    MatSetFromOptions(A);
+    MatSetUp(A);
+    
+    // ~ Generate the vector b for Au_t+b=u_tplus
+    VecCreate(comm,&b);
+    VecSetSizes(b,PETSC_DECIDE,n*n);
+    VecSetFromOptions(b);
+    VecSetUp(b);
+
+    VecDuplicate(b,&u_t);
+    VecDuplicate(b,&u_tplus);
+    VecDuplicate(b,&temp);
+    VecDuplicateVecs(b,maxIts+1,&u);  // store u for each timestep
+
+    // ~ Assign values to A and b
+ 
+    if(rank==0)
+    {
+        for(i=0;i<n;i++)            //global row index of u (consider as matrix)        
+        {   
+            for(j=0;j<n;j++)        //global col index of u (consider as matrix) 
+            {
+                r=i*n+j;            //global row index of A (same as b)
+                if(i==0)
+                {
+                    if(j==0)            //! 左上角的点
+                    {   
+                        loc = LeftTop;
+                        bound.ut=g_t[j];bound.ht=h_t[j];bound.tt=t_t[j];
+                        bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r;col[1]=r+1;col[2]=r+n;
+                        value[0]=IM.P;value[1]=IM.E;value[2]=IM.S;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES); 
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);
+                    }
+                    else if(j==n-1)     //! 右上角的点
+                    {
+                        loc = RightTop;
+                        bound.ut=g_t[j];bound.ht=h_t[j];bound.tt=t_t[j];
+                        bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-1;col[1]=r;col[2]=r+n;
+                        value[0]=IM.W;value[1]=IM.P;value[2]=IM.S;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);   
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);       
+                    }
+                    else                //! 上边界的点（除顶点外）
+                    {   
+                        loc = TopSide;
+                        bound.ut=g_t[j];bound.ht=h_t[j];bound.tt=t_t[j];
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-1;col[1]=r;col[2]=r+1;col[3]=r+n;
+                        value[0]=IM.W;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);              
+                    }
+                }
+                else if(i==n-1)
+                {
+                    if(j==0)            //! 左下角的点
+                    {
+                        loc = LeftBottom;
+                        bound.ub=g_b[j];bound.hb=h_b[j];bound.tb=t_b[j];
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-n;col[1]=r;col[2]=r+1;
+                        value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);  
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                                   
+                    }
+                    else if(j==n-1)     //! 右下角的点
+                    {   
+                        loc = RightBottom;
+                        bound.ub=g_b[j];bound.hb=h_b[j];bound.tb=t_b[j];
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-n;col[1]=r-1;col[2]=r;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;
+                        MatSetValues(A,1,&r,3,col,value,INSERT_VALUES);      
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                                     
+                    }
+                    else                //! 下边界的点 （除顶点外）
+                    {
+                        loc = BottomSide;
+                        bound.ub=g_b[j];bound.hb=h_b[j];bound.tb=t_b[j];
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);  
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                                       
+                    }
+                }
+                else
+                {
+                    if(j==0)            //! 左边界的点（除顶点外）
+                    {
+                        loc = LeftSide;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ul=g_l[i];bound.hl=h_l[i];bound.tl=t_l[i];
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-n;col[1]=r;col[2]=r+1;col[3]=r+n;
+                        value[0]=IM.N;value[1]=IM.P;value[2]=IM.E;value[3]=IM.S;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);
+
+                    }
+                    else if(j==n-1)     //! 右边界的点（除顶点外）
+                    {
+                        loc = RightSide;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ur=g_r[i];bound.hr=h_r[i];bound.tr=t_r[i];
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+n;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.S;
+                        MatSetValues(A,1,&r,4,col,value,INSERT_VALUES);
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);                  
+                    }
+                    else                //! 内部点
+                    {
+                        loc = Internal;
+                        bound.ub=0;     bound.hb=0;     bound.tb=0;
+                        bound.ur=0;     bound.hr=0;     bound.tr=0;
+                        bound.ut=0;     bound.ht=0;     bound.tt=0;
+                        bound.ul=0;     bound.hl=0;     bound.tl=0;
+                        ExplicitIterationMaterial(&IP,&bound,&IM,loc);
+                        col[0]=r-n;col[1]=r-1;col[2]=r;col[3]=r+1;col[4]=r+n;
+                        value[0]=IM.N;value[1]=IM.W;value[2]=IM.P;value[3]=IM.E;value[4]=IM.S;
+                        MatSetValues(A,1,&r,5,col,value,INSERT_VALUES);
+                        VecSetValue(b,r,IM.b,INSERT_VALUES);
+                    }
+                }
+            }
+        }
+    }
+
+    MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
+    MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY); 
+    VecAssemblyBegin(b);
+    VecAssemblyEnd(b);
+
+    // ~ ---------------------------------------------------------------------------
+    // ~ Now, we have A, u_t(u_0), b and u_tplus(unknown) Let's begin the iteration.
+    // ~ We will store u_t at any timestep in a HDF5 file.
+    VecCreate(comm,&step);
+    VecSetSizes(step,PETSC_DECIDE,1);
+    VecSetFromOptions(step);
+
+    if(restart==0)
+    {
+        PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_APPEND,&viewer);
+        PetscViewerHDF5PushGroup(viewer,"/u_t");     
+
+        VecCopy(u_0,u[0]);
+        sprintf(dsname, "%08d",0);
+        PetscObjectSetName((PetscObject)(u[0]),dsname);
+        VecView(u[0],viewer); 
+        while(its<maxIts)
+        {
+            MatMultAdd(A,u[its],b,u[its+1]);
+            its++;
+            sprintf(dsname, "%08d",its);
+            PetscObjectSetName((PetscObject)(u[its]),dsname);
+            VecView(u[its],viewer); 
+        }
+        VecSet(step,its);
+        PetscObjectSetName((PetscObject)(step),"step");
+        VecView(step,viewer); 
+        PetscViewerHDF5PopGroup(viewer);
+    }
+    else
+    {
+        file_id=H5Fopen(fname,H5F_ACC_RDONLY,H5P_DEFAULT);
+        group_id=H5Gopen(file_id,"/u_t",H5P_DEFAULT);
+        dataset_id=H5Dopen(group_id,"step",H5P_DEFAULT);
+        H5Dread(dataset_id,H5T_NATIVE_INT32,H5S_ALL,H5S_ALL,H5P_DEFAULT,&istep);
+        H5Gclose(group_id);
+        H5Fclose(file_id);      
+
+        its=istep;
+        sprintf(dsname, "%08d",its);
+        PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_UPDATE,&viewer);
+        PetscViewerHDF5PushGroup(viewer,"/u_t");     
+        PetscObjectSetName((PetscObject)(u[its]),dsname);
+        VecLoad(u[its],viewer);
+
+        while(its<maxIts)
+        {
+            MatMultAdd(A,u[its],b,u[its+1]);
+            its++;
+            sprintf(dsname, "%08d",its);
+            PetscObjectSetName((PetscObject)(u[its]),dsname);
+            VecView(u[its],viewer); 
+
+        }
+        VecSet(step,its);
+        PetscObjectSetName((PetscObject)(step),"step");
+        VecView(step,viewer); 
+
+        PetscViewerHDF5PopGroup(viewer);
+    }
+    
+
+    // MatView(A,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(b,PETSC_VIEWER_STDOUT_WORLD);
+    // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);
+
+    VecDestroy(&u_0);
+    PetscViewerDestroy(&viewer);
+   
+    PetscFinalize();
+    return 0;
 
 }
