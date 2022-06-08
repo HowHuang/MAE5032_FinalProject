@@ -1,1 +1,6 @@
 /work/ese-huangh/.lsbatch/1654698671.3827112.shell: line 10: 165201 Segmentation fault      (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1
+/work/ese-huangh/.lsbatch/1654701500.3827285.shell: line 10: 179266 Segmentation fault      (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1
+/work/ese-huangh/.lsbatch/1654702008.3827330.shell: line 10: 282033 Segmentation fault      (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1
+/work/ese-huangh/.lsbatch/1654702370.3827343.shell: line 10: 181449 Segmentation fault      (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1
+/work/ese-huangh/.lsbatch/1654703055.3827365.shell: line 10: 175433 Segmentation fault      (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1
+/work/ese-huangh/.lsbatch/1654704153.3827389.shell: line 10: 446208 Aborted                 (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1

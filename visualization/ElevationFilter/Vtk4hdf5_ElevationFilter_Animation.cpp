@@ -188,37 +188,40 @@ int main(int argc, char * argv[])
   }
 
   output -> GetPointData() -> AddArray(colors);
-
+  colors -> Delete();
 
   /***********************
    * Setup visualization *
    * *********************/
-  
   vtkNamedColors * Namecolors = vtkNamedColors::New();
   // Set the background color.
   vtkColor3d backgroundColor = Namecolors->GetColor3d("SlateGray");
+  std::cout << "here" << std::endl;
+  std::cout << output << std::endl;
 
-  // Create a mapper and actor 
+  // Create a mapper and actor
   vtkPolyDataMapper * mapper = vtkPolyDataMapper::New();
   vtkActor          * actor  = vtkActor::New();
   mapper -> SetInputData(output);
   actor  -> SetMapper(mapper);
   // actor  -> GetProperty()->SetColor(Namecolors->GetColor3d("Cyan").GetData());
+  std::cout << "here3" << std::endl;
 
   // Create a renderer, render window, and interactor
-  vtkRenderer * renderer = vtkRenderer::New();
+  vtkRenderer     * renderer     = vtkRenderer::New();
   vtkRenderWindow * renderWindow = vtkRenderWindow::New();
   renderWindow -> AddRenderer(renderer);
   // renderWindow -> SetSize(640, 480);
   renderWindow -> SetWindowName("DataAnimation");
-
+/*
   vtkRenderWindowInteractor * renderWindowInteractor = vtkRenderWindowInteractor::New();
   renderWindowInteractor -> SetRenderWindow(renderWindow);
 
   // Initialize must be called prior to creating timer events.
   renderWindowInteractor -> Initialize();
   renderWindowInteractor -> CreateRepeatingTimer(ds_num-1);
-  
+*/
+
   // vtkCallbackCommand * timerCallback = vtkCallbackCommand::New();
   // timerCallback -> SetCallback(TimerCallbackFunction);
   // timerCallback->SetClientData(programmableFilter);

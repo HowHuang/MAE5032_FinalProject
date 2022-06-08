@@ -12,6 +12,7 @@ find_package(VTK COMPONENTS
   vtkCommonColor 
   vtkCommonCore
   vtkCommonDataModel
+  vtkCommonTransforms
   vtkFiltersCore
   vtkFiltersGeneral
   vtkFiltersGeometry
@@ -19,7 +20,6 @@ find_package(VTK COMPONENTS
   vtkFiltersSources
   vtkIOCore vtkIOLegacy vtkIOXML
   vtkIOMovie
-  vtkIOVideo
   vtkIOExportOpenGL2
   vtkIOExportPDF
   vtkInteractionStyle
@@ -31,10 +31,16 @@ find_package(VTK COMPONENTS
   REQUIRED
 )
 
+if (NOT VTK_FOUND)
+  message(FATAL_ERROR "Visulisation: Unable to find the VTK build folder.\n")
+  message(FATAL_ERROR "This software tested through VTK 8.2.0.")
+endif()
+
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/src)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/hl/src)
+include(${VTK_USE_FILE})
 
 ADD_EXECUTABLE( vtk_AVI Vtk4hdf5_ElevationFilter_Animation.cpp )
 TARGET_LINK_LIBRARIES( vtk_AVI ${VTK_LIBRARIES} )

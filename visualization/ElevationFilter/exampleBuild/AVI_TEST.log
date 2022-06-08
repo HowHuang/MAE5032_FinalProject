@@ -5,9 +5,8 @@ The number of data in each dataset: 100
 The partitioning n for data is: 10*10
 The min and max of u : 0.000002 and 2.291399
 output here: 100
-Generic Warning: In /work/ese-huangh/VTK-8.2.0/Rendering/Core/vtkPolyDataMapper.cxx, line 28
-Error: no override found for 'vtkPolyDataMapper'.
-
-Generic Warning: In /work/ese-huangh/VTK-8.2.0/Rendering/Core/vtkActor.cxx, line 43
-Error: no override found for 'vtkActor'.
-
+here
+0xaef000
+here3
+ERROR: In /work/ese-huangh/VTK-8.2.0/Rendering/OpenGL2/vtkXOpenGLRenderWindow.cxx, line 452
+vtkXOpenGLRenderWindow (0xb010e0): bad X server connection. DISPLAY=
