@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/3.12.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/3.12.2/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,33 +23,33 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/3.12.2/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/3.12.2/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_064a8/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_064a8.dir/build.make CMakeFiles/cmTC_064a8.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_064a8.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_064a8.dir/testCCompiler.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_064a8
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_064a8.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_064a8.dir/testCCompiler.c.o  -o cmTC_064a8 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_b52bd/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_b52bd.dir/build.make CMakeFiles/cmTC_b52bd.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b52bd.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_b52bd.dir/testCCompiler.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_b52bd
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b52bd.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_b52bd.dir/testCCompiler.c.o  -o cmTC_b52bd 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_eae72/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_eae72.dir/build.make CMakeFiles/cmTC_eae72.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o   -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_eae72
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eae72.dir/link.txt --verbose=1
-/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o  -o cmTC_eae72 
+Run Build Command:"/usr/bin/gmake" "cmTC_c5711/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_c5711.dir/build.make CMakeFiles/cmTC_c5711.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o   -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_c5711
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c5711.dir/link.txt --verbose=1
+/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o  -o cmTC_c5711 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
@@ -58,24 +58,24 @@ Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/u
 Thread model: posix
 gcc version 4.8.5 20150623 (Red Hat 4.8.5-28) (GCC) 
 COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/share/base/hdf5/1.10.4-parallel-intel-18.4/lib/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_eae72' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_eae72 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/share/base/hdf5/1.10.4-parallel-intel-18.4/lib -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_c5711' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c5711 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_eae72/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_eae72.dir/build.make CMakeFiles/cmTC_eae72.dir/build]
-  ignore line: [gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o   -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_eae72]
-  ignore line: [/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eae72.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o  -o cmTC_eae72 ]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_c5711/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_c5711.dir/build.make CMakeFiles/cmTC_c5711.dir/build]
+  ignore line: [gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o   -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_c5711]
+  ignore line: [/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c5711.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o  -o cmTC_c5711 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper]
@@ -84,9 +84,9 @@ Parsed C implicit link information from above output:
   ignore line: [Thread model: posix]
   ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-28) (GCC) ]
   ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/share/base/hdf5/1.10.4-parallel-intel-18.4/lib/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_eae72' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_eae72 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/share/base/hdf5/1.10.4-parallel-intel-18.4/lib -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_c5711' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c5711 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
     arg [/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2] ==> ignore
     arg [--build-id] ==> ignore
     arg [--no-add-needed] ==> ignore
@@ -98,7 +98,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_eae72] ==> ignore
+    arg [cmTC_c5711] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o] ==> ignore
@@ -106,23 +106,8 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64]
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
-    arg [-L/share/base/hdf5/1.10.4-parallel-intel-18.4/lib] ==> dir [/share/base/hdf5/1.10.4-parallel-intel-18.4/lib]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64]
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..]
-    arg [CMakeFiles/cmTC_eae72.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_c5711.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -138,41 +123,26 @@ Parsed C implicit link information from above output:
   collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> [/usr/lib64]
   collapse library dir [/lib/../lib64] ==> [/lib64]
   collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
-  collapse library dir [/share/base/hdf5/1.10.4-parallel-intel-18.4/lib] ==> [/share/base/hdf5/1.10.4-parallel-intel-18.4/lib]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64]
   collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> [/usr/lib]
   implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
-  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5;/usr/lib64;/lib64;/share/base/hdf5/1.10.4-parallel-intel-18.4/lib;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64;/usr/lib]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5;/usr/lib64;/lib64;/usr/lib]
   implicit fwks: []
 
 
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_d91aa/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_d91aa.dir/build.make CMakeFiles/cmTC_d91aa.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d91aa.dir/feature_tests.c.o
-/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_d91aa.dir/feature_tests.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_d91aa
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d91aa.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_d91aa.dir/feature_tests.c.o  -o cmTC_d91aa 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_b9887/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_b9887.dir/build.make CMakeFiles/cmTC_b9887.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b9887.dir/feature_tests.c.o
+/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_b9887.dir/feature_tests.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_b9887
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b9887.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_b9887.dir/feature_tests.c.o  -o cmTC_b9887 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -182,17 +152,17 @@ gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visua
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_fa46d/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_fa46d.dir/build.make CMakeFiles/cmTC_fa46d.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_fa46d.dir/feature_tests.c.o
-/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_fa46d.dir/feature_tests.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_fa46d
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa46d.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_fa46d.dir/feature_tests.c.o  -o cmTC_fa46d 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_d703d/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_d703d.dir/build.make CMakeFiles/cmTC_d703d.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d703d.dir/feature_tests.c.o
+/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_d703d.dir/feature_tests.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_d703d
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d703d.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_d703d.dir/feature_tests.c.o  -o cmTC_d703d 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -202,17 +172,17 @@ gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visua
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_4d9ee/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_4d9ee.dir/build.make CMakeFiles/cmTC_4d9ee.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4d9ee.dir/feature_tests.c.o
-/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_4d9ee.dir/feature_tests.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_4d9ee
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4d9ee.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_4d9ee.dir/feature_tests.c.o  -o cmTC_4d9ee 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_f8f56/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_f8f56.dir/build.make CMakeFiles/cmTC_f8f56.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f8f56.dir/feature_tests.c.o
+/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_f8f56.dir/feature_tests.c.o   -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_f8f56
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f8f56.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_f8f56.dir/feature_tests.c.o  -o cmTC_f8f56 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -220,30 +190,30 @@ gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visua
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_a6eff/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_a6eff.dir/build.make CMakeFiles/cmTC_a6eff.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_a6eff.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTC_a6eff.dir/testCXXCompiler.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_a6eff
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a6eff.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_a6eff.dir/testCXXCompiler.cxx.o  -o cmTC_a6eff 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_c016e/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_c016e.dir/build.make CMakeFiles/cmTC_c016e.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c016e.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTC_c016e.dir/testCXXCompiler.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_c016e
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c016e.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_c016e.dir/testCXXCompiler.cxx.o  -o cmTC_c016e 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_5e8c0/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_5e8c0.dir/build.make CMakeFiles/cmTC_5e8c0.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_5e8c0
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5e8c0.dir/link.txt --verbose=1
-/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_5e8c0 
+Run Build Command:"/usr/bin/gmake" "cmTC_816f9/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_816f9.dir/build.make CMakeFiles/cmTC_816f9.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_816f9
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_816f9.dir/link.txt --verbose=1
+/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_816f9 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
@@ -252,24 +222,24 @@ Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/u
 Thread model: posix
 gcc version 4.8.5 20150623 (Red Hat 4.8.5-28) (GCC) 
 COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/share/base/hdf5/1.10.4-parallel-intel-18.4/lib/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_5e8c0' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5e8c0 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/share/base/hdf5/1.10.4-parallel-intel-18.4/lib -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_816f9' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_816f9 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_5e8c0/fast"]
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_5e8c0.dir/build.make CMakeFiles/cmTC_5e8c0.dir/build]
-  ignore line: [gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_5e8c0]
-  ignore line: [/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5e8c0.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_5e8c0 ]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_816f9/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_816f9.dir/build.make CMakeFiles/cmTC_816f9.dir/build]
+  ignore line: [gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o -c /share/base/cmake/3.12.2/share/cmake-3.12/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_816f9]
+  ignore line: [/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_816f9.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_816f9 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper]
@@ -278,9 +248,9 @@ Parsed CXX implicit link information from above output:
   ignore line: [Thread model: posix]
   ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-28) (GCC) ]
   ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/share/base/hdf5/1.10.4-parallel-intel-18.4/lib/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64/:/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64/:/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_5e8c0' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5e8c0 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/share/base/hdf5/1.10.4-parallel-intel-18.4/lib -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64 -L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64 -L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_816f9' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_816f9 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
     arg [/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2] ==> ignore
     arg [--build-id] ==> ignore
     arg [--no-add-needed] ==> ignore
@@ -292,7 +262,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_5e8c0] ==> ignore
+    arg [cmTC_816f9] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o] ==> ignore
@@ -300,23 +270,8 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64]
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
-    arg [-L/share/base/hdf5/1.10.4-parallel-intel-18.4/lib] ==> dir [/share/base/hdf5/1.10.4-parallel-intel-18.4/lib]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64]
-    arg [-L/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64] ==> dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64]
-    arg [-L/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64] ==> dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64]
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..]
-    arg [CMakeFiles/cmTC_5e8c0.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_816f9.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -330,41 +285,26 @@ Parsed CXX implicit link information from above output:
   collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> [/usr/lib64]
   collapse library dir [/lib/../lib64] ==> [/lib64]
   collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
-  collapse library dir [/share/base/hdf5/1.10.4-parallel-intel-18.4/lib] ==> [/share/base/hdf5/1.10.4-parallel-intel-18.4/lib]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64]
-  collapse library dir [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64] ==> [/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64]
-  collapse library dir [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64] ==> [/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64]
   collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> [/usr/lib]
   implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
-  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5;/usr/lib64;/lib64;/share/base/hdf5/1.10.4-parallel-intel-18.4/lib;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64_lin/gcc4.4;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/daal/lib/intel64_lin;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/tbb/lib/intel64/gcc4.4;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mkl/lib/intel64;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/compiler/lib/intel64;/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/ipp/lib/intel64;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib/release;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mpi/intel64/lib;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64_lin/gcc4.8;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/daal/lib/intel64_lin;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/tbb/lib/intel64/gcc4.8;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/compiler/lib/intel64;/share/intel/2020u4/compilers_and_libraries_2020.4.304/linux/ipp/lib/intel64;/usr/lib]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5;/usr/lib64;/lib64;/usr/lib]
   implicit fwks: []
 
 
 
 
 Detecting CXX [-std=c++1y] compiler features compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_f3e38/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_f3e38.dir/build.make CMakeFiles/cmTC_f3e38.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_f3e38.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++1y -o CMakeFiles/cmTC_f3e38.dir/feature_tests.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_f3e38
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f3e38.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_f3e38.dir/feature_tests.cxx.o  -o cmTC_f3e38 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_6511d/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_6511d.dir/build.make CMakeFiles/cmTC_6511d.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_6511d.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++1y -o CMakeFiles/cmTC_6511d.dir/feature_tests.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_6511d
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6511d.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_6511d.dir/feature_tests.cxx.o  -o cmTC_6511d 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -427,17 +367,17 @@ gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visua
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_5168c/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_5168c.dir/build.make CMakeFiles/cmTC_5168c.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_5168c.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_5168c.dir/feature_tests.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_5168c
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5168c.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_5168c.dir/feature_tests.cxx.o  -o cmTC_5168c 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_33371/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_33371.dir/build.make CMakeFiles/cmTC_33371.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_33371.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_33371.dir/feature_tests.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_33371
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_33371.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_33371.dir/feature_tests.cxx.o  -o cmTC_33371 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -500,17 +440,17 @@ gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visua
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp
+Change Dir: /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_66cbb/fast"
-/usr/bin/gmake -f CMakeFiles/cmTC_66cbb.dir/build.make CMakeFiles/cmTC_66cbb.dir/build
-gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_66cbb.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_66cbb.dir/feature_tests.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_66cbb
-/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_66cbb.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_66cbb.dir/feature_tests.cxx.o  -o cmTC_66cbb 
-gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_05218/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_05218.dir/build.make CMakeFiles/cmTC_05218.dir/build
+gmake[1]: Entering directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_05218.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_05218.dir/feature_tests.cxx.o -c /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_05218
+/share/base/cmake/3.12.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_05218.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_05218.dir/feature_tests.cxx.o  -o cmTC_05218 
+gmake[1]: Leaving directory `/work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

@@ -94,8 +94,8 @@ int main(int argc, char * argv[])
 
   printf("The partitioning n for data is: %d*%d\n", n, n);
 
-  vtkFloatArray * zvalues = vtkFloatArray::New();
-  zvalues -> SetName("UValues");
+  // vtkFloatArray * zvalues = vtkFloatArray::New();
+  // zvalues -> SetName("UValues");
   
   vtkPoints * points = vtkPoints::New();
   points -> SetDataTypeToDouble();
@@ -105,7 +105,7 @@ int main(int argc, char * argv[])
     for(int j=0; j<n; ++j)
     {
       points  -> InsertNextPoint(delta/2+i*delta,delta/2+j*delta,u_t[i*n+j]);
-      zvalues -> InsertNextValue(u_t[i*n+j]);
+      // zvalues -> InsertNextValue(u_t[i*n+j]);
       // std::cout << u_t[i*n+j] << std::endl;
     }
   }
@@ -182,15 +182,9 @@ int main(int argc, char * argv[])
   /*****************
    * Setup outputs *
    * ***************/
-  // Map the output zvalues to the z-coordinates of the data
-  vtkWarpScalar * warpScalar = vtkWarpScalar::New();
-  warpScalar -> SetInputConnection(delaunay->GetOutputPort());
-  warpScalar -> Update();
-
   vtkXMLPolyDataWriter * writer = vtkXMLPolyDataWriter::New();
   writer -> SetFileName("demo_EleFilter.vtp");
   writer -> SetInputData(output);
-  writer -> SetInputConnection(warpScalar->GetOutputPort());
   writer -> Write();
 
   /***********************
@@ -244,7 +238,7 @@ int main(int argc, char * argv[])
 
 
   
-  zvalues -> Delete();
+  // zvalues -> Delete();
   points -> Delete();
 
   // 
