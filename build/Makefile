@@ -52,9 +52,9 @@ print:
 	@echo CUDA_INCLUDE=$(CUDA_INCLUDE)
 
 # Files
-EXEC := main.out
-SRC := $(wildcard src/*.c)
-OBJ := $(patsubst src/%.c,src/%.o,$(SRC))
+EXEC := HTS2D
+SRC := $(wildcard ../src/*.c)
+OBJ := $(patsubst %.c,%.o,$(SRC))
 
 #Rules
 $(EXEC) : $(OBJ)
