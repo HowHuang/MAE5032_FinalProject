@@ -1,2 +1,307 @@
-data type is committed
-file opened.
+file type of temperature (u) for vtk visualization is committed
+group was opened.
+The number of datasets in the group (u_t): 102
+The number of data in each dataset: 100
+The partitioning n for data is: 10*10
+The min and max of u : -12.957642 and 0.829162
+output here: 100
+val: 1
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 1
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.752505
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.752505
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.501505
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.501505
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.250233
+dcolor: 0 0.0588235 1
+color: 0 15 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0.250233
+dcolor: 0 0.0588235 1
+color: 0 15 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0
+dcolor: 0 0.129412 1
+color: 0 33 255
+val: 0
+dcolor: 0 0.129412 1
+color: 0 33 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0
+dcolor: 0 0.129412 1
+color: 0 33 255
+val: 0
+dcolor: 0 0.129412 1
+color: 0 33 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.250233
+dcolor: 0 0.0588235 1
+color: 0 15 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0.202224
+dcolor: 0 0.0705882 1
+color: 0 18 255
+val: 0.250233
+dcolor: 0 0.0588235 1
+color: 0 15 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.501505
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.451333
+dcolor: 0 0.027451 1
+color: 0 7 255
+val: 0.453494
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.501505
+dcolor: 0 0.0196078 1
+color: 0 5 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.752505
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.702573
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.70264
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.704772
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.752505
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 1
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.95388
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953882
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.953937
+dcolor: 0 0 1
+color: 0 0 255
+val: 0.955763
+dcolor: 0 0 1
+color: 0 0 255
+val: 1
+dcolor: 0 0 1
+color: 0 0 255

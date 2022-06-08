@@ -121,7 +121,6 @@ int main(int argc, char * argv[])
   // Add the grid points to a polydata object
   vtkPolyData * inputPolyData = vtkPolyData::New();
   inputPolyData -> SetPoints(points);
-  inputPolyData -> GetPointData()->SetScalars(zvalues);
 
   // Triangulate the grid points
   vtkDelaunay2D * delaunay = vtkDelaunay2D::New();
@@ -156,20 +155,20 @@ int main(int argc, char * argv[])
 
   for (vtkIdType i = 0; i < output->GetNumberOfPoints(); i++)
   {
-    double val = elevation -> GetValue(i);
-    std::cout << "val: " << val << std::endl; //checked
+    double val = elevation->GetValue(i);
+    // std::cout << "val: " << val << std::endl; //checked
 
     double dcolor[3];
     colorLookupTable -> GetColor(val, dcolor);
-    std::cout << "dcolor: " << dcolor[0] << " " << dcolor[1] << " " <<
-                 dcolor[2] << std::endl;
+    // std::cout << "dcolor: " << dcolor[0] << " " << dcolor[1] << " " <<
+    // dcolor[2] << std::endl;
     unsigned char color[3];
     for (unsigned int j = 0; j < 3; j++)
     {
       color[j] = 255 * dcolor[j] / 1.0;
     }
-    std::cout << "color: " << (int)color[0] << " " << (int)color[1] << " " <<
-                 (int)color[2] << std::endl;
+    // std::cout << "color: " << (int)color[0] << " " << (int)color[1] << " " <<
+    // (int)color[2] << std::endl;
 
     colors -> InsertNextTypedTuple(color);
     /*
@@ -190,12 +189,9 @@ int main(int argc, char * argv[])
 
   vtkXMLPolyDataWriter * writer = vtkXMLPolyDataWriter::New();
   writer -> SetFileName("Test.vtp");
-  // writer -> SetInputData(output);
+  writer -> SetInputData(output);
   writer -> SetInputConnection(warpScalar->GetOutputPort());
   writer -> Write();
-
-
-
 
   /***********************
    * Setup visualization *
