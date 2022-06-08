@@ -7,4 +7,4 @@
 
 module purge
 
-./vtkHDF > SG_TEST.log 2>&1
+./vtk_StruGrid > SG_TEST.log 2>&1

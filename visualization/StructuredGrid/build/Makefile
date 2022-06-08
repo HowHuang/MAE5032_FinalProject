@@ -48,10 +48,10 @@ RM = /share/base/cmake/3.12.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization
+CMAKE_SOURCE_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build
+CMAKE_BINARY_DIR = /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named vtkHDF
+# Target rules for targets named vtk_StruGrid
 
 # Build rule for target.
-vtkHDF: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vtkHDF
-.PHONY : vtkHDF
+vtk_StruGrid: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 vtk_StruGrid
+.PHONY : vtk_StruGrid
 
 # fast build rule for target.
-vtkHDF/fast:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/build
-.PHONY : vtkHDF/fast
+vtk_StruGrid/fast:
+	$(MAKE) -f CMakeFiles/vtk_StruGrid.dir/build.make CMakeFiles/vtk_StruGrid.dir/build
+.PHONY : vtk_StruGrid/fast
 
 Vtk4hdf5.o: Vtk4hdf5.cpp.o
 
@@ -129,7 +129,7 @@ Vtk4hdf5.o: Vtk4hdf5.cpp.o
 
 # target to build an object file
 Vtk4hdf5.cpp.o:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.o
+	$(MAKE) -f CMakeFiles/vtk_StruGrid.dir/build.make CMakeFiles/vtk_StruGrid.dir/Vtk4hdf5.cpp.o
 .PHONY : Vtk4hdf5.cpp.o
 
 Vtk4hdf5.i: Vtk4hdf5.cpp.i
@@ -138,7 +138,7 @@ Vtk4hdf5.i: Vtk4hdf5.cpp.i
 
 # target to preprocess a source file
 Vtk4hdf5.cpp.i:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.i
+	$(MAKE) -f CMakeFiles/vtk_StruGrid.dir/build.make CMakeFiles/vtk_StruGrid.dir/Vtk4hdf5.cpp.i
 .PHONY : Vtk4hdf5.cpp.i
 
 Vtk4hdf5.s: Vtk4hdf5.cpp.s
@@ -147,7 +147,7 @@ Vtk4hdf5.s: Vtk4hdf5.cpp.s
 
 # target to generate assembly for a file
 Vtk4hdf5.cpp.s:
-	$(MAKE) -f CMakeFiles/vtkHDF.dir/build.make CMakeFiles/vtkHDF.dir/Vtk4hdf5.cpp.s
+	$(MAKE) -f CMakeFiles/vtk_StruGrid.dir/build.make CMakeFiles/vtk_StruGrid.dir/Vtk4hdf5.cpp.s
 .PHONY : Vtk4hdf5.cpp.s
 
 # Help Target
@@ -158,7 +158,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... vtkHDF"
+	@echo "... vtk_StruGrid"
 	@echo "... Vtk4hdf5.o"
 	@echo "... Vtk4hdf5.i"
 	@echo "... Vtk4hdf5.s"

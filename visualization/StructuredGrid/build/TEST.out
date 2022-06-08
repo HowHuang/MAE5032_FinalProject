@@ -916,3 +916,156 @@ PS:
 
 Read file <TEST.err> for stderr output of this job.
 
+Sender: LSF System <lsfadmin@r13n44>
+Subject: Job 3826600: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 17:55:02 2022.
+Job was executed on host(s) <2*r13n44>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 17:55:03 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build> was used as the working directory.
+Started at Wed Jun  8 17:55:03 2022.
+Terminated at Wed Jun  8 17:55:05 2022.
+Results reported at Wed Jun  8 17:55:05 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 2
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+
+./vtk_StruGrid > SG_TEST.log 2>&1
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.33 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n44>
+Subject: Job 3826613: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 17:58:46 2022.
+Job was executed on host(s) <2*r13n44>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 17:58:47 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build> was used as the working directory.
+Started at Wed Jun  8 17:58:47 2022.
+Terminated at Wed Jun  8 17:58:48 2022.
+Results reported at Wed Jun  8 17:58:48 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 2
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+
+./vtk_StruGrid > SG_TEST.log 2>&1
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.26 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            2 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@r13n44>
+Subject: Job 3826614: <vtk> in cluster <sustchpc> Done
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 17:59:44 2022.
+Job was executed on host(s) <2*r13n44>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 17:59:44 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/StructuredGrid/build> was used as the working directory.
+Started at Wed Jun  8 17:59:44 2022.
+Terminated at Wed Jun  8 17:59:45 2022.
+Results reported at Wed Jun  8 17:59:45 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 2
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+
+./vtk_StruGrid > SG_TEST.log 2>&1
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.22 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            1 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+

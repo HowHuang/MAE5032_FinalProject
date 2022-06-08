@@ -5,8 +5,6 @@
 #include "vtkPointData.h"
 #include "vtkPoints.h"
 #include "vtkPolyData.h"
-// #include "vtkDelaunay2D.h"
-// #include "vtkElevationFilter.h"
 #include "vtkLookupTable.h"
 #include "vtkTypedDataArray.h"
 #include "vtkPolyDataMapper.h"
@@ -80,8 +78,8 @@ int main(int argc, char * argv[])
     // status = H5Gget_info(group_id, &ginfo);
     // printf("The number of datasets in the group (u_t): %d.\n", ginfo.nlinks);
 
-  //use the first dataset to get the size of every dataset
-  sprintf(dsname, "%08d", 22);
+  // use the first dataset to get the size of every dataset
+  sprintf(dsname, "%08d", 0);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size    = H5Dget_storage_size(dataset_id);
   printf("The number of data in each dataset: %lld\n", ds_size/sizeof(double));
@@ -102,7 +100,7 @@ int main(int argc, char * argv[])
    *****************************/
   unsigned int      n = sqrt(ds_size/sizeof(double));
   double            delta = 1.0/n;
-  auto              dataSize = n*n;
+  auto              dataSize = n*n; //*(ds_num-1)
   auto              numberOfCells = (n-1)*(n-1);
 
   printf("The partitioning n for data is: %d*%d\n", n, n);
@@ -145,7 +143,7 @@ int main(int argc, char * argv[])
   structuredGrid->GetPointData()->SetScalars(pointValues);
 
 
-  // If the key is the cell Id, the value is a set of corresponding point Ids.
+  // The key is the cell Id, the value is a set of corresponding point Ids.
   std::map<vtkIdType, std::set<vtkIdType>> cellPointIds;
   vtkCellIterator* it = structuredGrid->NewCellIterator();
   for (it->InitTraversal(); !it->IsDoneWithTraversal(); it->GoToNextCell())
