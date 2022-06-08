@@ -1,0 +1,23 @@
+#!/bin/bash
+#BSUB -J HTS2D
+#BSUB -q debug
+#BSUB -n 10
+#BSUB -W 00:10
+#BSUB -e %J-petsc.err
+#BSUB -o %J-petsc.out
+
+K = 10
+N = 10
+
+
+
+HTS2D_DIR="/work/ese-chenph/github/MAE5032_FinalProject"
+cd $HTS2D_DIR
+
+module purge
+module load mpi/intel/2018.4
+
+cd build
+make HTS2D_DIR
+mpirun -np $K ./HTS2D generator -fname ../data/test01.hdf5 -n $N -dl 0.1 -dt 1 -g 200 -rho 300 -c 1000 -k 10 -f 0 -u0 50
+mpirun -np $K ./HTS2D implicit -fname ../data/test01.hdf5 -maxItsW 1000 -maxIts 1000 -restart 0 -log_view > test01.log 2>&1
