@@ -288,6 +288,12 @@ int Generator(int argc, char** argv)
     
     PetscPrintf(comm,"HDF5 file %s has been written.\n",fname);
 
+    VecDestroy(&g);VecDestroy(&h);VecDestroy(&u_0);VecDestroy(&paras);
+    VecDestroy(&g_b);VecDestroy(&g_l);VecDestroy(&g_r);VecDestroy(&g_t);
+    VecDestroy(&h_b);VecDestroy(&h_l);VecDestroy(&h_r);VecDestroy(&h_t);
+    VecDestroy(&t_b);VecDestroy(&t_l);VecDestroy(&t_r);VecDestroy(&t_t);
+    PetscViewerDestroy(&viewer);
+
     PetscFinalize();
     
     return 0;
