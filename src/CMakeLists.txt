@@ -17,8 +17,7 @@ find_package(VTK COMPONENTS
   vtkFiltersGeometry
   vtkFiltersModeling
   vtkFiltersSources
-  vtkIOXML
-  vtkIOImage
+  vtkIOCore vtkIOLegacy vtkIOXML vtkIOParallelXML
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
   vtkRenderingCore

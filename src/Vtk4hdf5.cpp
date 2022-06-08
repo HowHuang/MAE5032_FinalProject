@@ -1,20 +1,30 @@
-#include "vtkFloatArray.h"
+#include "vtkDoubleArray.h"
 #include "vtkArrayData.h"
+#include "vtkCellData.h"
+#include "vtkCellIterator.h"
 #include "vtkPointData.h"
 #include "vtkPoints.h"
 #include "vtkPolyData.h"
-#include "vtkDelaunay2D.h"
-#include "vtkElevationFilter.h"
+// #include "vtkDelaunay2D.h"
+// #include "vtkElevationFilter.h"
 #include "vtkLookupTable.h"
 #include "vtkTypedDataArray.h"
 #include "vtkPolyDataMapper.h"
-#include "vtkRenderWindow.h"
-#include "vtkRenderWindowInteractor.h"
-#include "vtkRenderer.h"
+// #include "vtkRenderWindow.h"
+// #include "vtkRenderWindowInteractor.h"
+// #include "vtkRenderer.h"
 #include "vtkNamedColors.h"
-#include "vtkCamera.h"
-#include "vtkWarpScalar.h"
-#include "vtkXMLPolyDataWriter.h"
+// #include "vtkCamera.h"
+// #include "vtkWarpScalar.h"
+// #include "vtkXMLPolyDataWriter.h"
+#include "vtkIdList.h"
+// #include "vtkType.h"
+#include "vtkStructuredGrid.h"
+#include "vtkStructuredGridWriter.h"
+
+#include <iterator>
+#include <map>
+#include <set>
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
@@ -63,7 +73,7 @@ int main(int argc, char * argv[])
   printf("group was opened.\n");
 
   status = H5Gget_num_objs(group_id,&ds_num);
-  printf("The number of datasets in the group (u_t): %d\n", ds_num);
+  printf("The number of datasets in the group (u_t): %lld\n", ds_num);
   /*
     another way to get the group's size (the number of dataset with the group):
     */
@@ -72,10 +82,10 @@ int main(int argc, char * argv[])
     // printf("The number of datasets in the group (u_t): %d.\n", ginfo.nlinks);
 
   //use the first dataset to get the size of every dataset
-  sprintf(dsname, "%08d", 1);
+  sprintf(dsname, "%08d", 22);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size = H5Dget_storage_size(dataset_id);
-  printf("The number of data in each dataset: %d\n", ds_size/sizeof(double));
+  printf("The number of data in each dataset: %lld\n", ds_size/sizeof(double));
   /*
     another way to get the u_t's size:
     */
@@ -88,147 +98,157 @@ int main(int argc, char * argv[])
   status = H5Dread(dataset_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,u_t);
   // status = H5Dclose(dataset_id);               ///暂时注释，指读一个dataset测试
 
-  //declare vkt objects
-  int        n = sqrt(ds_size/sizeof(double));
-  double     delta = 1.0/n;
+  /*****************************
+   *Start declaring vkt objects*
+   *****************************/
+  unsigned int      n = sqrt(ds_size/sizeof(double));
+  double            delta = 1.0/n;
+  auto              dataSize = n*n*n;
+  auto              numberOfCells = (n-1)*(n-1)*(n-1);
 
   printf("The partitioning n for data is: %d*%d\n", n, n);
 
-  vtkFloatArray * zvalues = vtkFloatArray::New();
-  zvalues -> SetName("UValues");
+  vtkDoubleArray * pointValues = vtkDoubleArray::New();
+  pointValues -> SetName("UValues");
+  pointValues -> SetNumberOfComponents(1);
+  pointValues -> SetNumberOfTuples(dataSize);
+  for (size_t k=0; k<dataSize; ++k)
+  {
+    pointValues->SetValue(k, u_t[k]);
+  }
+
+  vtkDoubleArray * cellValues = vtkDoubleArray::New();
+  cellValues  -> SetNumberOfTuples(numberOfCells);
+  for(unsigned int i=0; i<n; ++i)
+  {
+    for(unsigned int j=0; j<n; ++j)
+    {
+      cellValues->SetValue(i*n+j,i*n+j);  //what should be cellValues??
+    }
+  }
   
   vtkPoints * points = vtkPoints::New();
-  points -> SetDataTypeToDouble();
+  // points -> SetDataTypeToDouble();
 
-  for(int i=0; i<n; ++i)
+  for(unsigned int i=0; i<n; ++i)
   {
-    for(int j=0; j<n; ++j)
+    for(unsigned int j=0; j<n; ++j)
     {
-      points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,u_t[i*n+j]);
-      zvalues -> InsertNextValue(u_t[i*n+j]);
-      // std::cout << u_t[i*n+j] << std::endl;
+      points  -> InsertNextPoint(delta/2+i*delta,delta/2+i*delta,0.5);
+      std::cout << u_t[i*n+j] << std::endl;
     }
   }
   status = H5Dclose(dataset_id);
   
-  double    bounds[6];
-  points -> GetBounds(bounds);
-  /*GetBounds() Return a pointer to the geometry bounding box in the form 
-    (xmin,xmax, ymin, ymax, zmin, zmax).
-    */
-  printf("The min and max of u : %f and %f\n", bounds[4], bounds[5]);
+  // Create a grid
+  vtkStructuredGrid * structuredGrid = vtkStructuredGrid::New();
+  // Specify the dimensions of the grid
+  structuredGrid->SetDimensions(static_cast<int>(n), static_cast<int>(n),
+                                static_cast<int>(n));
+  structuredGrid->SetPoints(points);
+  structuredGrid->GetCellData()->SetScalars(cellValues);
+  structuredGrid->GetPointData()->SetScalars(pointValues);
 
-  // Add the grid points to a polydata object
-  vtkPolyData * inputPolyData = vtkPolyData::New();
-  inputPolyData -> SetPoints(points);
-  inputPolyData -> GetPointData()->SetScalars(zvalues);
-
-  // Triangulate the grid points
-  vtkDelaunay2D * delaunay = vtkDelaunay2D::New();
-  delaunay -> SetInputData(inputPolyData);
-  delaunay -> Update();
-
-  vtkElevationFilter * elevationFilter = vtkElevationFilter::New();
-  elevationFilter -> SetInputConnection(delaunay->GetOutputPort());
-  elevationFilter -> SetLowPoint(0.0, 0.0, bounds[4]);
-  elevationFilter -> SetHighPoint(0.0, 0.0, bounds[5]);
-  elevationFilter -> Update();
-
-  vtkPolyData * output = vtkPolyData::New();
-  output -> ShallowCopy(dynamic_cast<vtkPolyData*>(elevationFilter->GetOutput()));
-  std::cout << "output here: " << output->GetNumberOfPoints() << std::endl;
-
-  vtkFloatArray * elevation = vtkFloatArray::New();
-  elevation = dynamic_cast<vtkFloatArray*>(output->GetPointData()->GetArray("Elevation"));
-    /*GetArray will Returns the n-th vtkArray in the collection.
-      https://vtk.org/doc/nightly/html/classvtkArrayData.html#ae404ca06bbffe9927ac59cb908c4ab95
-      */
-
-  // Create the color map
-  vtkLookupTable * colorLookupTable = vtkLookupTable::New();
-  colorLookupTable -> SetTableRange(bounds[4], bounds[5]);
-  colorLookupTable -> Build();
-
-  // Generate the colors for each point based on the color map
-  vtkUnsignedCharArray * colors = vtkUnsignedCharArray::New();
-  colors -> SetNumberOfComponents(3);
-  colors -> SetName("Colors");
-
-  for (vtkIdType i = 0; i < output->GetNumberOfPoints(); i++)
+  // The key is the cell Id and the value is a set of corresponding point Ids.
+  std::map<vtkIdType, std::set<vtkIdType>> cellPointIds;
+  vtkCellIterator* it = structuredGrid->NewCellIterator();
+  for (it->InitTraversal(); !it->IsDoneWithTraversal(); it->GoToNextCell())
   {
-    double val = elevation -> GetValue(i);
-    std::cout << "val: " << val << std::endl; //checked
+    vtkIdList * pointIds = it->GetPointIds();
+    std::set<vtkIdType> ptIds;
 
-    double dcolor[3];
-    colorLookupTable -> GetColor(val, dcolor);
-    std::cout << "dcolor: " << dcolor[0] << " " << dcolor[1] << " " <<
-                 dcolor[2] << std::endl;
-    unsigned char color[3];
-    for (unsigned int j = 0; j < 3; j++)
+    std::cout << pointIds->GetId(0) << std::endl;
+  //   vtkIdType * beginId  = 0;
+    vtkIdType     numId  = pointIds->GetNumberOfIds();
+    std::cout << "2::" << numId << std::endl;
+
+    for (vtkIdType id = pointIds->GetId(0); id != pointIds->GetId(0)+pointIds->GetNumberOfIds(); ++id)
     {
-      color[j] = 255 * dcolor[j] / 1.0;
+      ptIds.insert(id);
     }
-    std::cout << "color: " << (int)color[0] << " " << (int)color[1] << " " <<
-                 (int)color[2] << std::endl;
+    cellPointIds[it->GetCellId()] = ptIds;
+  }
+  it->Delete();
 
-    colors -> InsertNextTypedTuple(color);
-    /*
-      InsertNextTupleValue is now InsertNextTypedTuple:
-      https://vtk.org/doc/nightly/html/VTK-7-1-Changes.html
-      */
+  std::cout << "Cells and their points" << std::endl;
+  for (auto cell : cellPointIds)
+  {
+    std::cout << "Cell Id: " << cell.first << " Point Ids: ";
+    for (auto id = cell.second.begin(); id != cell.second.end(); ++id)
+      if (id != std::prev(cell.second.end()))
+      {
+        std::cout << *id << ", ";
+      }
+      else
+      {
+        std::cout << *id << std::endl;
+      }
   }
 
-  output -> GetPointData() -> AddArray(colors);
+  // The key is the point Id and the value is a set of corresponding cell Ids.
+  std::map<vtkIdType, std::set<vtkIdType>> commonPointIds;
+    // = cellPointIds.begin()->second;
+  for (auto cell : cellPointIds)
+  {
+    for (auto pointId : cell.second)
+    {
+      commonPointIds[pointId].insert(cell.first);
+    }
+  }
 
-  /*****************
-   * Setup outputs *
-   * ***************/
-  // Map the output zvalues to the z-coordinates of the data
-  vtkWarpScalar * warpScalar = vtkWarpScalar::New();
-  warpScalar -> SetInputConnection(delaunay->GetOutputPort());
-  warpScalar -> Update();
+  std::cout << "Point Ids shared between cells" << std::endl;
+  for (auto point = commonPointIds.begin(); point != commonPointIds.end();
+       ++point)
+  {
+    if (point->second.size() > 1)
+    {
+      std::cout << "Point Id: " << point->first << " CellIds: ";
+      for (auto cellId = point->second.begin(); cellId != point->second.end();
+           ++cellId)
+      {
+        if (cellId != std::prev(point->second.end()))
+        {
+          std::cout << *cellId << ", ";
+        }
+        else
+        {
+          std::cout << *cellId << std::endl;
+        }
+      }
+    }
+  }
 
-  vtkXMLPolyDataWriter * writer = vtkXMLPolyDataWriter::New();
-  writer -> SetFileName("Test.vtp");
-  // writer -> SetInputData(output);
-  writer -> SetInputConnection(warpScalar->GetOutputPort());
-  writer -> Write();
-
-
-
+  // Use the point data
+  // Map the scalar values in the image to colors with a lookup table:
+  // vtkLookupTable * lut = vtkLookupTable::New();
+  // lut    -> SetNumberOfTableValues(dataSize);
+  // lut    -> Build();
 
   /***********************
    * Setup visualization *
    * *********************/
-  // vtkPolyDataMapper * mapper = vtkPolyDataMapper::New();
-  // mapper -> SetInputData(output);
+  // Create a mapper and actor
+  // vtkDataSetMapper * mapper = vtkDataSetMapper::New();
+  // mapper -> SetInputData(structuredGrid);
+  // mapper -> SetLookupTable(lut);
+  // mapper -> SetScalarRange(0, dataSize - 1);
+  // mapper -> ScalarVisibilityOn();
 
-  // vtkActor * actor = vtkActor::New();
-  // actor  -> SetMapper(mapper);
 
-  // vtkRenderer * renderer = vtkRenderer::New();
-  // vtkRenderWindow * renderWindow = vtkRenderWindow::New();
-  // renderWindow -> AddRenderer(renderer);
-  // renderWindow -> SetWindowName("ElevationFilter");
 
-  // vtkRenderWindowInteractor * renderWindowInteractor = vtkRenderWindowInteractor::New();
-  // renderWindowInteractor -> SetRenderWindow(renderWindow);
 
-  // vtkNamedColors * namedColors = vtkNamedColors::New();  
-  // renderer -> AddActor(actor);
-  // renderer -> SetBackground(namedColors->GetColor3d("ForestGreen").GetData());
 
-  // // z-axis points upwards and y-axis is lower right edge
-  // auto camera = renderer->GetActiveCamera();
-  // camera->SetPosition(-13.3586, 20.7305, 22.5147);
-  // camera->SetFocalPoint(4.5, 4.5, 4.5);
-  // camera->SetViewUp(0.506199, -0.328212, 0.797521);
-  // camera->SetDistance(30.1146);
-  // camera->SetClippingRange(14.3196, 50.0698);
 
-  // renderWindow->Render();
 
-  // renderWindowInteractor->Start();
+  /*****************
+   * Setup outputs *
+   * ***************/
+  vtkStructuredGridWriter * writer = vtkStructuredGridWriter::New();
+  writer -> SetFileName("Test.vtk");
+  writer -> SetInputData(structuredGrid);
+  writer -> Write();
+
+  std::cout << "Success!" << std::endl;
 
   // for(int img = 1; img < ds_num-1; ++img)
   // {
@@ -248,8 +268,7 @@ int main(int argc, char * argv[])
 
 
   
-  zvalues -> Delete();
-  points -> Delete();
+  // points -> Delete();
 
   // 
 

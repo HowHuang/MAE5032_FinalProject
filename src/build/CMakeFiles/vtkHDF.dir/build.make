@@ -82,14 +82,8 @@ vtkHDF: CMakeFiles/vtkHDF.dir/build.make
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkhdf5-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkhdf5_hl-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkFiltersModeling-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOXML-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOXMLParser-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkexpat-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOImage-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkDICOMParser-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkmetaio-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkjpeg-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtktiff-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOParallelXML-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkParallelCore-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkInteractionStyle-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkFiltersExtraction-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkFiltersStatistics-8.2.so.1
@@ -100,6 +94,11 @@ vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkRenderingFreeType-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkfreetype-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkRenderingGL2PSOpenGL2-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkgl2ps-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkpng-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOXML-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOXMLParser-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkexpat-8.2.so.1
+vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOLegacy-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkIOCore-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkdoubleconversion-8.2.so.1
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtklz4-8.2.so.1
@@ -128,7 +127,6 @@ vtkHDF: /usr/lib64/libX11.so
 vtkHDF: /usr/lib64/libXext.so
 vtkHDF: /usr/lib64/libXt.so
 vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkzlib-8.2.so.1
-vtkHDF: /work/ese-huangh/lib/VTK-8.2.0/lib64/libvtkpng-8.2.so.1
 vtkHDF: CMakeFiles/vtkHDF.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/work/ese-huangh/MAE5032/MAE5032_FinalProject/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable vtkHDF"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/vtkHDF.dir/link.txt --verbose=$(VERBOSE)
