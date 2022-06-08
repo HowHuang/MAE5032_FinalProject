@@ -1,4 +1,6 @@
 # HTS2D(MAE5032_FinalProject)
+![截屏2022-06-08 19.26.36](README.assets/截屏2022-06-08 19.26.36.png)
+
 HTS2D使用git进行版本控制，并上传到github仓库，使用以下命令克隆至本地
 
 ```bash
