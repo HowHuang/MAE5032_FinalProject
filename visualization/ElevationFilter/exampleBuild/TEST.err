@@ -1,0 +1,1 @@
+/work/ese-huangh/.lsbatch/1654698671.3827112.shell: line 10: 165201 Segmentation fault      (core dumped) ./vtk_AVI > AVI_TEST.log 2>&1

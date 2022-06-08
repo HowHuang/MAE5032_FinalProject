@@ -1,0 +1,51 @@
+Sender: LSF System <lsfadmin@r13n45>
+Subject: Job 3827112: <vtk> in cluster <sustchpc> Exited
+
+Job <vtk> was submitted from host <login01> by user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 22:31:11 2022.
+Job was executed on host(s) <2*r13n45>, in queue <debug>, as user <ese-huangh> in cluster <sustchpc> at Wed Jun  8 22:31:12 2022.
+</work/ese-huangh> was used as the home directory.
+</work/ese-huangh/MAE5032/MAE5032_FinalProject/visualization/ElevationFilter/exampleBuild> was used as the working directory.
+Started at Wed Jun  8 22:31:12 2022.
+Terminated at Wed Jun  8 22:31:15 2022.
+Results reported at Wed Jun  8 22:31:15 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J vtk
+#BSUB -q debug
+#BSUB -n 2
+#BSUB -e TEST.err
+#BSUB -o TEST.out
+
+module purge
+
+./vtk_AVI > AVI_TEST.log 2>&1
+
+------------------------------------------------------------
+
+Exited with exit code 139.
+
+Resource usage summary:
+
+    CPU time :                                   0.14 sec.
+    Max Memory :                                 4 MB
+    Average Memory :                             4.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1345 MB
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   2 sec.
+    Turnaround time :                            4 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file <TEST.err> for stderr output of this job.
+

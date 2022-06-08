@@ -1,4 +1,4 @@
-PROJECT(vtkHDF-EleFilter)
+PROJECT(vtkHDF-AVT)
 
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
@@ -17,7 +17,11 @@ find_package(VTK COMPONENTS
   vtkFiltersGeometry
   vtkFiltersModeling
   vtkFiltersSources
-  vtkIOCore vtkIOLegacy vtkIOXML vtkIOParallelXML
+  vtkIOCore vtkIOLegacy vtkIOXML
+  vtkIOMovie
+  vtkIOVideo
+  vtkIOExportOpenGL2
+  vtkIOExportPDF
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
   vtkRenderingCore
@@ -32,7 +36,7 @@ INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/src)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/hl/src)
 
-ADD_EXECUTABLE( vtk_EleFilter Vtk4hdf5_ElevationFilter.cpp )
-TARGET_LINK_LIBRARIES( vtk_EleFilter ${VTK_LIBRARIES} )
+ADD_EXECUTABLE( vtk_AVI Vtk4hdf5_ElevationFilter_Animation.cpp )
+TARGET_LINK_LIBRARIES( vtk_AVI ${VTK_LIBRARIES} )
 
 # EOF

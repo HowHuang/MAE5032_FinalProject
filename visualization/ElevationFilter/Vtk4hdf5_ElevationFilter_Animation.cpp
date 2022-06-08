@@ -8,13 +8,17 @@
 #include "vtkLookupTable.h"
 #include "vtkTypedDataArray.h"
 #include "vtkPolyDataMapper.h"
-// #include "vtkRenderWindow.h"
-// #include "vtkRenderWindowInteractor.h"
-// #include "vtkRenderer.h"
+#include "vtkRenderWindow.h"
+#include "vtkRenderWindowInteractor.h"
+#include "vtkRenderer.h"
 #include "vtkNamedColors.h"
-// #include "vtkCamera.h"
+#include "vtkCamera.h"
 #include "vtkWarpScalar.h"
-#include "vtkXMLPolyDataWriter.h"
+// #include "vtkXMLPolyDataWriter.h"
+#include "vtkActor.h"
+#include "vtkWindowToImageFilter.h"
+#include "vtkGenericMovieWriter.h"
+#include "vtkSmartPointer.h"
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
@@ -23,6 +27,12 @@
 
 #define FILE "../../default.hdf5"
 #define GROUP "u_t"
+
+/*
+  https://gitlab.kitware.com/vtk/vtk/-/tree/v8.2.0/IO/Movie
+  why my 8.2 does not have "vtkAVIWriter.h"????
+  another try: vtkOggTheoraWriter.h??
+  */
 
 int main(int argc, char * argv[])
 {
@@ -179,46 +189,77 @@ int main(int argc, char * argv[])
 
   output -> GetPointData() -> AddArray(colors);
 
-  /*****************
-   * Setup outputs *
-   * ***************/
-  vtkXMLPolyDataWriter * writer = vtkXMLPolyDataWriter::New();
-  writer -> SetFileName("demo_EleFilter.vtp");
-  writer -> SetInputData(output);
-  writer -> Write();
 
   /***********************
    * Setup visualization *
    * *********************/
-  // vtkPolyDataMapper * mapper = vtkPolyDataMapper::New();
-  // mapper -> SetInputData(output);
+  
+  vtkNamedColors * Namecolors = vtkNamedColors::New();
+  // Set the background color.
+  vtkColor3d backgroundColor = Namecolors->GetColor3d("SlateGray");
 
-  // vtkActor * actor = vtkActor::New();
-  // actor  -> SetMapper(mapper);
+  // Create a mapper and actor 
+  vtkPolyDataMapper * mapper = vtkPolyDataMapper::New();
+  vtkActor          * actor  = vtkActor::New();
+  mapper -> SetInputData(output);
+  actor  -> SetMapper(mapper);
+  // actor  -> GetProperty()->SetColor(Namecolors->GetColor3d("Cyan").GetData());
 
-  // vtkRenderer * renderer = vtkRenderer::New();
-  // vtkRenderWindow * renderWindow = vtkRenderWindow::New();
-  // renderWindow -> AddRenderer(renderer);
-  // renderWindow -> SetWindowName("ElevationFilter");
+  // Create a renderer, render window, and interactor
+  vtkRenderer * renderer = vtkRenderer::New();
+  vtkRenderWindow * renderWindow = vtkRenderWindow::New();
+  renderWindow -> AddRenderer(renderer);
+  // renderWindow -> SetSize(640, 480);
+  renderWindow -> SetWindowName("DataAnimation");
 
-  // vtkRenderWindowInteractor * renderWindowInteractor = vtkRenderWindowInteractor::New();
-  // renderWindowInteractor -> SetRenderWindow(renderWindow);
+  vtkRenderWindowInteractor * renderWindowInteractor = vtkRenderWindowInteractor::New();
+  renderWindowInteractor -> SetRenderWindow(renderWindow);
 
-  // vtkNamedColors * namedColors = vtkNamedColors::New();  
-  // renderer -> AddActor(actor);
-  // renderer -> SetBackground(namedColors->GetColor3d("ForestGreen").GetData());
+  // Initialize must be called prior to creating timer events.
+  renderWindowInteractor -> Initialize();
+  renderWindowInteractor -> CreateRepeatingTimer(ds_num-1);
+  
+  // vtkCallbackCommand * timerCallback = vtkCallbackCommand::New();
+  // timerCallback -> SetCallback(TimerCallbackFunction);
+  // timerCallback->SetClientData(programmableFilter);
 
-  // // z-axis points upwards and y-axis is lower right edge
-  // auto camera = renderer->GetActiveCamera();
-  // camera->SetPosition(-13.3586, 20.7305, 22.5147);
-  // camera->SetFocalPoint(4.5, 4.5, 4.5);
-  // camera->SetViewUp(0.506199, -0.328212, 0.797521);
-  // camera->SetDistance(30.1146);
-  // camera->SetClippingRange(14.3196, 50.0698);
+  // Add the actor to the scene
+  renderer -> AddActor(actor);
+  renderer -> SetBackground(backgroundColor.GetData());
 
+  // Render and interact
+  renderWindow->Render();
+  auto camera = renderer->GetActiveCamera();
+  camera->SetPosition(2.26841, -1.51874, 1.805);
+  camera->SetFocalPoint(-0.148582, 0.0814323, 0.24803);
+  camera->SetViewUp(0.157813, 0.800687, 0.577923);
+  camera->SetDistance(3.29037);
+  camera->SetClippingRange(1.14823, 5.60288);
+  // or
   // renderWindow->Render();
+  // renderer->GetActiveCamera()->Azimuth(30);
+  // renderer->GetActiveCamera()->Elevation(30);
+  // renderer->ResetCameraClippingRange();
 
-  // renderWindowInteractor->Start();
+
+
+  /*****************
+   * Setup outputs *
+   * ***************/
+
+  vtkGenericMovieWriter * writer;
+    // vtkNew<vtkGenericMovieWriter> writer;
+  // vtkSmartPointer<vtkAVIWriter> writer=vtkSmartPointer<vtkAVIWriter>::New();
+
+  vtkWindowToImageFilter * filter = vtkWindowToImageFilter::New();
+  filter -> SetInput(renderWindow);
+  writer -> SetInputConnection(filter->GetOutputPort());
+  writer -> SetFileName("demo_EleFilter.avi");
+  // writer -> InlineDataOn();
+  // writer -> SetRenderWindow(renderWindow);
+  writer -> Write();
+
+  writer -> Delete();
 
   // for(int img = 1; img < ds_num-1; ++img)
   // {
@@ -255,6 +296,5 @@ int main(int argc, char * argv[])
   status = H5Fclose(file_id);
   return 0;
 }
-
 
 // EOF

@@ -1,0 +1,13 @@
+file type of temperature (u) for vtk visualization is committed
+group was opened.
+The number of datasets in the group (u_t): 102
+The number of data in each dataset: 100
+The partitioning n for data is: 10*10
+The min and max of u : 0.000002 and 2.291399
+output here: 100
+Generic Warning: In /work/ese-huangh/VTK-8.2.0/Rendering/Core/vtkPolyDataMapper.cxx, line 28
+Error: no override found for 'vtkPolyDataMapper'.
+
+Generic Warning: In /work/ese-huangh/VTK-8.2.0/Rendering/Core/vtkActor.cxx, line 43
+Error: no override found for 'vtkActor'.
+
