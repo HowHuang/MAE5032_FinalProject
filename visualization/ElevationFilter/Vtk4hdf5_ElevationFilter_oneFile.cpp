@@ -63,7 +63,7 @@ int main(int argc, char * argv[])
   printf("group was opened.\n");
 
   status = H5Gget_num_objs(group_id,&ds_num);
-  printf("The number of datasets in the group (u_t): %d\n", ds_num);
+  printf("The number of datasets in the group (u_t): %lld\n", ds_num);
   /*
     another way to get the group's size (the number of dataset with the group):
     */
@@ -75,7 +75,7 @@ int main(int argc, char * argv[])
   sprintf(dsname, "%08d", 1);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size = H5Dget_storage_size(dataset_id);
-  printf("The number of data in each dataset: %d\n", ds_size/sizeof(double));
+  printf("The number of data in each dataset: %lld\n", ds_size/sizeof(double));
   /*
     another way to get the u_t's size:
     */

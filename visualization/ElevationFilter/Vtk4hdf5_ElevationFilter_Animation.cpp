@@ -19,6 +19,9 @@
 #include "vtkWindowToImageFilter.h"
 #include "vtkGenericMovieWriter.h"
 #include "vtkSmartPointer.h"
+// #include "vtkPNGWriter.h"
+#include "vtkAnimationScene.h"
+#include "vtkInteractorStyleTrackballCamera.h"
 
 #include "vtk_hdf5.h"
 #include "H5public.h"
@@ -73,7 +76,7 @@ int main(int argc, char * argv[])
   printf("group was opened.\n");
 
   status = H5Gget_num_objs(group_id,&ds_num);
-  printf("The number of datasets in the group (u_t): %d\n", ds_num);
+  printf("The number of datasets in the group (u_t): %lld\n", ds_num);
   /*
     another way to get the group's size (the number of dataset with the group):
     */
@@ -85,7 +88,7 @@ int main(int argc, char * argv[])
   sprintf(dsname, "%08d", 1);
   dataset_id = H5Dopen(group_id,dsname,H5P_DEFAULT);
   ds_size = H5Dget_storage_size(dataset_id);
-  printf("The number of data in each dataset: %d\n", ds_size/sizeof(double));
+  printf("The number of data in each dataset: %lld\n", ds_size/sizeof(double));
   /*
     another way to get the u_t's size:
     */
@@ -197,7 +200,7 @@ int main(int argc, char * argv[])
   // Set the background color.
   vtkColor3d backgroundColor = Namecolors->GetColor3d("SlateGray");
   std::cout << "here" << std::endl;
-  std::cout << output << std::endl;
+  // std::cout << output << std::endl;
 
   // Create a mapper and actor
   vtkPolyDataMapper * mapper = vtkPolyDataMapper::New();
@@ -205,26 +208,21 @@ int main(int argc, char * argv[])
   mapper -> SetInputData(output);
   actor  -> SetMapper(mapper);
   // actor  -> GetProperty()->SetColor(Namecolors->GetColor3d("Cyan").GetData());
-  std::cout << "here3" << std::endl;
 
   // Create a renderer, render window, and interactor
   vtkRenderer     * renderer     = vtkRenderer::New();
   vtkRenderWindow * renderWindow = vtkRenderWindow::New();
+  renderWindow -> SetOffScreenRendering(1);
   renderWindow -> AddRenderer(renderer);
   // renderWindow -> SetSize(640, 480);
   renderWindow -> SetWindowName("DataAnimation");
-/*
+
   vtkRenderWindowInteractor * renderWindowInteractor = vtkRenderWindowInteractor::New();
   renderWindowInteractor -> SetRenderWindow(renderWindow);
 
   // Initialize must be called prior to creating timer events.
   renderWindowInteractor -> Initialize();
   renderWindowInteractor -> CreateRepeatingTimer(ds_num-1);
-*/
-
-  // vtkCallbackCommand * timerCallback = vtkCallbackCommand::New();
-  // timerCallback -> SetCallback(TimerCallbackFunction);
-  // timerCallback->SetClientData(programmableFilter);
 
   // Add the actor to the scene
   renderer -> AddActor(actor);
@@ -232,37 +230,63 @@ int main(int argc, char * argv[])
 
   // Render and interact
   renderWindow->Render();
-  auto camera = renderer->GetActiveCamera();
-  camera->SetPosition(2.26841, -1.51874, 1.805);
-  camera->SetFocalPoint(-0.148582, 0.0814323, 0.24803);
-  camera->SetViewUp(0.157813, 0.800687, 0.577923);
-  camera->SetDistance(3.29037);
-  camera->SetClippingRange(1.14823, 5.60288);
-  // or
-  // renderWindow->Render();
-  // renderer->GetActiveCamera()->Azimuth(30);
-  // renderer->GetActiveCamera()->Elevation(30);
-  // renderer->ResetCameraClippingRange();
+  renderer->GetActiveCamera()->Azimuth(160);
+  renderer->GetActiveCamera()->Elevation(160);
+  renderer->ResetCameraClippingRange();
+
+/*
+  // Testing the Rendering request and camera position
+  // see an old example here: 
+  // https://kitware.github.io/vtk-examples/site/Cxx/Utilities/OffScreenRendering/
+  vtkSmartPointer<vtkWindowToImageFilter> windowToImageFilter =
+      vtkSmartPointer<vtkWindowToImageFilter>::New();
+  windowToImageFilter->SetInput(renderWindow);
+  windowToImageFilter->Update();
+
+  vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
+  writer->SetFileName("screenshot.png");
+  writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+  writer->Write();
+*/
+
+  /***************
+   * Setup Movie *
+   * *************/
+
+  //Create an Animation Scene
+  vtkAnimationScene * scene = vtkAnimationScene::New();
+  scene -> SetModeToSequence();
+  scene -> SetFrameRate(5);
+  scene -> SetStartTime(0);
+  scene -> SetEndTime(ds_num);
+
+  vtkInteractorStyleTrackballCamera * style = vtkInteractorStyleTrackballCamera::New();
+  renderWindowInteractor->SetInteractorStyle(style);
+  
 
 
+    
+  vtkSmartPointer<vtkAVIWriter> writer =vtkSmartPointer<vtkAVIWriter>::New();
+  // vtkGenericMovieWriter * writer;
+    /* Not work
+      vtkNew<vtkGenericMovieWriter> writer;
+      vtkSmartPointer<vtkAVIWriter> writer=vtkSmartPointer<vtkAVIWriter>::New();
+      */
+  writer -> SetFileName("demo.avi");
 
-  /*****************
-   * Setup outputs *
-   * ***************/
-
-  vtkGenericMovieWriter * writer;
-    // vtkNew<vtkGenericMovieWriter> writer;
-  // vtkSmartPointer<vtkAVIWriter> writer=vtkSmartPointer<vtkAVIWriter>::New();
-
+  std::cout << "here3" << std::endl;
   vtkWindowToImageFilter * filter = vtkWindowToImageFilter::New();
   filter -> SetInput(renderWindow);
   writer -> SetInputConnection(filter->GetOutputPort());
-  writer -> SetFileName("demo_EleFilter.avi");
-  // writer -> InlineDataOn();
-  // writer -> SetRenderWindow(renderWindow);
-  writer -> Write();
+    std::cout << "Segmentation fault here?" << std::endl;
+  
+ 
 
-  writer -> Delete();
+
+  // writer -> Write();
+  // writer -> Delete();
+
+
 
   // for(int img = 1; img < ds_num-1; ++img)
   // {
@@ -282,7 +306,6 @@ int main(int argc, char * argv[])
 
 
   
-  // zvalues -> Delete();
   points -> Delete();
 
   // 

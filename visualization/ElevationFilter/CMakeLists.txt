@@ -3,6 +3,7 @@ PROJECT(vtkHDF-AVT)
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
 SET(VTK_DIR /work/ese-huangh/lib/VTK-8.2.0/lib64/cmake/vtk-8.2)
+SET(VTK_DIR /usr/local/lib/cmake/vtk-8.2)
 
 # FIND_PACKAGE(VTK COMPONENTS vtkCommonCore vtkCommonSystem
 #   vtkCommonMisc vtkCommonMath vtkIOCore vtkIOLegacy
