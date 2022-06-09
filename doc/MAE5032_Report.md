@@ -504,13 +504,18 @@ done
 
 使用VTK和Paraview进行可视化，可视化模块位于 `visualization`文件夹。
 
-进入 `visualization ` 文件夹，进行构建
+进入 `visualization ` 文件夹，提供有两种可视化方法：`StructuredGrid`为二维平面结构化网格，ElevationFilter为三维高程可视化（讲温度变化假设为高程）。
+
+文件内提供CMakeLists.txt，根据是在太乙服务器上还是本地机上修改VTK路径（都测试了，不要的注释掉就行）。**请确保VTK的版本为8.2.0**。以StructuredGrid为例：
 
 ```bash
 cd visualization
+cd StructuredGrid
 mkdir build && cd build
 cmake .. && make
 ```
+
+build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，也可以在太乙上提交`visualization/StructuredGrid`文件夹中的`ty_script`
 
 ### 8.1 StructuredGrid
 
@@ -532,3 +537,8 @@ cmake .. && make
 
 
 
+> 注1，提供的cpp代码默认读取HDF5文件的名字为u_t的group的Dataset，时间步长时按照(0), 1, 2, 3, ...读取，如果HDF5的时间步长改变，需要更改变量。
+>
+> 注2，可视化未实现并行，如果剖分的网格很密或者时间步长很多，需要耗时较大；
+>
+> 注3，尝试了动画渲染，未成功，仅实现到了本地记的离屏渲染单张照片（而且VTK-8.2.0中为什么没有找到AVIWriter？）。
