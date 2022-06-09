@@ -1,7 +1,7 @@
 #!/bin/bash
 #BSUB -J HTS2D
 #BSUB -q debug
-#BSUB -n 20
+#BSUB -n 10
 #BSUB -W 00:19
 #BSUB -e %J-petsc.err
 #BSUB -o %J-petsc.out
@@ -18,19 +18,42 @@ make HTS2D
 rm -rf ../data/*
 
 ITS=50000
-K=20
+K=10
 
 ksp=richardson
-for pc in {}
+for pc in {jacobi,sor}
 do
-mpirun -np $K ./HTS2D generator -fname ../data/test01_ex.hdf5 -n 100 -dl 0.01 -dt 10 -g 200 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
-mpirun -np $K ./HTS2D explicit -fname ../data/test01_ex.hdf5 -maxItsW $ITS -maxIts $ITS -restart 0 -log_view > test01_ex.log 2>&1
-
-
 mpirun -np $K ./HTS2D generator -fname ../data/test01_im.hdf5 -n 100 -dl 0.01 -dt 10 -g 200 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
-mpirun -np $K ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-20 -ps 1000 -maxItsW $ITS -maxIts $ITS -restart 0 -log_view > test01_im.log 2>&1
+mpirun -np $K ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-20 -ps 1000 -ksptype $ksp -pc_type $pc -maxItsW $ITS -maxIts $ITS -restart 0 -log_view > test01_im.log 2>&1
 
-mv test01_ex.log ../TaiYi_Material/solver_compare/EX_ITS${ITS}K${K}.log
-mv test01_im.log ../TaiYi_Material/solver_compare/IM_ITS${ITS}K${K}.log
+mv test01_im.log ../TaiYi_Material/solver_compare/IM_${ksp}_${pc}.log
 rm -rf ../data/*
 done
+
+ksp=gmres
+for pc in {jacobi,none,asm,hypre}
+do
+mpirun -np $K ./HTS2D generator -fname ../data/test01_im.hdf5 -n 100 -dl 0.01 -dt 10 -g 200 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
+mpirun -np $K ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-20 -ps 1000 -ksptype $ksp -pc_type $pc -maxItsW $ITS -maxIts $ITS -restart 0 -log_view > test01_im.log 2>&1
+
+mv test01_im.log ../TaiYi_Material/solver_compare/IM_${ksp}_${pc}.log
+rm -rf ../data/*
+done
+
+ksp=cg
+for pc in {jacobi,none,asm,hypre}
+do
+mpirun -np $K ./HTS2D generator -fname ../data/test01_im.hdf5 -n 100 -dl 0.01 -dt 10 -g 200 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
+mpirun -np $K ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-20 -ps 1000 -ksptype $ksp -pc_type $pc -maxItsW $ITS -maxIts $ITS -restart 0 -log_view > test01_im.log 2>&1
+
+mv test01_im.log ../TaiYi_Material/solver_compare/IM_${ksp}_${pc}.log
+rm -rf ../data/*
+done
+
+ksp=preonly
+pc=lu
+mpirun -np $K ./HTS2D generator -fname ../data/test01_im.hdf5 -n 100 -dl 0.01 -dt 10 -g 200 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
+mpirun -np $K ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-20 -ps 1000 -ksptype $ksp -pc_type $pc -maxItsW $ITS -maxIts $ITS -restart 0 -log_view > test01_im.log 2>&1
+
+mv test01_im.log ../TaiYi_Material/solver_compare/IM_${ksp}_${pc}.log
+rm -rf ../data/*
