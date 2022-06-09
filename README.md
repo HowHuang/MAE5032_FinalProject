@@ -1,6 +1,10 @@
 # HTS2D(MAE5032_FinalProject)
 
-![StruGrid_visulization_movie](StruGrid_visulization_movie.gif)![StruGrid_visulization_movie]()
+![StruGrid_visulization_movie](StruGrid_visulization_movie.gif)
+
+<img src="StruGrid_visulization.png" alt="StruGrid_visulization" style="zoom:50%;" />
+
+
 
 HTS2D使用git进行版本控制，并上传到github仓库，使用以下命令克隆至本地
 
