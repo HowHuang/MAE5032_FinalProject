@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<VTKFile type="StructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <StructuredGrid WholeExtent="0 9 0 9 0 0">
+    <Piece Extent="0 9 0 9 0 0"                                                       >
+      <PointData Scalars="UValues">
+        <DataArray type="Float64" Name="UValues" format="appended" RangeMin="2.4256478614"         RangeMax="19.32605756"          offset="0"                   />
+      </PointData>
+      <CellData Scalars="Scalars_">
+        <DataArray type="Float64" Name="Scalars_" format="appended" RangeMin="2.4256478614"         RangeMax="19.32605756"          offset="440"                 />
+      </CellData>
+      <Points>
+        <DataArray type="Float32" Name="Points" NumberOfComponents="3" format="appended" RangeMin="0.070710679172"       RangeMax="1.3435028674"         offset="832"                 />
+      </Points>
+    </Piece>
+  </StructuredGrid>
+  <AppendedData encoding="base64">
+   _AQAAAACAAAAgAwAANgEAAA==eJy7Mk+6qSLY2GHvFVV3VgUjB98b8q3NLoYOV+Z12DIeM3A4fXHO2iv9Bg5nofRVqDhM3R6ovgto5qiZJrHKT9R1yEtK/iR7WsPB9u71rxVcag66c3hOTr2jAqdh4rlQdTB9e9DcA5Mvrb/sfveKooNwc9iJUwukHfYJcbF+0JNw2A+lhaDiJVB1MPv9oObA3O8AtVcUqr4ua+H6CgUhB13Jdxl8UjxwuhYqDrPPDqoPZs45aLjA/ANzD0z/h+aHArvSmeG0IVT8IFSdPlQfLJzRzTuAw7xPUNoIzTxdNPNg7rSBuhsWPtVo/tWH0vVQcXGoOpi+a2jxnoMjPvZA3bEXSsPES9HiA2bOLmg8q6ClFxsc6QUmDrNfFapvN1o6hPHR4/0UNFxg4XMdzV/o5gAAyJJDaA==AQAAAACAAACIAgAAFAEAAA==eJy7Mk+6qSLY2GHvFVV3VgUjB98b8q3NLoYOV+Z12DIeM3A4fXHO2iv9Bg5nofRVqDhM3R6ovgto5qiZJrHKT9R1yEtK/iR7WsPB9u71rxVcag66c3hOTr2jAqdh4rlQdTB9e9DcA5Mvrb/sfveKooNwc9iJUwukHfYJcbF+0JNw2A+lhaDiJVB1MPv9oObA3O8AtVcUqr4ua+H6CgUhB13Jdxl8UjxwuhYqDrPPDqoPZs45aLjA/ANzD0z/h+aHArvSmeG0IVT8IFSdPlQfLJzRzTuAw7xPUNoIzTxdNPNg7rSBuhsWPtVo/tWH0vVQcXGoOpi+a2jxnoMjPvZA3bEXSsPES9HiA2bOLmg8AwAzHgWrAQAAAACAAACwBAAANgEAAA==eJxFk2FNhEEMRE/AGsBADfAbXgVgoAYwsAY+G2ADG3c20AHL0n2XXHbSZGbSfK+P+9vL4/d/+/2t9/Pj6bX17XYd/fz8dfT7+/fRj/vAeaA3MbMwZ/7p1dO9S3fvfq+ju3fp7t3egfNAb2JmYc7uXdndu3T37s7r6O5dunu3d+A80JuYWZize1de9y7dvbvnOrp719u92ztwHuhNzCzM2b0ro3uX7t6dfR3dvUt37/YOnAd6EzMLc+b/tx7I1UCuVt51tFwN5Gp5B84DvYmZhTm9b+C+gfsG7hu4b+C+gfsG7hu4b+C+gVwlcpXIVSJXiVwlcpXIVSJXiVwlcpV4R4V3VHhHhXdUeEeFd1R4R4V3VHhHhXdUyPNEnifyPJHniTxP5HkizxN5nsjzRJ7n6f0BrT4bMA==
+  </AppendedData>
+</VTKFile>

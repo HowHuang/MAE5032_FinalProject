@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
   hid_t               file_id, group_id, dataset_id;
   hsize_t             ds_num, ds_size;
   herr_t              status;
-  const std::string   filename("../output/test");
+  const std::string   filename("../output/StruGrid");
   char                dsname[10000];
   
   if((file_test = H5Fis_hdf5(FILE)) > 0)
@@ -136,7 +136,7 @@ int main(int argc, char * argv[])
     {
       for(size_t j=0; j<n; ++j)
       {
-        points  -> InsertNextPoint(delta/2+i*delta,delta/2+j*delta,0.1*img);
+        points  -> InsertNextPoint(delta/2+i*delta,delta/2+j*delta,0);//0.1*img
         //if 3-D, the z values can be u_t[i*n+j]
       }
     }

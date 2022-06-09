@@ -1,8 +1,8 @@
-PROJECT(vtkHDF-AVT)
+PROJECT(vtkHDF-leFilter)
 
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
-SET(VTK_DIR /work/ese-huangh/lib/VTK-8.2.0/lib64/cmake/vtk-8.2)
+# SET(VTK_DIR /work/ese-huangh/lib/VTK-8.2.0/lib64/cmake/vtk-8.2)
 SET(VTK_DIR /usr/local/lib/cmake/vtk-8.2)
 
 # FIND_PACKAGE(VTK COMPONENTS vtkCommonCore vtkCommonSystem
@@ -43,7 +43,7 @@ INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/src)
 INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS}/vtkhdf5/hl/src)
 include(${VTK_USE_FILE})
 
-ADD_EXECUTABLE( vtk_AVI Vtk4hdf5_ElevationFilter_Animation.cpp )
-TARGET_LINK_LIBRARIES( vtk_AVI ${VTK_LIBRARIES} )
+ADD_EXECUTABLE( vtk_EleFilter Vtk4hdf5_ElevationFilter_MultiFiles.cpp )
+TARGET_LINK_LIBRARIES( vtk_EleFilter ${VTK_LIBRARIES} )
 
 # EOF
