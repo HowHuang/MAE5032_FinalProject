@@ -2,7 +2,7 @@
 
 ![StruGrid_visulization_movie](StruGrid_visulization_movie.gif)
 
-<img src="StruGrid_visulization.png" alt="StruGrid_visulization" style="zoom:30%;" />
+<img src="StruGrid_visulization.png" alt="StruGrid_visulization" width="500" align="middle" />
 
 
 
