@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/vtk_EleFilter.dir/Vtk4hdf5_ElevationFilter_MultiFiles.cpp.o"
-  "vtk_EleFilter"
   "vtk_EleFilter.pdb"
+  "vtk_EleFilter"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -6,5 +6,6 @@
 #BSUB -o TEST.out
 
 module purge
-
+cd build
 ./vtk_EleFilter > EF_TEST.log 2>&1
+mv EF_TEST.log ../EF_TEST.log

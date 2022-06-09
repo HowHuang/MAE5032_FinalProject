@@ -7,4 +7,6 @@
 
 module purge
 
+cd build
 ./vtk_StruGrid > SG_TEST.log 2>&1
+mv SG_TEST.log ../SG_TEST.log

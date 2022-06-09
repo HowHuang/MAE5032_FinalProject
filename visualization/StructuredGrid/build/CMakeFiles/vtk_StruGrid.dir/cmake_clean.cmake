@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/vtk_StruGrid.dir/Vtk4hdf5_StruGrid_MultiLayers.cpp.o"
-  "vtk_StruGrid"
   "vtk_StruGrid.pdb"
+  "vtk_StruGrid"
 )
 
 # Per-language clean rules from dependency scanning.

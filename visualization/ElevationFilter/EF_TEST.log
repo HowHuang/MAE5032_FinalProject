@@ -1,0 +1,306 @@
+file type of temperature (u) for vtk visualization is committed
+group was opened.
+The number of datasets in the group (u_t): 102
+The number of data in each dataset: 100
+The partitioning n for data is: 10*10
+The min and max of u for layer 1: 0.000002 and 2.291399
+output here: 100
+dataset 1 was writen.
+The min and max of u for layer 2: 0.000014 and 4.265304
+output here: 100
+dataset 2 was writen.
+The min and max of u for layer 3: 0.000045 and 5.970047
+output here: 100
+dataset 3 was writen.
+The min and max of u for layer 4: 0.000115 and 7.446130
+output here: 100
+dataset 4 was writen.
+The min and max of u for layer 5: 0.000245 and 8.727551
+output here: 100
+dataset 5 was writen.
+The min and max of u for layer 6: 0.000467 and 9.842900
+output here: 100
+dataset 6 was writen.
+The min and max of u for layer 7: 0.000814 and 10.816262
+output here: 100
+dataset 7 was writen.
+The min and max of u for layer 8: 0.001327 and 11.667964
+output here: 100
+dataset 8 was writen.
+The min and max of u for layer 9: 0.002053 and 12.415195
+output here: 100
+dataset 9 was writen.
+The min and max of u for layer 10: 0.003039 and 13.072516
+output here: 100
+dataset 10 was writen.
+The min and max of u for layer 11: 0.004340 and 13.652286
+output here: 100
+dataset 11 was writen.
+The min and max of u for layer 12: 0.006012 and 14.165015
+output here: 100
+dataset 12 was writen.
+The min and max of u for layer 13: 0.008114 and 14.619659
+output here: 100
+dataset 13 was writen.
+The min and max of u for layer 14: 0.010705 and 15.023864
+output here: 100
+dataset 14 was writen.
+The min and max of u for layer 15: 0.013847 and 15.384170
+output here: 100
+dataset 15 was writen.
+The min and max of u for layer 16: 0.017602 and 15.706185
+output here: 100
+dataset 16 was writen.
+The min and max of u for layer 17: 0.022033 and 15.994723
+output here: 100
+dataset 17 was writen.
+The min and max of u for layer 18: 0.027199 and 16.253929
+output here: 100
+dataset 18 was writen.
+The min and max of u for layer 19: 0.033163 and 16.487376
+output here: 100
+dataset 19 was writen.
+The min and max of u for layer 20: 0.039982 and 16.698152
+output here: 100
+dataset 20 was writen.
+The min and max of u for layer 21: 0.047713 and 16.888931
+output here: 100
+dataset 21 was writen.
+The min and max of u for layer 22: 0.056413 and 17.062031
+output here: 100
+dataset 22 was writen.
+The min and max of u for layer 23: 0.066134 and 17.219470
+output here: 100
+dataset 23 was writen.
+The min and max of u for layer 24: 0.076926 and 17.363003
+output here: 100
+dataset 24 was writen.
+The min and max of u for layer 25: 0.088837 and 17.494162
+output here: 100
+dataset 25 was writen.
+The min and max of u for layer 26: 0.101911 and 17.614289
+output here: 100
+dataset 26 was writen.
+The min and max of u for layer 27: 0.116190 and 17.724558
+output here: 100
+dataset 27 was writen.
+The min and max of u for layer 28: 0.131712 and 17.825999
+output here: 100
+dataset 28 was writen.
+The min and max of u for layer 29: 0.148512 and 17.919519
+output here: 100
+dataset 29 was writen.
+The min and max of u for layer 30: 0.166623 and 18.005917
+output here: 100
+dataset 30 was writen.
+The min and max of u for layer 31: 0.186072 and 18.085900
+output here: 100
+dataset 31 was writen.
+The min and max of u for layer 32: 0.206886 and 18.160090
+output here: 100
+dataset 32 was writen.
+The min and max of u for layer 33: 0.229086 and 18.229042
+output here: 100
+dataset 33 was writen.
+The min and max of u for layer 34: 0.252692 and 18.293247
+output here: 100
+dataset 34 was writen.
+The min and max of u for layer 35: 0.277719 and 18.353141
+output here: 100
+dataset 35 was writen.
+The min and max of u for layer 36: 0.304180 and 18.409113
+output here: 100
+dataset 36 was writen.
+The min and max of u for layer 37: 0.332085 and 18.461512
+output here: 100
+dataset 37 was writen.
+The min and max of u for layer 38: 0.361442 and 18.510647
+output here: 100
+dataset 38 was writen.
+The min and max of u for layer 39: 0.392254 and 18.556799
+output here: 100
+dataset 39 was writen.
+The min and max of u for layer 40: 0.424523 and 18.600215
+output here: 100
+dataset 40 was writen.
+The min and max of u for layer 41: 0.458248 and 18.641122
+output here: 100
+dataset 41 was writen.
+The min and max of u for layer 42: 0.493426 and 18.679720
+output here: 100
+dataset 42 was writen.
+The min and max of u for layer 43: 0.530050 and 18.716194
+output here: 100
+dataset 43 was writen.
+The min and max of u for layer 44: 0.568114 and 18.750707
+output here: 100
+dataset 44 was writen.
+The min and max of u for layer 45: 0.607607 and 18.783408
+output here: 100
+dataset 45 was writen.
+The min and max of u for layer 46: 0.648517 and 18.814434
+output here: 100
+dataset 46 was writen.
+The min and max of u for layer 47: 0.690830 and 18.843906
+output here: 100
+dataset 47 was writen.
+The min and max of u for layer 48: 0.734531 and 18.871936
+output here: 100
+dataset 48 was writen.
+The min and max of u for layer 49: 0.779602 and 18.898625
+output here: 100
+dataset 49 was writen.
+The min and max of u for layer 50: 0.826026 and 18.924067
+output here: 100
+dataset 50 was writen.
+The min and max of u for layer 51: 0.873782 and 18.948346
+output here: 100
+dataset 51 was writen.
+The min and max of u for layer 52: 0.922850 and 18.971539
+output here: 100
+dataset 52 was writen.
+The min and max of u for layer 53: 0.973205 and 18.993717
+output here: 100
+dataset 53 was writen.
+The min and max of u for layer 54: 1.024827 and 19.014946
+output here: 100
+dataset 54 was writen.
+The min and max of u for layer 55: 1.077689 and 19.035284
+output here: 100
+dataset 55 was writen.
+The min and max of u for layer 56: 1.131766 and 19.054788
+output here: 100
+dataset 56 was writen.
+The min and max of u for layer 57: 1.187034 and 19.073507
+output here: 100
+dataset 57 was writen.
+The min and max of u for layer 58: 1.243465 and 19.091489
+output here: 100
+dataset 58 was writen.
+The min and max of u for layer 59: 1.301031 and 19.108776
+output here: 100
+dataset 59 was writen.
+The min and max of u for layer 60: 1.359706 and 19.125409
+output here: 100
+dataset 60 was writen.
+The min and max of u for layer 61: 1.419461 and 19.141423
+output here: 100
+dataset 61 was writen.
+The min and max of u for layer 62: 1.480267 and 19.156855
+output here: 100
+dataset 62 was writen.
+The min and max of u for layer 63: 1.542096 and 19.171734
+output here: 100
+dataset 63 was writen.
+The min and max of u for layer 64: 1.604918 and 19.186092
+output here: 100
+dataset 64 was writen.
+The min and max of u for layer 65: 1.668705 and 19.199955
+output here: 100
+dataset 65 was writen.
+The min and max of u for layer 66: 1.733427 and 19.213349
+output here: 100
+dataset 66 was writen.
+The min and max of u for layer 67: 1.799054 and 19.226298
+output here: 100
+dataset 67 was writen.
+The min and max of u for layer 68: 1.865558 and 19.238824
+output here: 100
+dataset 68 was writen.
+The min and max of u for layer 69: 1.932909 and 19.250948
+output here: 100
+dataset 69 was writen.
+The min and max of u for layer 70: 2.001078 and 19.262690
+output here: 100
+dataset 70 was writen.
+The min and max of u for layer 71: 2.070035 and 19.274067
+output here: 100
+dataset 71 was writen.
+The min and max of u for layer 72: 2.139752 and 19.285098
+output here: 100
+dataset 72 was writen.
+The min and max of u for layer 73: 2.210201 and 19.295798
+output here: 100
+dataset 73 was writen.
+The min and max of u for layer 74: 2.281351 and 19.306182
+output here: 100
+dataset 74 was writen.
+The min and max of u for layer 75: 2.353176 and 19.316264
+output here: 100
+dataset 75 was writen.
+The min and max of u for layer 76: 2.425648 and 19.326058
+output here: 100
+dataset 76 was writen.
+The min and max of u for layer 77: 2.498738 and 19.335576
+output here: 100
+dataset 77 was writen.
+The min and max of u for layer 78: 2.572420 and 19.344830
+output here: 100
+dataset 78 was writen.
+The min and max of u for layer 79: 2.646666 and 19.353832
+output here: 100
+dataset 79 was writen.
+The min and max of u for layer 80: 2.721451 and 19.362592
+output here: 100
+dataset 80 was writen.
+The min and max of u for layer 81: 2.796748 and 19.371119
+output here: 100
+dataset 81 was writen.
+The min and max of u for layer 82: 2.872530 and 19.379425
+output here: 100
+dataset 82 was writen.
+The min and max of u for layer 83: 2.948774 and 19.387516
+output here: 100
+dataset 83 was writen.
+The min and max of u for layer 84: 3.025454 and 19.395403
+output here: 100
+dataset 84 was writen.
+The min and max of u for layer 85: 3.102546 and 19.403092
+output here: 100
+dataset 85 was writen.
+The min and max of u for layer 86: 3.180026 and 19.410592
+output here: 100
+dataset 86 was writen.
+The min and max of u for layer 87: 3.257869 and 19.417909
+output here: 100
+dataset 87 was writen.
+The min and max of u for layer 88: 3.336055 and 19.425052
+output here: 100
+dataset 88 was writen.
+The min and max of u for layer 89: 3.414558 and 19.432025
+output here: 100
+dataset 89 was writen.
+The min and max of u for layer 90: 3.493359 and 19.438837
+output here: 100
+dataset 90 was writen.
+The min and max of u for layer 91: 3.572435 and 19.445491
+output here: 100
+dataset 91 was writen.
+The min and max of u for layer 92: 3.651764 and 19.451994
+output here: 100
+dataset 92 was writen.
+The min and max of u for layer 93: 3.731327 and 19.458352
+output here: 100
+dataset 93 was writen.
+The min and max of u for layer 94: 3.811103 and 19.464570
+output here: 100
+dataset 94 was writen.
+The min and max of u for layer 95: 3.891073 and 19.470652
+output here: 100
+dataset 95 was writen.
+The min and max of u for layer 96: 3.971217 and 19.476603
+output here: 100
+dataset 96 was writen.
+The min and max of u for layer 97: 4.051516 and 19.482427
+output here: 100
+dataset 97 was writen.
+The min and max of u for layer 98: 4.131953 and 19.488130
+output here: 100
+dataset 98 was writen.
+The min and max of u for layer 99: 4.212509 and 19.493714
+output here: 100
+dataset 99 was writen.
+The min and max of u for layer 100: 4.293167 and 19.499184
+output here: 100
+dataset 100 was writen.
+Success!

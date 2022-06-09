@@ -2,12 +2,6 @@
 
 ![StruGrid_visulization_movie](StruGrid_visulization_movie.gif)
 
-<<<<<<< HEAD
-=======
-<img src="StruGrid_visulization.png" alt="StruGrid_visulization" style="zoom:30%;" />
->>>>>>> f46463ee13a9209cea9996c24ad7649a66ea000b
-
-
 
 HTS2D使用git进行版本控制，并上传到github仓库，使用以下命令克隆至本地
 
