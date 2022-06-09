@@ -402,7 +402,7 @@ Reports information only for process 0.
 
 
 
-## 7. Parallelism and Scalability
+## 5. Parallelism and Scalability
 
 用于考察并行可扩展性的脚本位于 `/work/ese-chenph/github/MAE5032_FinalProject/TaiYi_Material/ty_parallelism`
 
@@ -485,7 +485,7 @@ done
 
 ![adlasjhdhwauofbvuav](https://perhaps-1306015279.cos.ap-guangzhou.myqcloud.com/adlasjhdhwauofbvuav.png)
 
-## 7. Comparison of KSP&PC
+## 6. Comparison of KSP&PC
 
 用于比较的太乙脚本位于 `/work/ese-chenph/github/MAE5032_FinalProject/TaiYi_Material/ty_ksppc`
 
@@ -500,7 +500,7 @@ done
 
 分析发现选择GMRES/CG的KSP类别和Jacobi的PC类别有较高的计算效率，使用PREONLY和LU的组合计算时间过长。
 
-## 8. Visualization
+## 7. Visualization
 
 使用VTK和Paraview进行可视化，可视化模块位于 `visualization`文件夹。
 
@@ -517,7 +517,7 @@ cmake .. && make
 
 build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，也可以在太乙上提交`visualization/StructuredGrid`文件夹中的`ty_script`
 
-### 8.1 StructuredGrid
+### 7.1 StructuredGrid
 
 在`visualization/StructuredGrid`文件夹中， 在太乙脚本使用以下命令对demo文件 `default.hdf5` 进行可视化，边缘温度为20K，初始表面温度为0K，最终达到稳定的情况。
 
@@ -529,7 +529,7 @@ build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，�
 
 ![image-20220609164026925](https://perhaps-1306015279.cos.ap-guangzhou.myqcloud.com/image-20220609164026925.png)
 
-### 8.2 ElevationFilter
+### 7.2 ElevationFilter
 
 在`visualization/ElevationFilter`文件夹中，可以对某一时刻的二维温度进行[三维数字高程绘制](https://github.com/PerhapsChen/MAE5032_FinalProject/blob/main/DEM_visualization.gif)。
 
@@ -542,3 +542,9 @@ build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，�
 > 注2，可视化未实现并行，如果剖分的网格很密或者时间步长很多，需要耗时较大；
 >
 > 注3，尝试了动画渲染，未成功，仅实现到了本地记的离屏渲染单张照片（而且VTK-8.2.0中为什么没有找到AVIWriter？）。
+
+## 8.2 讨论
+
+- 生成输入数据部分正常实现，能够生成用户给定的数据组合，并存储到指定HDF5文件中，且能够较好的识别例如温度值（K）为负的输入方式并退出报错，但包括读取该数据部分的代码较为冗长，可以尝试更好的输入及读取方式。
+- 显式及隐式计算部分，如果输入特定的物理参数组合，可能会导致系数矩阵，即五对角矩阵的主对角线值为负，从而造成迭代异常，该问题发现较晚，可能由于在数学和物理上的理解有些偏差，该问题由于时间原因暂未修复。
+- 显示及隐式计算输出到HDF5文件的部分，可以实现每个时间步长都输入到文件中，也可以用户指定每迭代多少次输出到HDF5文件中。但无论那种方式，都需要提前分配足够的向量数组空间，分配个数达到百万级别时，似乎会导致内存不足的情况导致程序异常退出。后续改进方向可以考虑探索动态分配向量数组的内存，或者只存储每100次或者1000次迭代的结果，从而节省内存的使用。
