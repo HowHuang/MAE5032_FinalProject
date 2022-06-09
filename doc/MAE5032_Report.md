@@ -519,11 +519,7 @@ build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，�
 
 ### 7.1 StructuredGrid
 
-在`visualization/StructuredGrid`文件夹中， 在太乙脚本使用以下命令对demo文件 `default.hdf5` 进行可视化，边缘温度为20K，初始表面温度为0K，最终达到稳定的情况。
-
-```bash
-./vtk_StruGrid > SG_TEST.log 2>&1
-```
+在`visualization/StructuredGrid`文件夹中， 在太乙脚本使用以下命令对demo文件 `default.hdf5` 进行可视化，边缘温度为20K，初始表面温度为0K，时间变化如下
 
 在`output`目录可以生成一系列文件供可视化，显式及隐式计算得到的HDF5文件是每个时刻的温度一个dataset，所以暂时只能实现每个时刻生成一个文件，再用Paraview后处理成动画，[查看动画](https://github.com/PerhapsChen/MAE5032_FinalProject/blob/main/StruGrid_visulization_movie.gif)。
 
@@ -541,7 +537,7 @@ build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，�
 >
 > 注2，可视化未实现并行，如果剖分的网格很密或者时间步长很多，需要耗时较大；
 >
-> 注3，尝试了动画渲染，未成功，仅实现到了本地记的离屏渲染单张照片（而且VTK-8.2.0中为什么没有找到AVIWriter？）。
+> 注3，尝试了动画渲染，未成功，仅实现到了本地记的离屏渲染单张照片（而且VTK-8.2.0中不知道为什么没有找到AVIWriter）。最终用ParaView实现动画。
 
 ## 8.2 讨论
 
