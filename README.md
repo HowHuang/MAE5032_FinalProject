@@ -2,12 +2,9 @@
 
 ![StruGrid_visulization_movie](StruGrid_visulization_movie.gif)
 
-<<<<<<< HEAD
-=======
 ![StruGrid_visulization](StruGrid_visulization.png){: width="80px" height="80px"}
 
 
->>>>>>> d33c439342ebd2d5561b28fd36223821106874b9
 
 HTS2D使用git进行版本控制，并上传到github仓库，使用以下命令克隆至本地
 
@@ -79,12 +76,14 @@ mpirun -np X ./HTS2D generator [PARAMETERS] [OTHERS]
 例如，使用单核处理器，生成时间步长为1，空间步长为0.1，规模为10，上边界、左边界温度值为200，有边界、下边界热流密度为100，密度为300，head capacity 为1000，conductivity 为10 ，heat supply 为0，初始温度平面为50的文件名为default.hdf5的命令为
 
 ```bash
-mpirun -np 1 ./HTS2D generator -fname ../data/default.hdf5 -n 10 -dl 0.1 -dt 1 -gl 200 -gt 200 -hr 100 -hb 100 -rho 300 -c 1000 -k 10 -f 0 -u0 50
+mpirun -np 4 ./HTS2D generator -fname ../data/test01_ex.hdf5 -n 100 -dl 0.01 -dt 100 -g 100 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
 ```
 
 ![image-20220608183941646](https://perhaps-1306015279.cos.ap-guangzhou.myqcloud.com/image-20220608183941646.png)
 
 生成的文件如上图所示，其中u_0中记录了每次时间步长迭代得到的温度值， Parameters记录了相关常量物理参数，boundary记录了边界条件，g表示温度，h表示热流密度，t指出该点的边界类型（1代表狄利克雷边界，2代表诺依曼边界条件）
+
+如果希望使用更复杂的边界条件，可以修改HDF5文件中对应变量的值。
 
 ### 3.2 Explicit
 
@@ -105,10 +104,10 @@ mpirun -np X ./HTS2D explicit [PARAMETERS] [OTHERS]
 | -maxIts    | 该次任务中，累计最大迭代次数       |
 | -restart   | 0代表非重启型任务，1代表重启任务   |
 
-例如，我们希望使用4个处理器内核对3.1中生成的数据进行迭代计算，设置该任务总迭代次数最多为1000次，该次迭代次数为100次（不希望一次性计算完毕），首次运行时候，参考以下命令
+例如，我们希望使用4个处理器内核对3.1中生成的数据进行迭代计算，设置该任务总迭代次数最多为100000次，该次迭代次数为100次（不希望一次性计算完毕，或者中途异常退出），首次运行时候，太乙脚本中参考以下命令
 
 ```bash
-mpirun -np 4 ./HTS2D explicit -fname ../data/default.hdf5 -maxItsW 1000 -maxIts 100 -restart 0
+mpirun -np 4 ./HTS2D explicit -fname ../data/test01_ex.hdf5 -tol 1e-7 -ps 1000 -maxItsW 100000 -maxIts 100 -restart 0
 ```
 
 即可在该HDF5文件中记录每次迭代的结果及迭代次数，存放在u_t的group中
@@ -118,7 +117,7 @@ mpirun -np 4 ./HTS2D explicit -fname ../data/default.hdf5 -maxItsW 1000 -maxIts 
 如果我们希望重启任务，从上次迭代结束的次数重新计算至500次，则可以考虑以下命令
 
 ```bash
-mpirun -np 4 ./HTS2D explicit -fname ../data/default.hdf5 -maxItsW 1000 -maxIts 500 -restart 1
+mpirun -np 4 ./HTS2D explicit -fname ../data/test01_ex.hdf5 -tol 1e-7 -ps 1000 -maxItsW 100000 -maxIts 500 -restart 1
 ```
 
 ![image-20220608185454934](https://perhaps-1306015279.cos.ap-guangzhou.myqcloud.com/image-20220608185454934.png)
@@ -129,11 +128,11 @@ mpirun -np 4 ./HTS2D explicit -fname ../data/default.hdf5 -maxItsW 1000 -maxIts 
 
 ```bash
 # 生成数据
-mpirun -np 1 ./HTS2D generator -fname ../data/implicit_test.hdf5 -n 10 -dl 0.1 -dt 1 -g 200 -rho 300 -c 1000 -k 10 -f 0 -u0 50
+mpirun -np 4 ./HTS2D generator -fname ../data/test01_im.hdf5 -n 100 -dl 0.01 -dt 100 -g 100 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
 
 # 首次迭代100次
-mpirun -np 4 ./HTS2D implicit -fname ../data/implicit_test.hdf5 -maxItsW 1000 -maxIts 100 -restart 0
+mpirun -np 4 ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-7 -ps 1000 -maxItsW 100000 -maxIts 100 -restart 0
 
 # 重启迭代至500次
-mpirun -np 4 ./HTS2D implicit -fname ../data/implicit_test.hdf5 -maxItsW 1000 -maxIts 500 -restart 1
+mpirun -np 4 ./HTS2D implicit -fname ../data/test01_im.hdf5 -tol 1e-7 -ps 1000 -maxItsW 100000 -maxIts 500 -restart 1
 ```
