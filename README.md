@@ -2,6 +2,10 @@
 
 ![StruGrid_visulization_movie](StruGrid_visulization_movie.gif)
 
+<<<<<<< HEAD
+=======
+<img src="StruGrid_visulization.png" alt="StruGrid_visulization" style="zoom:30%;" />
+>>>>>>> f46463ee13a9209cea9996c24ad7649a66ea000b
 
 
 
