@@ -519,7 +519,9 @@ build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，�
 
 ### 7.1 StructuredGrid
 
-在`visualization/StructuredGrid`文件夹中， 在太乙脚本使用以下命令对demo文件 `default.hdf5` 进行可视化，边缘温度为20K，初始表面温度为0K，时间变化如下
+在`visualization/StructuredGrid`文件夹中， 在太乙脚本使用以下命令对demo文件 `default.hdf5` 进行可视化，边缘温度为20K，初始表面温度为0K，温度由边缘传递到中间。
+
+![StruGrid_visulization](StruGrid_visulization.png)
 
 在`output`目录可以生成一系列文件供可视化，显式及隐式计算得到的HDF5文件是每个时刻的温度一个dataset，所以暂时只能实现每个时刻生成一个文件，再用Paraview后处理成动画，[查看动画](https://github.com/PerhapsChen/MAE5032_FinalProject/blob/main/StruGrid_visulization_movie.gif)。
 
@@ -527,7 +529,7 @@ build文件内产生可执行文件，可在本地机直接`./vtk_StruGrid`，�
 
 ### 7.2 ElevationFilter
 
-在`visualization/ElevationFilter`文件夹中，可以对某一时刻的二维温度进行[三维数字高程绘制](https://github.com/PerhapsChen/MAE5032_FinalProject/blob/main/DEM_visualization.gif)。
+在`visualization/ElevationFilter`文件夹中，可以对某一时刻的二维温度进行[三维数字高程绘制](https://github.com/PerhapsChen/MAE5032_FinalProject/blob/main/EleFilter_visulization_movie.gif)。
 
 ![image-20220609171846428](https://raw.githubusercontent.com/PerhapsChen/picgo_pic/main/image-20220609171846428.png)
 
