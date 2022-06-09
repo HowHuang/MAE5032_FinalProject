@@ -1,7 +1,6 @@
 # HTS2D(MAE5032_FinalProject)
 
-![4fe036dab33d34df8826e296532eed5](https://perhaps-1306015279.cos.ap-guangzhou.myqcloud.com/4fe036dab33d34df8826e296532eed5.jpg)
-
+![StruGrid_visulization_movie](https://perhaps-1306015279.cos.ap-guangzhou.myqcloud.com/StruGrid_visulization_movie.gif)
 
 HTS2D使用git进行版本控制，并上传到github仓库，使用以下命令克隆至本地
 

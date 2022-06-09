@@ -1,0 +1,93 @@
+Sender: LSF System <lsfadmin@r13n47>
+Subject: Job 3828499: <HTS2D> in cluster <sustchpc> Done
+
+Job <HTS2D> was submitted from host <login03> by user <ese-chenph> in cluster <sustchpc> at Thu Jun  9 12:46:21 2022.
+Job was executed on host(s) <10*r13n47>, in queue <debug>, as user <ese-chenph> in cluster <sustchpc> at Thu Jun  9 12:46:22 2022.
+</work/ese-chenph> was used as the home directory.
+</work/ese-chenph/github/MAE5032_FinalProject/src_bak> was used as the working directory.
+Started at Thu Jun  9 12:46:22 2022.
+Terminated at Thu Jun  9 12:46:47 2022.
+Results reported at Thu Jun  9 12:46:47 2022.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J HTS2D
+#BSUB -q debug
+#BSUB -n 10
+#BSUB -W 00:10
+#BSUB -e %J-petsc.err
+#BSUB -o %J-petsc.out
+
+HTS2D_DIR="/work/ese-chenph/github/MAE5032_FinalProject"
+cd $HTS2D_DIR
+
+cd src_bak
+
+module purge
+module load mpi/intel/2018.4
+
+make HTS2D
+
+rm ../data/test02_ex*
+
+ITS=100000
+
+mpirun -np 10 ./HTS2D generator -fname ../data/test02_ex.hdf5 -n 100 -dl 0.01 -dt 100 -g 100 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
+mpirun -np 10 ./HTS2D explicit -fname ../data/test02_ex.hdf5 -ps 1000 -tol 1e-20 -maxIts $ITS -maxItsW $ITS -restart 0 -log_view > test01_ex.log 2>&1
+
+mpirun -np 10 ./HTS2D generator -fname ../data/test02_im.hdf5 -n 100 -dl 0.01 -dt 100 -g 100 -rho 5000 -c 1000 -k 1 -f 0 -u0 50
+mpirun -np 10 ./HTS2D implicit -fname ../data/test02_im.hdf5 -ps 1000 -tol 1e-20 -maxIts $ITS -maxItsW $ITS -restart 0 -log_view > test01_im.log 2>&1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   189.80 sec.
+    Max Memory :                                 9620 MB
+    Average Memory :                             6409.00 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   165 MB
+    Max Processes :                              8
+    Max Threads :                                9
+    Run time :                                   24 sec.
+    Turnaround time :                            26 sec.
+
+The output (if any) follows:
+
+/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin/mpicc -fPIC -Wall -Wwrite-strings -Wno-strict-aliasing -Wno-unknown-pragmas -fstack-protector -fvisibility=hidden -O3 -march=native -mtune=native  -std=c99 -std=c99   -I/work/ese-chenph/lib/petsc-3.16.6-opt/include    -c -o generator.o generator.c
+/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin/mpicc -fPIC -Wall -Wwrite-strings -Wno-strict-aliasing -Wno-unknown-pragmas -fstack-protector -fvisibility=hidden -O3 -march=native -mtune=native  -std=c99 -std=c99   -I/work/ese-chenph/lib/petsc-3.16.6-opt/include    -c -o main.o main.c
+/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin/mpicc -fPIC -Wall -Wwrite-strings -Wno-strict-aliasing -Wno-unknown-pragmas -fstack-protector -fvisibility=hidden -O3 -march=native -mtune=native  -std=c99 -std=c99   -I/work/ese-chenph/lib/petsc-3.16.6-opt/include    -c -o explicit.o explicit.c
+/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin/mpicc -fPIC -Wall -Wwrite-strings -Wno-strict-aliasing -Wno-unknown-pragmas -fstack-protector -fvisibility=hidden -O3 -march=native -mtune=native  -std=c99 -std=c99   -I/work/ese-chenph/lib/petsc-3.16.6-opt/include    -c -o implicit.o implicit.c
+/share/intel/2018u4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin/mpicxx -Wall -Wwrite-strings -Wno-strict-aliasing -Wno-unknown-pragmas -fstack-protector -fvisibility=hidden -O3 -march=native -mtune=native  -fPIC -std=gnu++11 -std=c99    -I/work/ese-chenph/lib/petsc-3.16.6-opt/include   -L/work/ese-chenph/lib/petsc-3.16.6-opt/lib    -Wl,-rpath,/work/ese-chenph/lib/petsc-3.16.6-opt/lib  -lpetsc   -lm -lhdf5 -o HTS2D generator.o main.o explicit.o implicit.o
+rm -f generator.o main.o explicit.o implicit.o
+Setting finished for parameters. dt:  100
+Setting finished for parameters. dl:  0.01
+Setting finished for parameters. rho: 5000
+Setting finished for parameters. c:   1000
+Setting finished for parameters. k:   1
+Setting finished for parameters. f:   0
+Setting finished for parameters. n:   100
+Setting finished for the initial u0: 50..
+Setting finished for g of all the boundary: 100..
+HDF5 file ../data/test02_ex.hdf5 has been written.
+Setting finished for parameters. dt:  100
+Setting finished for parameters. dl:  0.01
+Setting finished for parameters. rho: 5000
+Setting finished for parameters. c:   1000
+Setting finished for parameters. k:   1
+Setting finished for parameters. f:   0
+Setting finished for parameters. n:   100
+Setting finished for the initial u0: 50..
+Setting finished for g of all the boundary: 100..
+HDF5 file ../data/test02_im.hdf5 has been written.
+
+
+PS:
+
+Read file <3828499-petsc.err> for stderr output of this job.
+

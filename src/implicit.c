@@ -221,6 +221,8 @@ int Implicit(int argc,char **argv)
     PetscChar       dsname[PETSC_MAX_PATH_LEN]="default";
     PetscInt        col[5];
     PetscScalar     value[5];
+    PetscInt        ps=100;               // print stride, 10/100/1000.. are recommended
+
     KSP             ksp;
     PC              pc;
     InputPara       IP; //PetscScalar     dt,dl,rho,c,k,f;
@@ -236,8 +238,11 @@ int Implicit(int argc,char **argv)
     // iteration parts
     PetscInt        its=0 , maxIts = 100, maxItsW = 1000;
     Vec             *u; 
-    Vec             step;
+    Vec             step, evec,sln;
     PetscInt        istep;        
+    PetscScalar     norm_ut,norm_utplus; 
+    PetscReal       tol=1e-5;
+    PetscScalar     e,s;  //error
 
     ierr = PetscInitialize(&argc, &argv, (char*) 0, NULL);if (ierr) return ierr;
     comm = PETSC_COMM_WORLD;
@@ -248,6 +253,8 @@ int Implicit(int argc,char **argv)
     ierr = PetscOptionsGetInt(NULL,NULL, "-maxIts", &maxIts, NULL);
     ierr = PetscOptionsGetInt(NULL,NULL, "-maxItsW", &maxItsW, NULL);
     ierr = PetscOptionsGetInt(NULL,NULL, "-restart", &restart, NULL);
+    ierr = PetscOptionsGetInt(NULL,NULL, "-ps", &ps, NULL);
+    ierr = PetscOptionsGetReal(NULL,NULL, "-tol", &tol, NULL);
 
     hid_t   file_id, group_id, dataset_id;
 
@@ -340,6 +347,9 @@ int Implicit(int argc,char **argv)
     VecDuplicate(b,&u_t);
     VecDuplicate(b,&u_tplus);
     VecDuplicate(b,&temp);
+    VecDuplicate(b,&evec);
+    VecDuplicate(b,&sln);
+
     VecDuplicateVecs(b,maxIts+1,&u);  // store u for each timestep
 
     // ~ Assign values to A and b
@@ -515,15 +525,22 @@ int Implicit(int argc,char **argv)
         VecView(u[0],viewer); 
         while(its<maxIts)
         {   
+            VecNorm(u[its],NORM_2,&norm_ut);
             VecAXPBYPCZ(temp,1,1,0,u[its],b);
             KSPSolve(ksp,temp,u[its+1]);
+            VecNorm(u[its+1],NORM_2,&norm_utplus);
             its++;
-            sprintf(dsname, "%08d",its);
-            PetscObjectSetName((PetscObject)(u[its]),dsname);
-            VecView(u[its],viewer); 
+            if(its%ps==0)
+            {
+                sprintf(dsname, "%08d",its);
+                PetscObjectSetName((PetscObject)(u[its]),dsname);
+                VecView(u[its],viewer); 
+            }
+            if(PetscAbs(norm_ut-norm_utplus)<tol) break;
+
         }
 
-        VecSet(step,its);
+        VecSet(step,its%ps);
         PetscObjectSetName((PetscObject)(step),"step");
         VecView(step,viewer); 
         PetscViewerHDF5PopGroup(viewer);
@@ -537,7 +554,7 @@ int Implicit(int argc,char **argv)
         H5Gclose(group_id);
         H5Fclose(file_id);      
 
-        its=istep;
+        its=istep*ps;
         sprintf(dsname, "%08d",its);
         PetscViewerHDF5Open(PETSC_COMM_WORLD,fname,FILE_MODE_UPDATE,&viewer);
         PetscViewerHDF5PushGroup(viewer,"/u_t");     
@@ -549,12 +566,15 @@ int Implicit(int argc,char **argv)
             VecAXPBYPCZ(temp,1,1,0,u[its],b);
             KSPSolve(ksp,temp,u[its+1]);
             its++;
-            sprintf(dsname, "%08d",its);
-            PetscObjectSetName((PetscObject)(u[its]),dsname);
-            VecView(u[its],viewer); 
+            if(its%ps==0)
+            {
+                sprintf(dsname, "%08d",its);
+                PetscObjectSetName((PetscObject)(u[its]),dsname);
+                VecView(u[its],viewer);                     
+            }
         }
         
-        VecSet(step,its);
+        VecSet(step,its%ps);
         PetscObjectSetName((PetscObject)(step),"step");
         VecView(step,viewer); 
 
@@ -566,8 +586,28 @@ int Implicit(int argc,char **argv)
     // VecView(b,PETSC_VIEWER_STDOUT_WORLD);
     // VecView(u_0,PETSC_VIEWER_STDOUT_WORLD);
 
-    VecDestroy(&u_0);
+    VecAXPBYPCZ(evec,1,-1,0,u[its],u[its-1]);
+    VecAbs(evec);
+    VecMax(evec,NULL,&e);
+
+    VecSet(sln,g_b[0]);
+    VecAXPBY(sln,1,-1,u[its]);
+    VecNorm(sln,NORM_2,&s);
+
+    PetscPrintf(comm,"Implicit iteration done.\nIteration times:%d, break tolerance:%g .\n",its,e);
+    PetscPrintf(comm,"Difference to solution: %g .\n",s);
+    PetscPrintf(comm,"---------------------------------------------------------------.\n");
+
+    VecDestroy(&u_0);VecDestroy(&b);VecDestroy(&u_t);VecDestroy(&evec);
+    VecDestroy(&u_tplus);VecDestroy(&temp);VecDestroy(&step);VecDestroy(&sln);
+    MatDestroy(&A);
+    VecDestroyVecs(maxItsW+1,&u);
     PetscViewerDestroy(&viewer);
+    
+    PetscFree4(g_b, g_t, g_l, g_r);
+    PetscFree4(h_b, h_t, h_l, h_r);
+    PetscFree4(t_b, t_t, t_l, t_r);
+
    
     PetscFinalize();
     return 0;
